@@ -8,17 +8,17 @@ interface userType extends Promise<any> {
 
 // 获取验证码
 export const getVerify = (): userType => {
-  return http.request("get", "/captcha");
+  return http.get("/captcha");
 };
 
 // 登录
 export const getLogin = (data: object) => {
-  return http.request("post", "/login", { data });
+  return http.post("/auth/login", { data });
 };
 
 // 刷新token
 export const refreshToken = (data: object) => {
-  return http.request("post", "/refreshToken", { data });
+  return http.post("/refreshToken", { data });
 };
 
 // export const searchVague = (data: object) => {

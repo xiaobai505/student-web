@@ -7,7 +7,6 @@ import qrCode from "./components/qrCode.vue";
 import regist from "./components/regist.vue";
 import update from "./components/update.vue";
 import { initRouter } from "/@/router/utils";
-import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
 import { storageSession } from "@pureadmin/utils";
 import { ref, reactive, watch, computed } from "vue";
@@ -16,6 +15,8 @@ import { useUserStoreHook } from "/@/store/modules/user";
 import { bg, avatar, currentWeek } from "./utils/static";
 import { ReImageVerify } from "/@/components/ReImageVerify";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { getToken, removeToken, setToken } from "/@/utils/auth";
+import { getLogin } from "/@/api/user";
 
 defineOptions({
   name: "Login"
@@ -42,16 +43,24 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       // 模拟请求，需根据实际开发进行修改
-      setTimeout(() => {
+      if (getToken) {
+        removeToken;
+      }
+      // 项目需要表单提交
+      let userInfo = new window.FormData();
+      userInfo.append("username", ruleForm.username);
+      userInfo.append("password", ruleForm.password);
+      getLogin(userInfo).then(res => {
         loading.value = false;
+        setToken(res);
         storageSession.setItem("info", {
-          username: "admin",
-          accessToken: "eyJhbGciOiJIUzUxMiJ9.test"
+          username: ruleForm.username,
+          accessToken: res
         });
         initRouter("admin").then(() => {});
-        message.success("登录成功");
         router.push("/");
-      }, 2000);
+      });
+      loading.value = false;
     } else {
       loading.value = false;
       return fields;

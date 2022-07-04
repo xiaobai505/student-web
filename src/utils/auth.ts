@@ -15,9 +15,13 @@ export function getToken() {
   return Cookies.get("authorized-token");
 }
 
+export function setToken(data) {
+  Cookies.set("authorized-token", data);
+}
+
 // 设置token以及过期时间（cookies、sessionStorage各一份）
 // 后端需要将用户信息和token以及过期时间都返回给前端，过期时间主要用于刷新token
-export function setToken(data) {
+export function setToken1(data) {
   const { accessToken, expires, name } = data;
   // 提取关键信息进行存储
   const paramsMap: paramsMapType = {
@@ -38,6 +42,7 @@ export function setToken(data) {
 
 // 删除token
 export function removeToken() {
+  Cookies.get("authorized-token");
   Cookies.remove(TokenKey);
   sessionStorage.removeItem(TokenKey);
 }

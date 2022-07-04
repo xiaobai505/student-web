@@ -7,16 +7,17 @@ import { storageSession } from "@pureadmin/utils";
 import { getLogin, refreshToken } from "/@/api/user";
 import { getToken, setToken, removeToken } from "/@/utils/auth";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
+import { StorageConfigs } from "/#/index";
 
-const data = getToken();
-let token = "";
+const data = storageSession.getItem<StorageConfigs>("info");
+const token = getToken();
 let name = "";
 if (data) {
-  const dataJson = JSON.parse(data);
-  if (dataJson) {
-    token = dataJson?.accessToken;
-    name = dataJson?.name ?? "admin";
-  }
+  name = storageSession.getItem<StorageConfigs>("info").username;
+  // const dataJson = JSON.parse(data);
+  // if (dataJson) {
+  //   name = dataJson?.name ?? "admin";
+  // }
 }
 
 export const useUserStore = defineStore({
@@ -47,10 +48,9 @@ export const useUserStore = defineStore({
       return new Promise<void>((resolve, reject) => {
         getLogin(data)
           .then(data => {
-            if (data) {
-              setToken(data);
-              resolve();
-            }
+            debugger;
+            setToken(data);
+            resolve();
           })
           .catch(error => {
             reject(error);
@@ -59,9 +59,9 @@ export const useUserStore = defineStore({
     },
     // 登出 清空缓存
     logOut() {
+      removeToken();
       this.token = "";
       this.name = "";
-      removeToken();
       storageSession.clear();
       useMultiTagsStoreHook().handleTags("equal", routerArrays);
       router.push("/login");
