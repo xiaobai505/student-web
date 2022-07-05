@@ -73,6 +73,7 @@ function onHandle(value) {
 }
 
 watch(imgCode, value => {
+  console.log("验证码是："+value);
   useUserStoreHook().SET_VERIFYCODE(value);
 });
 </script>

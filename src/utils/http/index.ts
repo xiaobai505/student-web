@@ -12,6 +12,7 @@ import { loadEnv } from "@build/index";
 import { getToken } from "/@/utils/auth";
 import { useUserStoreHook } from "/@/store/modules/user";
 
+
 // 加载环境变量 VITE_PROXY_DOMAIN（开发环境）  VITE_PROXY_DOMAIN_REAL（打包后的线上环境）
 const { VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL } = loadEnv();
 
@@ -62,9 +63,9 @@ class PureHttp {
         }
         if (getToken()) {
           config.headers["Authorization"] = getToken();
-        } else {
-          return $config;
         }
+        return $config;
+
         // const token = getToken();
         // if (token) {
         //   const data = JSON.parse(token);
@@ -149,6 +150,15 @@ class PureHttp {
     });
   }
 
+  // 单独抽离的get工具函数
+  public get<T, P>(
+    url: string,
+    params?: T,
+    config?: PureHttpRequestConfig
+  ): Promise<P> {
+    return this.request<P>("get", url, params, config);
+  }
+
   // 单独抽离的post工具函数
   public post<T, P>(
     url: string,
@@ -158,13 +168,22 @@ class PureHttp {
     return this.request<P>("post", url, params, config);
   }
 
-  // 单独抽离的get工具函数
-  public get<T, P>(
+  // 单独抽离的 put 工具函数
+  public put<T, P>(
     url: string,
     params?: T,
     config?: PureHttpRequestConfig
   ): Promise<P> {
-    return this.request<P>("get", url, params, config);
+    return this.request<P>("put", url, params, config);
+  }
+
+  // 单独抽离的 delete 工具函数
+  public delete<T, P>(
+    url: string,
+    params?: T,
+    config?: PureHttpRequestConfig
+  ): Promise<P> {
+    return this.request<P>("delete", url, params, config);
   }
 }
 

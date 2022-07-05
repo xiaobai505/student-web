@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { getConfig } from "/@/config";
 import type { StorageConfigs } from "/#/index";
 import { storageLocal } from "@pureadmin/utils";
-import {removeToken} from "/@/utils/auth";
+import { removeToken } from "/@/utils/auth";
 
 export const useEpThemeStore = defineStore({
   id: "pure-epTheme",
