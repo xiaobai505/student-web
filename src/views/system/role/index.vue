@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useColumns } from "./columns";
-import { getRoleList } from "/@/api/system";
 import { reactive, ref, onMounted } from "vue";
 import { type FormInstance } from "element-plus";
 import { TableProBar } from "/@/components/ReTable";
 import { type PaginationProps } from "@pureadmin/table";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { roles } from "/@/api/user";
 
 defineOptions({
   name: "Role"
@@ -52,12 +52,11 @@ function handleSelectionChange(val) {
 
 async function onSearch() {
   loading.value = true;
-  let { data } = await getRoleList();
-  dataList.value = data.list;
-  pagination.total = data.total;
-  setTimeout(() => {
+  await roles(null).then(data => {
     loading.value = false;
-  }, 500);
+    dataList.value = data.records;
+    pagination.total = data.total;
+  });
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {

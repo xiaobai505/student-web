@@ -42,7 +42,6 @@ export function setToken1(data) {
 
 // 删除token
 export function removeToken() {
-  Cookies.get("authorized-token");
   Cookies.remove(TokenKey);
-  sessionStorage.removeItem(TokenKey);
+  sessionStorage.removeItem("info");
 }

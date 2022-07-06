@@ -43,8 +43,8 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       // 模拟请求，需根据实际开发进行修改
-      if (getToken) {
-        removeToken;
+      if (getToken()) {
+        removeToken();
       }
       // 项目需要表单提交
       let userInfo = new window.FormData();
@@ -73,7 +73,7 @@ function onHandle(value) {
 }
 
 watch(imgCode, value => {
-  console.log("验证码是："+value);
+  console.log("验证码是：" + value);
   useUserStoreHook().SET_VERIFYCODE(value);
 });
 </script>

@@ -12,7 +12,6 @@ import { loadEnv } from "@build/index";
 import { getToken } from "/@/utils/auth";
 import { useUserStoreHook } from "/@/store/modules/user";
 
-
 // 加载环境变量 VITE_PROXY_DOMAIN（开发环境）  VITE_PROXY_DOMAIN_REAL（打包后的线上环境）
 const { VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL } = loadEnv();
 
@@ -61,6 +60,10 @@ class PureHttp {
           PureHttp.initConfig.beforeRequestCallback($config);
           return $config;
         }
+        // 说下思路，后端可直接根据 token 解析当前用户
+        // 完全没必要校验过期时间，过期了跳到登录页面重新登录，用户体验不好
+        // 后期加入 刷新token 解决 token 过期的问题
+        // 登录到首页之后，可根据 token 拿到当前用户信息返回
         if (getToken()) {
           config.headers["Authorization"] = getToken();
         }

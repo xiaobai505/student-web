@@ -24,15 +24,15 @@ export function useColumns() {
     },
     {
       label: "角色名称",
-      prop: "name"
+      prop: "roleName"
     },
     {
       label: "角色标识",
-      prop: "code"
+      prop: "roleCode"
     },
     {
       label: "角色类型",
-      prop: "type",
+      prop: "roleType",
       cellRenderer: ({ row, props }) => (
         <el-tag
           size={props.size}
@@ -45,7 +45,7 @@ export function useColumns() {
     },
     {
       label: "显示顺序",
-      prop: "sort"
+      prop: "roleSort"
     },
     {
       label: "状态",
@@ -67,7 +67,7 @@ export function useColumns() {
     {
       label: "创建时间",
       width: 180,
-      prop: "createTime",
+      prop: "updateTime",
       formatter: ({ createTime }) =>
         dayjs(createTime).format("YYYY-MM-DD HH:mm:ss")
     },

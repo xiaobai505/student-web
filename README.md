@@ -89,7 +89,7 @@ pnpm build
 3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
 4. 推送您的分支: `git push origin feat/xxxx`
 5. 提交`pull request`
-6. 也可以增加自己倉庫 `git remote add origin https://github.com/XXX`
+6. 也可以增加自己倉庫 `git remote add student https://gitee.com/gydong/student-web-test.git`
 7. 如果有，则删掉已存在的远程仓库 `git remote rm origin`
    
 

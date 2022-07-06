@@ -6,6 +6,11 @@ interface userType extends Promise<any> {
   info?: object;
 }
 
+// Role API接口
+export const roles = (data: object) => {
+  return http.get("/dgy/role/page", data);
+};
+
 // 获取验证码
 export const getVerify = (): userType => {
   return http.get("/captcha");
