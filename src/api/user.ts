@@ -1,28 +1,27 @@
-import { http } from "../utils/http";
+import {http} from "../utils/http";
 
-interface userType extends Promise<any> {
-  svg?: string;
+interface ResponseType extends Promise<any> {
+  data?: object;
   code?: number;
-  info?: object;
+  msg?: string;
 }
-
 // Role API接口
 export const roles = (data: object) => {
   return http.get("/dgy/role/page", data);
 };
 
 // 获取验证码
-export const getVerify = (): userType => {
+export const getVerify = (): ResponseType => {
   return http.get("/captcha");
 };
 
 // 登录
-export const getLogin = (data: object) => {
+export const getLogin = (data: object): ResponseType => {
   return http.post("/auth/login", { data });
 };
 
 // 刷新token
-export const refreshToken = (data: object) => {
+export const refreshToken = (data: object): ResponseType => {
   return http.post("/refreshToken", { data });
 };
 

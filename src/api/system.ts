@@ -1,4 +1,4 @@
-import { http } from "../utils/http";
+import {http} from "../utils/http";
 import qs from "qs";
 
 interface ResponseType extends Promise<any> {
@@ -59,5 +59,5 @@ export const getRoleList = (data?: object): ResponseType => {
 
 // 获取部门管理列表
 export const getDeptList = (data?: object): ResponseType => {
-  return http.request("post", "/dept", { data });
+  return http.get("/dgy/dept?", { data });
 };

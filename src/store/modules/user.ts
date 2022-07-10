@@ -1,13 +1,13 @@
-import { defineStore } from "pinia";
-import { store } from "/@/store";
-import { userType } from "./types";
-import { router } from "/@/router";
-import { routerArrays } from "/@/layout/types";
-import { storageSession } from "@pureadmin/utils";
-import { getLogin, refreshToken } from "/@/api/user";
-import { getToken, setToken, removeToken } from "/@/utils/auth";
-import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
-import { StorageConfigs } from "/#/index";
+import {defineStore} from "pinia";
+import {store} from "/@/store";
+import {userType} from "./types";
+import {router} from "/@/router";
+import {routerArrays} from "/@/layout/types";
+import {storageSession} from "@pureadmin/utils";
+import {getLogin, refreshToken} from "/@/api/user";
+import {getToken, removeToken, setToken} from "/@/utils/auth";
+import {useMultiTagsStoreHook} from "/@/store/modules/multiTags";
+import {StorageConfigs} from "/#/index";
 
 const data = storageSession.getItem<StorageConfigs>("info");
 const token = getToken();
@@ -48,7 +48,6 @@ export const useUserStore = defineStore({
       return new Promise<void>((resolve, reject) => {
         getLogin(data)
           .then(data => {
-            debugger;
             setToken(data);
             resolve();
           })

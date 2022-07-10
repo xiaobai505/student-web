@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { ElTree } from "element-plus";
-import { getDeptList } from "/@/api/system";
-import { handleTree } from "@pureadmin/utils";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { ref, watch, onMounted, getCurrentInstance } from "vue";
+import type {ElTree} from "element-plus";
+import {getDeptList} from "/@/api/system";
+import {handleTree} from "@pureadmin/utils";
+import {useRenderIcon} from "/@/components/ReIcon/src/hooks";
+import {getCurrentInstance, onMounted, ref, watch} from "vue";
 
 interface Tree {
   id: number;
@@ -47,7 +47,7 @@ function nodeClick(value) {
 function toggleRowExpansionAll(status) {
   // @ts-expect-error
   let nodes = proxy.$refs["treeRef"].store._getAllNodes();
-  for (var i = 0; i < nodes.length; i++) {
+  for (let i = 0; i < nodes.length; i++) {
     nodes[i].expanded = status;
   }
 }
@@ -64,8 +64,12 @@ watch(searchValue, val => {
 });
 
 onMounted(async () => {
-  let { data } = await getDeptList();
-  treeData.value = handleTree(data);
+  await getDeptList().then(data => {
+    treeData.value = handleTree(data);
+  });
+  // let { data } = await getDeptList();
+  // console.log("data:" + data);
+  // treeData.value = handleTree(data);
 });
 </script>
 

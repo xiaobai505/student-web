@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useColumns } from "./columns";
-import { handleTree } from "@pureadmin/utils";
-import { getDeptList } from "/@/api/system";
-import { FormInstance } from "element-plus";
-import { reactive, ref, onMounted } from "vue";
-import { TableProBar } from "/@/components/ReTable";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import {useColumns} from "./columns";
+import {handleTree} from "@pureadmin/utils";
+import {getDeptList} from "/@/api/system";
+import {FormInstance} from "element-plus";
+import {onMounted, reactive, ref} from "vue";
+import {TableProBar} from "/@/components/ReTable";
+import {useRenderIcon} from "/@/components/ReIcon/src/hooks";
 
 defineOptions({
   name: "Dept"
@@ -36,11 +36,10 @@ function handleSelectionChange(val) {
 
 async function onSearch() {
   loading.value = true;
-  let { data } = await getDeptList();
-  dataList.value = handleTree(data);
-  setTimeout(() => {
+  await getDeptList().then(data => {
     loading.value = false;
-  }, 500);
+    dataList.value = handleTree(data);
+  });
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
-import { storageLocal } from "@pureadmin/utils";
-import rolesVue from "./rowRoles.vue";
-import { delUser, pageUser, roles, saveUser, updateUser } from "/@/api/system";
+import {reactive, ref} from "vue";
+import {VxeGridInstance, VxeGridProps, VXETable} from "vxe-table";
+import {storageLocal} from "@pureadmin/utils";
+import {delUser, pageUser, roles, saveUser, updateUser} from "/@/api/system";
 import Tree from "/@/views/system/user/tree.vue";
 
 const xGrid = ref<VxeGridInstance>();
@@ -12,7 +11,7 @@ const gridOptions = reactive({
   showOverflow: true,
   resizable: true,
   keepSource: true,
-  height: 578,
+  height: 780,
   align: "center",
   printConfig: {},
   importConfig: {
