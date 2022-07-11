@@ -8,7 +8,7 @@ const editorRouter = {
   meta: {
     icon: "edit",
     title: $t("menus.hseditor"),
-    rank: 2
+    rank: 3
   },
   children: [
     {

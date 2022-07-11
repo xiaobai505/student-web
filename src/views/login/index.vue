@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import Motion from "./utils/motion";
-import {useRouter} from "vue-router";
-import {loginRules} from "./utils/rule";
-import {initRouter} from "/@/router/utils";
-import type {FormInstance} from "element-plus";
-import {storageSession} from "@pureadmin/utils";
-import {computed, reactive, ref, watch} from "vue";
-import {operates, thirdParty} from "./utils/enums";
-import {useUserStoreHook} from "/@/store/modules/user";
-import {bg, currentWeek} from "./utils/static";
-import {ReImageVerify} from "/@/components/ReImageVerify";
-import {useRenderIcon} from "/@/components/ReIcon/src/hooks";
-import {getToken, removeToken, setToken} from "/@/utils/auth";
-import {getLogin} from "/@/api/user";
+import { useRouter } from "vue-router";
+import { loginRules } from "./utils/rule";
+import phone from "./components/phone.vue";
+import qrCode from "./components/qrCode.vue";
+import regist from "./components/regist.vue";
+import update from "./components/update.vue";
+import { initRouter } from "/@/router/utils";
+import { message } from "@pureadmin/components";
+import type { FormInstance } from "element-plus";
+import { storageSession } from "@pureadmin/utils";
+import { ref, reactive, watch, computed } from "vue";
+import { operates, thirdParty } from "./utils/enums";
+import { useUserStoreHook } from "/@/store/modules/user";
+import { bg, avatar, currentWeek } from "./utils/static";
+import { ReImageVerify } from "/@/components/ReImageVerify";
+import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { getToken, removeToken, setToken } from "/@/utils/auth";
+import { getLogin } from "/@/api/user";
 
 defineOptions({
   name: "Login"
@@ -54,6 +59,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
           accessToken: res.data
         });
         initRouter("admin").then(() => {});
+        message.success("登录成功");
         router.push("/");
       });
     } else {
