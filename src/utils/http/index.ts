@@ -9,8 +9,10 @@ import {
 import qs from "qs";
 import NProgress from "../progress";
 import { loadEnv } from "@build/index";
-import { getToken } from "/@/utils/auth";
+import { getToken, removeToken } from "/@/utils/auth";
 import { useUserStoreHook } from "/@/store/modules/user";
+import router from "/@/router";
+import { message } from "@pureadmin/components";
 
 // 加载环境变量 VITE_PROXY_DOMAIN（开发环境）  VITE_PROXY_DOMAIN_REAL（打包后的线上环境）
 const { VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL } = loadEnv();
@@ -120,6 +122,13 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
+        // @ts-ignore
+        if (error.response.data.code && error.response.data.code === 50001003) {
+          removeToken();
+          // @ts-ignore
+          message.success("warning:" + error.response.data.msg);
+          router.push("/login");
+        }
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }

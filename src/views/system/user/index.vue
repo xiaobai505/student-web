@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {reactive, ref} from "vue";
-import {VxeGridInstance, VxeGridProps, VXETable} from "vxe-table";
-import {storageLocal} from "@pureadmin/utils";
-import {delUser, pageUser, roles, saveUser, updateUser} from "/@/api/system";
+import { reactive, ref } from "vue";
+import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
+import { storageLocal } from "@pureadmin/utils";
+import { delUser, pageUser, roles, saveUser, updateUser } from "/@/api/system";
 import Tree from "/@/views/system/user/tree.vue";
+import rolesVue from "./rowRoles.vue";
 
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive({
@@ -246,7 +247,7 @@ const rolesList = ref<any>(getRoles());
   <div class="main flex">
     <tree />
     <div class="flex-1 ml-4">
-      <rolesVue ref="rolesRef" />
+      <rolesVue ref="rolesVue" />
       <vxe-grid ref="xGrid" v-bind="gridOptions">
         <!--  查询条件  -->
         <template #name_item="{ data }">
