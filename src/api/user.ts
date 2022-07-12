@@ -1,4 +1,4 @@
-import {http} from "../utils/http";
+import { http } from "../utils/http";
 
 interface ResponseType extends Promise<any> {
   data?: object;
@@ -18,6 +18,11 @@ export const getVerify = (): ResponseType => {
 // 登录
 export const getLogin = (data: object): ResponseType => {
   return http.post("/auth/login", { data });
+};
+
+// 登录
+export const getWechatUrl = () => {
+  return http.get("/wechat");
 };
 
 // 刷新token
