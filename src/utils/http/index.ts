@@ -122,10 +122,8 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
-        // @ts-ignore
         if (error.response.data.code && error.response.data.code === 50001003) {
           removeToken();
-          // @ts-ignore
           message.success("warning:" + error.response.data.msg);
           router.push("/login");
         }
