@@ -145,7 +145,8 @@
     "vite-plugin-mock": "^2.9.6",
     "vite-plugin-remove-console": "^1.0.4",
     "vite-svg-loader": "^3.3.0",
-    "vue-eslint-parser": "^8.2.0"
+    "vue-eslint-parser": "^8.2.0",
+    "vue-wxlogin": "^1.0.4"
   },
   "repository": "git@github.com:xiaoxian521/vue-pure-admin.git",
   "author": "xiaoxian521",
