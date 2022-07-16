@@ -4,15 +4,6 @@ import { reactive } from "vue";
 import { getRolesById, setRolesById } from "/@/api/system";
 import { storageLocal } from "@pureadmin/utils";
 
-interface Props {
-  id?: number;
-}
-
-// 接受参数，可以是默认值
-withDefaults(defineProps<Props>(), {
-  id: -1
-});
-
 interface Option {
   id: number;
   roleName: string;

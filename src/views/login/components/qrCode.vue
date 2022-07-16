@@ -3,6 +3,7 @@ import Motion from "../utils/motion";
 import { useUserStoreHook } from "/@/store/modules/user";
 import { getWechatUrl } from "/@/api/user";
 import { reactive } from "vue";
+import wxlogin from "vue-wxlogin";
 
 let wechat: {
   url: any;
@@ -17,7 +18,11 @@ getWechatUrl().then(res => {
 
 <template>
   <Motion class="-mt-2 -mb-2">
-    <el-image alt="Scan me!" :src="wechat.url" />
+    <wxlogin
+      appid="wx49400000000110"
+      :redirect_uri="encodeURIComponent('http://g2i2570656.goho.co')"
+      :scope="'snsapi_login'"
+    />
   </Motion>
   <Motion :delay="100">
     <el-divider>

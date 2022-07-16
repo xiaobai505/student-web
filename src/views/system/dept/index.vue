@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {useColumns} from "./columns";
-import {handleTree} from "@pureadmin/utils";
-import {getDeptList} from "/@/api/system";
-import {FormInstance} from "element-plus";
-import {onMounted, reactive, ref} from "vue";
-import {TableProBar} from "/@/components/ReTable";
-import {useRenderIcon} from "/@/components/ReIcon/src/hooks";
+import { useColumns } from "./columns";
+import { handleTree } from "@pureadmin/utils";
+import { getDeptList } from "/@/api/system";
+import { FormInstance } from "element-plus";
+import { onMounted, reactive, ref } from "vue";
+import { TableProBar } from "/@/components/ReTable";
+import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 
 defineOptions({
   name: "Dept"

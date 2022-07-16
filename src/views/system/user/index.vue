@@ -3,8 +3,8 @@ import { reactive, ref } from "vue";
 import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
 import { storageLocal } from "@pureadmin/utils";
 import { delUser, pageUser, roles, saveUser, updateUser } from "/@/api/system";
+import rowRoles from "/@/views/system/user/rowRoles.vue";
 import Tree from "/@/views/system/user/tree.vue";
-import rolesVue from "./rowRoles.vue";
 
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive({
@@ -241,13 +241,17 @@ const getRoles = () => {
   });
 };
 const rolesList = ref<any>(getRoles());
+
+function handleClose(id) {
+  console.log("CLOSED" + id);
+}
 </script>
 
 <template>
   <div class="main flex">
-    <tree />
+    <tree @handleClose="handleClose" />
     <div class="flex-1 ml-4">
-      <rolesVue ref="rolesVue" />
+      <rowRoles ref="rolesRef" />
       <vxe-grid ref="xGrid" v-bind="gridOptions">
         <!--  查询条件  -->
         <template #name_item="{ data }">

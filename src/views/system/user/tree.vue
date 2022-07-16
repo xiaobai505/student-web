@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type {ElTree} from "element-plus";
-import {getDeptList} from "/@/api/system";
-import {handleTree} from "@pureadmin/utils";
-import {useRenderIcon} from "/@/components/ReIcon/src/hooks";
-import {getCurrentInstance, onMounted, ref, watch} from "vue";
+import type { ElTree } from "element-plus";
+import { getDeptList } from "/@/api/system";
+import { handleTree } from "@pureadmin/utils";
+import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { getCurrentInstance, onMounted, ref, watch } from "vue";
 
 interface Tree {
   id: number;
@@ -27,6 +27,7 @@ const filterNode = (value: string, data: Tree) => {
   if (!value) return true;
   return data.name.includes(value);
 };
+const emit = defineEmits<{ (e: "handleClose", v: number) }>();
 
 function nodeClick(value) {
   const nodeId = value.$treeNodeId;
@@ -42,6 +43,8 @@ function nodeClick(value) {
       v.highlight = false;
     }
   });
+  // 把id返回给父页面
+  emit("handleClose", value.id);
 }
 
 function toggleRowExpansionAll(status) {
