@@ -1,11 +1,29 @@
 <script setup lang="ts">
 import Motion from "../utils/motion";
-import ReQrcode from "/@/components/ReQrcode";
 import { useUserStoreHook } from "/@/store/modules/user";
+import { getWechatUrl } from "/@/api/user";
+import { reactive } from "vue";
+import wxlogin from "vue-wxlogin";
+
+let wechat: {
+  url: any;
+} = reactive({
+  url: "123"
+});
+
+getWechatUrl().then(res => {
+  wechat.url = res;
+});
 </script>
 
 <template>
-  <Motion class="-mt-2 -mb-2"> <ReQrcode text="模拟测试" /> </Motion>
+  <Motion class="-mt-2 -mb-2">
+    <wxlogin
+      appid="wx49400000000110"
+      :redirect_uri="encodeURIComponent('http://g2i2570656.goho.co')"
+      :scope="'snsapi_login'"
+    />
+  </Motion>
   <Motion :delay="100">
     <el-divider>
       <p class="text-gray-500 text-xs">扫码后点击"确认"，即可完成登录</p>

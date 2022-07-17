@@ -1,0 +1,85 @@
+<script setup lang="ts">
+import { reactive } from "vue";
+import { getCourse } from "/@/api/course";
+import { VxeGridProps } from "vxe-table";
+import { saveCourseUser } from "/@/api/courseUser";
+
+const electiveCourse = reactive({
+  flag: false
+});
+
+const gridOptions = reactive<VxeGridProps>({
+  border: true,
+  height: 530,
+  align: "center",
+  rowConfig: {
+    keyField: "id"
+  },
+  columnConfig: {
+    resizable: true
+  },
+  checkboxConfig: {
+    reserve: true
+  },
+  pagerConfig: {
+    pageSize: 10
+  },
+  columns: [
+    { field: "id", title: "id" },
+    { field: "courseName", title: "课程名称" },
+    { field: "courseTeacher", title: "授课老师" },
+    { field: "stock", title: "座位数量" },
+    { field: "sale", title: "报名人数" },
+    { field: "timeTable", title: "上课时间" },
+    { field: "startTime", title: "授课开始时间" },
+    { field: "endTime", title: "授课结束时间" },
+    { title: "操作", width: 200, slots: { default: "operate" } }
+  ],
+  proxyConfig: {
+    seq: true, // 启用动态序号代理（分页之后索引自动计算为当前页的起始序号）
+    props: {
+      result: "records",
+      total: "total"
+    },
+    ajax: {
+      // 接收 Promise
+      query: ({ page, form }) => {
+        return getCourse(Object.assign(page, form, { isMust: false }));
+      }
+    }
+  }
+});
+
+const openElective = () => {
+  electiveCourse.flag = !electiveCourse.flag;
+};
+const saveRowEvent = async (row: any) => {
+  saveCourseUser(row);
+  console.log(row);
+  openElective();
+};
+
+// 使用defineExpose暴露inputVal和exposeFun
+defineExpose({
+  openElective
+});
+</script>
+<template>
+  <div>
+    <vxe-modal v-model="electiveCourse.flag" width="1200">
+      <template #default>
+        <vxe-grid v-bind="gridOptions">
+          <!-- 操作列 插槽   -->
+          <template #operate="{ row }">
+            <vxe-button
+              icon="vxe-icon--check"
+              status="success"
+              circle
+              @click="saveRowEvent(row)"
+            />
+          </template>
+        </vxe-grid>
+      </template>
+    </vxe-modal>
+  </div>
+</template>

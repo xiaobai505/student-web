@@ -1,24 +1,33 @@
 import { http } from "../utils/http";
 
-interface userType extends Promise<any> {
-  svg?: string;
+interface ResponseType extends Promise<any> {
+  data?: object;
   code?: number;
-  info?: object;
+  msg?: string;
 }
+// Role API接口
+export const roles = (data: object) => {
+  return http.get("/dgy/role/page", data);
+};
 
 // 获取验证码
-export const getVerify = (): userType => {
-  return http.request("get", "/captcha");
+export const getVerify = (): ResponseType => {
+  return http.get("/captcha");
 };
 
 // 登录
-export const getLogin = (data: object) => {
-  return http.request("post", "/login", { data });
+export const getLogin = (data: object): ResponseType => {
+  return http.post("/auth/login", { data });
+};
+
+// 登录
+export const getWechatUrl = () => {
+  return http.get("/wechat");
 };
 
 // 刷新token
-export const refreshToken = (data: object) => {
-  return http.request("post", "/refreshToken", { data });
+export const refreshToken = (data: object): ResponseType => {
+  return http.post("/refreshToken", { data });
 };
 
 // export const searchVague = (data: object) => {

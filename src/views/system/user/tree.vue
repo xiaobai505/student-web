@@ -3,7 +3,7 @@ import type { ElTree } from "element-plus";
 import { getDeptList } from "/@/api/system";
 import { handleTree } from "@pureadmin/utils";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { ref, watch, onMounted, getCurrentInstance } from "vue";
+import { getCurrentInstance, onMounted, ref, watch } from "vue";
 
 interface Tree {
   id: number;
@@ -27,6 +27,7 @@ const filterNode = (value: string, data: Tree) => {
   if (!value) return true;
   return data.name.includes(value);
 };
+const emit = defineEmits<{ (e: "handleClose", v: number) }>();
 
 function nodeClick(value) {
   const nodeId = value.$treeNodeId;
@@ -42,12 +43,14 @@ function nodeClick(value) {
       v.highlight = false;
     }
   });
+  // 把id返回给父页面
+  emit("handleClose", value.id);
 }
 
 function toggleRowExpansionAll(status) {
   // @ts-expect-error
   let nodes = proxy.$refs["treeRef"].store._getAllNodes();
-  for (var i = 0; i < nodes.length; i++) {
+  for (let i = 0; i < nodes.length; i++) {
     nodes[i].expanded = status;
   }
 }
@@ -64,8 +67,12 @@ watch(searchValue, val => {
 });
 
 onMounted(async () => {
-  let { data } = await getDeptList();
-  treeData.value = handleTree(data);
+  await getDeptList().then(data => {
+    treeData.value = handleTree(data);
+  });
+  // let { data } = await getDeptList();
+  // console.log("data:" + data);
+  // treeData.value = handleTree(data);
 });
 </script>
 

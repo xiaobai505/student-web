@@ -89,8 +89,10 @@ pnpm build
 3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
 4. 推送您的分支: `git push origin feat/xxxx`
 5. 提交`pull request`
-6. 也可以增加自己倉庫 `git remote add origin https://github.com/XXX`
+6. 也可以增加自己倉庫 `git remote add student https://gitee.com/gydong/student-web-test.git`
 7. 如果有，则删掉已存在的远程仓库 `git remote rm origin`
+   
+
 
 ## Git 贡献提交规范
 
@@ -132,9 +134,9 @@ pnpm build
 
 ## QQ 交流群
 
-群里严禁`黄`、`赌`、`毒`、`vpn`等违法行为！
+一群已满，下面是二群，群里严禁`黄`、`赌`、`毒`、`vpn`等违法行为！
 
-<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0697596aec84661b724f6eebdf8db17~tplv-k3u1fbpfcp-watermark.awebp?" width="150px" height="225px" />
+<img src="https://pure-admin-doc.vercel.app/img/support/qq.png" width="150px" height="225px" />
 
 ## 许可证
 
@@ -150,7 +152,7 @@ pnpm build
 | :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://github.com/xueyuheng"><img src="https://avatars.githubusercontent.com/u/48202935?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/taolei1990"><img src="https://avatars.githubusercontent.com/u/23173640?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/hang-kim"><img src="https://avatars.githubusercontent.com/u/52914259?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/madwolfcrazy"><img src="https://avatars.githubusercontent.com/u/223671?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/limuen"><img src="https://avatars.githubusercontent.com/u/31790606?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/BenLakes"><img src="https://avatars.githubusercontent.com/u/15206046?v=4" width="60px" height="60px" /></a> |
 |                                                                mollerzhu                                                                 |                                                                  TLovers                                                                  |                                                                  cnyyk                                                                  |                                                                                                                                           |                                                                                                                                       |                                                                                                                                         |
-| <a href="https://github.com/mollerzhu"><img src="https://avatars.githubusercontent.com/u/49627902?v=4" width="60px" height="60px" /></a> |  <a href="https://github.com/TLovers"><img src="https://avatars.githubusercontent.com/u/26561694?v=4" width="60px" height="60px" /></a>   | <a href="https://github.com/mollerzhu"><img src="https://avatars.githubusercontent.com/u/275233?v=4" width="60px" height="60px" /></a>  |                                                                                                                                           |                                                                                                                                       |                                                                                                                                         |
+| <a href="https://github.com/mollerzhu"><img src="https://avatars.githubusercontent.com/u/49627902?v=4" width="60px" height="60px" /></a> |  <a href="https://github.com/TLovers"><img src="https://avatars.githubusercontent.com/u/26561694?v=4" width="60px" height="60px" /></a>   |   <a href="https://github.com/cnyyk"><img src="https://avatars.githubusercontent.com/u/275233?v=4" width="60px" height="60px" /></a>    |                                                                                                                                           |                                                                                                                                       |                                                                                                                                         |
 
 ## 贡献者
 

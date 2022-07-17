@@ -112,11 +112,145 @@ function resetRouter(): void {
     }
   });
 }
+const tabs = {
+  path: "/tabs",
+  redirect: "/tabs/index",
+  meta: {
+    icon: "IF-team-icontabs",
+    title: "menus.hstabs",
+    rank: 13
+  },
+  children: [
+    {
+      path: "/tabs/index",
+      name: "Tabs",
+      meta: {
+        title: "menus.hstabs"
+      }
+    },
+    {
+      path: "/tabs/detail",
+      name: "TabDetail",
+      meta: {
+        title: "",
+        showLink: false,
+        dynamicLevel: 3,
+        refreshRedirect: "/tabs/index"
+      }
+    }
+  ]
+};
+const iframe = {
+  path: "/iframe",
+  redirect: "/iframe/pure",
+  meta: {
+    icon: "monitor",
+    title: "menus.hsExternalPage",
+    rank: 10
+  },
+  children: [
+    {
+      path: "/iframe/pure",
+      name: "FramePure",
+      meta: {
+        title: "menus.hsPureDocument",
+        frameSrc: "https://pure-admin-doc.vercel.app"
+      }
+    },
+    {
+      path: "/external",
+      name: "https://pure-admin-doc.vercel.app",
+      meta: {
+        title: "menus.externalLink"
+      }
+    },
+    {
+      path: "/iframe/ep",
+      name: "FrameEp",
+      meta: {
+        title: "menus.hsEpDocument",
+        frameSrc: "https://element-plus.org/zh-CN/"
+      }
+    }
+  ]
+};
+const system = {
+  path: "/system",
+  redirect: "/system/user/index",
+  meta: {
+    icon: "setting",
+    title: "menus.hssysManagement",
+    rank: 11
+  },
+  children: [
+    {
+      path: "/system/user/index",
+      name: "User",
+      meta: {
+        icon: "flUser",
+        title: "menus.hsUser"
+      }
+    },
+    {
+      path: "/system/role/index",
+      name: "Role",
+      meta: {
+        icon: "role",
+        title: "menus.hsRole"
+      }
+    },
+    {
+      path: "/system/dept/index",
+      name: "Dept",
+      meta: {
+        icon: "dept",
+        title: "menus.hsDept"
+      }
+    },
+    {
+      path: "/system/dict",
+      component: "/system/dict/index",
+      name: "Dict",
+      meta: {
+        icon: "dict",
+        title: "menus.hsDict",
+        keepAlive: true
+      }
+    }
+  ]
+};
+const permission = {
+  path: "/permission",
+  redirect: "/permission/page/index",
+  meta: {
+    title: "menus.permission",
+    icon: "lollipop",
+    rank: 7
+  },
+  children: [
+    {
+      path: "/permission/page/index",
+      name: "PermissionPage",
+      meta: {
+        title: "menus.permissionPage"
+      }
+    },
+    {
+      path: "/permission/button/index",
+      name: "PermissionButton",
+      meta: {
+        title: "menus.permissionButton",
+        authority: ["v-admin"]
+      }
+    }
+  ]
+};
 
 // 初始化路由
 function initRouter(name: string) {
   return new Promise(resolve => {
     getAsyncRoutes({ name }).then(({ info }) => {
+      info = [tabs, iframe, system, permission];
       if (info.length === 0) {
         usePermissionStoreHook().changeSetting(info);
       } else {

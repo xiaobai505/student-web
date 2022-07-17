@@ -8,7 +8,7 @@ const flowChartRouter = {
   meta: {
     icon: "set-up",
     title: $t("menus.hsflowChart"),
-    rank: 1
+    rank: 3
   },
   children: [
     {
