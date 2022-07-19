@@ -28,6 +28,7 @@ let greetings = computed(() => {
   }
 });
 
+
 const openDepot = (): void => {
   window.open("https://github.com/xiaoxian521/vue-pure-admin");
 };
@@ -65,7 +66,7 @@ const openDepot = (): void => {
       >
         <el-card style="height: 360px">
           <template #header>
-            <span style="font-size: 16px; font-weight: 500">GitHub信息</span>
+            <span style="font-size: 16px; font-weight: 500">我的学习情况</span>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
@@ -98,7 +99,7 @@ const openDepot = (): void => {
         <el-card style="height: 360px">
           <template #header>
             <span style="font-size: 16px; font-weight: 500">
-              GitHub滚动信息
+              学校公告信息栏
             </span>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">

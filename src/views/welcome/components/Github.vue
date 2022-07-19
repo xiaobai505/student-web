@@ -19,6 +19,7 @@ const list = [
 </script>
 
 <template>
+  --{{ columnsA }}
   <PureDescriptions
     v-for="(item, index) in list"
     :key="index"

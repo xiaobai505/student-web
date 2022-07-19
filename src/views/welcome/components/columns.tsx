@@ -1,13 +1,31 @@
 import { IconifyIconOffline } from "/@/components/ReIcon";
+import { getUser } from "/@/api/user";
+import { reactive } from "vue";
 
 export function useColumns() {
   const lists = [
-    { type: "", label: "善良" },
-    { type: "success", label: "好学" },
-    { type: "info", label: "幽默" },
-    { type: "danger", label: "旅游" },
-    { type: "warning", label: "追剧" }
+    { type: "", label: "学霸" },
+    { type: "success", label: "三好学生" },
+    { type: "info", label: "文艺委员" },
+    { type: "danger", label: "学生会主席" },
+    { type: "warning", label: "国家奖学金" }
   ];
+
+  const data: {
+    user: {
+      name: string;
+      phone: number;
+    };
+  } = reactive({
+    user: {
+      name: "asd",
+      phone: null
+    }
+  });
+
+  getUser().then(data => {
+    data["user"] = data;
+  });
 
   const columnsA = [
     {
@@ -16,10 +34,10 @@ export function useColumns() {
           <el-icon>
             <IconifyIconOffline icon="user" />
           </el-icon>
-          用户名
+          姓名
         </div>
       ),
-      value: "xiaoxian"
+      value: data.user.name
     },
     {
       labelRenderer: () => (
@@ -30,7 +48,7 @@ export function useColumns() {
           手机号
         </div>
       ),
-      value: "123456789"
+      value: data.user.phone
     },
     {
       labelRenderer: () => (

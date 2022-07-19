@@ -25,6 +25,11 @@ export const getWechatUrl = () => {
   return http.get("/wechat");
 };
 
+// 登录
+export const getUser = () => {
+  return http.get("/dgy/user");
+};
+
 // 刷新token
 export const refreshToken = (data: object): ResponseType => {
   return http.post("/refreshToken", { data });
