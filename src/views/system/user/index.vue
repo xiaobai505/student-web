@@ -121,19 +121,19 @@ const gridOptions = reactive({
         });
       },
       // body 对象： { insertRecords, updateRecords, removeRecords, pendingRecords }
-      save: ({ body }) => {
+      save: async ({ body }) => {
         if (body.insertRecords.length > 0) {
           console.log("新增:" + body.insertRecords);
-          saveUser(body.insertRecords);
+          await saveUser(body.insertRecords);
         }
         if (body.updateRecords.length > 0) {
           console.log("更新:" + body.insertRecords);
-          updateUser(body.updateRecords);
+          await updateUser(body.updateRecords);
         }
         if (body.removeRecords.length > 0 || body.pendingRecords.length > 0) {
           const array = [...body.removeRecords, ...body.pendingRecords];
           console.log("删除:" + array);
-          delUser(array);
+          await delUser(array);
         }
         return new Promise(resolve => {
           resolve({});
