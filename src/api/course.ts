@@ -1,4 +1,4 @@
-import {http} from "../utils/http";
+import { http } from "../utils/http";
 import qs from "qs";
 
 // 分页查询

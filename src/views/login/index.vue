@@ -16,7 +16,7 @@ import { useUserStoreHook } from "/@/store/modules/user";
 import { bg, avatar, currentWeek } from "./utils/static";
 import { ReImageVerify } from "/@/components/ReImageVerify";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { getToken, removeToken, setToken } from "/@/utils/auth";
+import { removeToken, setToken } from "/@/utils/auth";
 import { getLogin } from "/@/api/user";
 
 defineOptions({
@@ -42,27 +42,25 @@ const ruleForm = reactive({
 const onLogin = async (formEl: FormInstance | undefined) => {
   loading.value = true;
   if (!formEl) return;
-  await formEl.validate((valid, fields) => {
+  await formEl.validate(async (valid, fields) => {
     if (valid) {
       // 模拟请求，需根据实际开发进行修改
-      if (getToken()) {
-        removeToken();
-      }
+      removeToken();
       // 项目需要表单提交
       let userInfo = new window.FormData();
       userInfo.append("username", ruleForm.username);
       userInfo.append("password", ruleForm.password);
-      getLogin(userInfo).then(res => {
-        loading.value = false;
-        setToken(res.data);
-        storageSession.setItem("info", {
-          username: ruleForm.username,
-          accessToken: res.data
-        });
-        initRouter("admin").then(() => {});
-        message.success("登录成功");
-        router.push("/");
+      let { data } = await getLogin(userInfo);
+      loading.value = false;
+      setToken(data);
+      storageSession.setItem("info", {
+        username: ruleForm.username,
+        accessToken: data
       });
+      initRouter("admin").then(() => {
+        message.success("登录成功");
+      });
+      router.push("/");
     } else {
       loading.value = false;
       return fields;

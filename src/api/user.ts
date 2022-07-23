@@ -1,6 +1,7 @@
 import { http } from "../utils/http";
 
 interface ResponseType extends Promise<any> {
+  name?: string;
   data?: object;
   code?: number;
   msg?: string;
@@ -26,7 +27,7 @@ export const getWechatUrl = () => {
 };
 
 // 登录
-export const getUser = () => {
+export const getUser = (): ResponseType => {
   return http.get("/dgy/user");
 };
 

@@ -11,7 +11,7 @@ export function useColumns() {
     { type: "warning", label: "国家奖学金" }
   ];
 
-  const data: {
+  const data1: {
     user: {
       name: string;
       phone: number;
@@ -22,10 +22,8 @@ export function useColumns() {
       phone: null
     }
   });
-
-  getUser().then(data => {
-    data["user"] = data;
-  });
+  const { name } = getUser();
+  console.log(name);
 
   const columnsA = [
     {
@@ -34,10 +32,10 @@ export function useColumns() {
           <el-icon>
             <IconifyIconOffline icon="user" />
           </el-icon>
-          姓名
+          姓名1
         </div>
       ),
-      value: data.user.name
+      value: data1.user.name
     },
     {
       labelRenderer: () => (
@@ -48,7 +46,7 @@ export function useColumns() {
           手机号
         </div>
       ),
-      value: data.user.phone
+      value: data1.user.phone
     },
     {
       labelRenderer: () => (

@@ -14,6 +14,7 @@ import {
   type VxeTableEvents,
   type FormMethods
 } from "vxe-table";
+import { getDict } from "/@/api/dict";
 
 type onEditNRow = {
   name: string;
@@ -25,6 +26,8 @@ defineOptions({
 });
 
 const { t } = useI18n();
+
+getDict(null).then();
 
 const dictData = reactive({
   submitLoading: false,
