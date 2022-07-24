@@ -36,6 +36,7 @@ const gridOptions = reactive<VxeGridProps>({
     { title: "操作", width: 200, slots: { default: "operate" } }
   ],
   proxyConfig: {
+    form: true, // 启用表单代理
     seq: true, // 启用动态序号代理（分页之后索引自动计算为当前页的起始序号）
     props: {
       result: "records",
@@ -54,8 +55,7 @@ const openElective = () => {
   electiveCourse.flag = !electiveCourse.flag;
 };
 const saveRowEvent = async (row: any) => {
-  saveCourseUser(row);
-  console.log(row);
+  await saveCourseUser(row);
   openElective();
 };
 

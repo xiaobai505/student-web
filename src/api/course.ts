@@ -3,7 +3,9 @@ import qs from "qs";
 
 // 分页查询
 export const getCourse = (params: object) => {
-  const stringify = qs.stringify(params, { arrayFormat: "comma" });
+  const stringify = qs
+    .stringify(params, { arrayFormat: "comma" })
+    .replace("currentPage", "current");
   return http.get("/dgy/course?" + stringify);
 };
 

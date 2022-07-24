@@ -4,22 +4,19 @@ import { ref, reactive } from "vue";
 import { type Direction } from "element-plus";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { type VxeTableEvents, type VxeTableInstance } from "vxe-table";
+import { getDictConfig } from "/@/api/dictConfig";
 
 interface Props {
-  drawer: boolean;
   drawTitle?: string;
   direction?: Direction;
 }
 
 withDefaults(defineProps<Props>(), {
-  drawer: false,
-  drawTitle: "",
+  drawTitle: "字典列表",
   direction: "rtl"
 });
 
-const emit = defineEmits<{
-  (e: "handleClose"): void;
-}>();
+let drawer = ref(false);
 
 const { t } = useI18n();
 
@@ -28,12 +25,12 @@ const xTable = ref({} as VxeTableInstance);
 const configData = reactive({
   tableData: [
     {
-      name: "禁用",
-      dataval: "0"
+      dictDisplay: "禁用",
+      dictValue: "0"
     },
     {
-      name: "启用",
-      dataval: "1"
+      dictDisplay: "启用",
+      dictValue: "1"
     }
   ],
   isAllChecked: false,
@@ -46,11 +43,25 @@ const configData = reactive({
   }
 });
 
+async function getdata(id: number) {
+  drawer.value = !drawer.value;
+  console.log("id:", id);
+  await getDictConfig(id).then(data => {
+    configData.tableData = data;
+    console.log("data:", data);
+  });
+}
+
+// 使用defineExpose暴露inputVal和exposeFun
+defineExpose({
+  getdata
+});
+
 // 抽屉关闭
 function handleClose() {
   configData.isAllChecked = false;
   configData.isIndeterminate = false;
-  emit("handleClose");
+  drawer.value = !drawer.value;
 }
 
 function editConfig(row) {
@@ -99,8 +110,9 @@ const checkboxChangeEvent: VxeTableEvents.CheckboxChange = ({ records }) => {
           @checkbox-all="checkboxChangeEvent"
         >
           <vxe-table-column type="checkbox" width="60" />
-          <vxe-table-column field="name" title="名称" />
-          <vxe-table-column field="dataval" title="数据值" />
+          <vxe-table-column field="dictDisplay" title="名称" />
+          <vxe-table-column field="dictValue" title="数据值" />
+          <vxe-table-column field="remark" title="备注" />
           <vxe-table-column title="操作" fixed="right">
             <template #default="{ row }">
               <el-button
