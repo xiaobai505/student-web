@@ -32,10 +32,10 @@ export function useColumns() {
           <el-icon>
             <IconifyIconOffline icon="user" />
           </el-icon>
-          姓名1
+          用户名
         </div>
       ),
-      value: data1.user.name
+      value: "xiaoxian"
     },
     {
       labelRenderer: () => (
@@ -46,7 +46,7 @@ export function useColumns() {
           手机号
         </div>
       ),
-      value: data1.user.phone
+      value: "123456789"
     },
     {
       labelRenderer: () => (

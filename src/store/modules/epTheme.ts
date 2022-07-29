@@ -3,7 +3,6 @@ import { defineStore } from "pinia";
 import { getConfig } from "/@/config";
 import type { StorageConfigs } from "/#/index";
 import { storageLocal } from "@pureadmin/utils";
-import { removeToken } from "/@/utils/auth";
 
 export const useEpThemeStore = defineStore({
   id: "pure-epTheme",
@@ -36,7 +35,6 @@ export const useEpThemeStore = defineStore({
       this.epTheme = layout?.theme;
       this.epThemeColor = newColor;
       layout.epThemeColor = newColor;
-      removeToken();
       storageLocal.setItem("responsive-layout", layout);
     }
   }

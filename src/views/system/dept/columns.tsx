@@ -19,6 +19,7 @@ export function useColumns() {
     {
       label: "部门名称",
       prop: "name",
+      width: 180,
       align: "left"
     },
     {

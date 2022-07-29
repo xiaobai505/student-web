@@ -3,7 +3,7 @@ import { useColumns } from "./columns";
 import { handleTree } from "@pureadmin/utils";
 import { getDeptList } from "/@/api/system";
 import { FormInstance } from "element-plus";
-import { onMounted, reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { TableProBar } from "/@/components/ReTable";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 
@@ -36,10 +36,11 @@ function handleSelectionChange(val) {
 
 async function onSearch() {
   loading.value = true;
-  await getDeptList().then(data => {
+  let { data } = await getDeptList();
+  dataList.value = handleTree(data);
+  setTimeout(() => {
     loading.value = false;
-    dataList.value = handleTree(data);
-  });
+  }, 500);
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -59,7 +60,7 @@ onMounted(() => {
       ref="formRef"
       :inline="true"
       :model="form"
-      class="bg-white w-99/100 pl-8 pt-4"
+      class="bg-white dark:bg-dark w-99/100 pl-8 pt-4"
     >
       <el-form-item label="部门名称：" prop="user">
         <el-input v-model="form.user" placeholder="请输入部门名称" clearable />
@@ -109,7 +110,10 @@ onMounted(() => {
           :data="dataList"
           :columns="columns"
           :checkList="checkList"
-          :header-cell-style="{ background: '#fafafa', color: '#606266' }"
+          :header-cell-style="{
+            background: 'var(--el-table-row-hover-bg-color)',
+            color: 'var(--el-text-color-primary)'
+          }"
           @selection-change="handleSelectionChange"
         >
           <template #operation="{ row }">
