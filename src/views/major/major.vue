@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {reactive, ref} from "vue";
-import {VxeGridInstance, VxeGridProps, VXETable} from "vxe-table";
-import {delMajor, getMajor, saveMajor, updateMajor} from "/@/api/major";
+import { reactive, ref } from "vue";
+import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
+import { delMajor, getMajor, saveMajor, updateMajor } from "/@/api/major";
 
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive<VxeGridProps>({

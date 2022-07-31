@@ -2,9 +2,10 @@
 import { reactive, ref } from "vue";
 import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
 import { storageLocal } from "@pureadmin/utils";
-import { delUser, pageUser, roles, saveUser, updateUser } from "/@/api/system";
 import rowRoles from "/@/views/system/user/rowRoles.vue";
 import Tree from "/@/views/system/user/tree.vue";
+import { delUser, pageUser, saveUser, updateUser } from "/@/api/user";
+import {roles} from "/@/api/role";
 
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive({
@@ -242,9 +243,14 @@ const getRoles = () => {
 };
 const rolesList = ref<any>(getRoles());
 
-function handleClose(id) {
+const handleClose = async (id: number) => {
   console.log("CLOSED" + id);
-}
+  const $grid = xGrid.value;
+  if ($grid) {
+    await $grid.commitProxy("reload", "&userId=");
+    console.log("??");
+  }
+};
 </script>
 
 <template>

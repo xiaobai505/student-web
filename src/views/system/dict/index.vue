@@ -227,10 +227,6 @@ function onDeploy(value?: onEditNRow) {
   config.value?.getdata(value.id);
 }
 
-function handleClose() {
-  // drawer.value = false;
-}
-
 function onExpand() {
   xTree.value.setAllTreeExpand(true);
 }
@@ -384,7 +380,7 @@ function onHide() {
       </template>
     </vxe-modal>
 
-    <Config ref="config" @handleClose="handleClose" />
+    <Config ref="config" />
   </div>
 </template>
 

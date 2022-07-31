@@ -1,4 +1,5 @@
 import { http } from "../utils/http";
+import qs from "qs";
 
 interface ResponseType extends Promise<any> {
   name?: string;
@@ -6,36 +7,39 @@ interface ResponseType extends Promise<any> {
   code?: number;
   msg?: string;
 }
-// Role API接口
-export const roles = (data: object) => {
-  return http.get("/dgy/role/page", data);
-};
 
-// 获取验证码
-export const getVerify = (): ResponseType => {
-  return http.get("/captcha");
-};
-
-// 登录
-export const getLogin = (data: object): ResponseType => {
-  return http.post("/auth/login", { data });
-};
-
-// 登录
-export const getWechatUrl = () => {
-  return http.get("/wechat");
-};
-
-// 登录
+// 获取用户
 export const getUser = (): ResponseType => {
   return http.get("/dgy/user");
 };
 
-// 刷新token
-export const refreshToken = (data: object): ResponseType => {
-  return http.post("/refreshToken", { data });
+// 获取用户管理列表
+export const getUserList = (data?: object): ResponseType => {
+  return http.request("post", "/user", { data });
 };
 
-// export const searchVague = (data: object) => {
-//   return http.request("post", "/searchVague", { data });
-// };
+// 分页查询pageUser
+export const pageUser = (params: object) => {
+  const stringify = qs
+    .stringify(params, { arrayFormat: "comma" })
+    .replace("currentPage", "current");
+  return http.get("/dgy/user/page?" + stringify);
+};
+
+// 分页查询
+export const userPage = (data: object) => {
+  return http.post("/dgy/user/selectPage", { data });
+};
+
+// 保存用户
+export const saveUser = (data: object) => {
+  return http.post("/dgy/user", { data });
+};
+// 更新用户
+export const updateUser = (data: object) => {
+  return http.put("/dgy/user", { data });
+};
+// 删除用户
+export const delUser = (data: object) => {
+  return http.delete("/dgy/user", { data });
+};

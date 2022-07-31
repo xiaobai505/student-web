@@ -22,6 +22,7 @@ export function useColumns() {
       phone: null
     }
   });
+  console.log(data1.user);
   const { name } = getUser();
   console.log(name);
 

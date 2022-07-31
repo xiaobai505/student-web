@@ -18,7 +18,6 @@ import { bg, avatar, currentWeek } from "./utils/static";
 import { ReImageVerify } from "/@/components/ReImageVerify";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { removeToken, setToken } from "/@/utils/auth";
-import { getLogin } from "/@/api/user";
 import { useTranslationLang } from "/@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "/@/layout/hooks/useDataThemeChange";
 import { ref, reactive, watch, computed, getCurrentInstance } from "vue";
@@ -26,6 +25,7 @@ import { ref, reactive, watch, computed, getCurrentInstance } from "vue";
 import dayIcon from "/@/assets/svg/day.svg?component";
 import darkIcon from "/@/assets/svg/dark.svg?component";
 import globalization from "/@/assets/svg/globalization.svg?component";
+import { getLogin } from "/@/api/system";
 
 defineOptions({
   name: "Login"

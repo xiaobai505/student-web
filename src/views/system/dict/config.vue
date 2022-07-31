@@ -45,10 +45,8 @@ const configData = reactive({
 
 async function getdata(id: number) {
   drawer.value = !drawer.value;
-  console.log("id:", id);
   await getDictConfig(id).then(data => {
     configData.tableData = data;
-    console.log("data:", data);
   });
 }
 
@@ -61,7 +59,7 @@ defineExpose({
 function handleClose() {
   configData.isAllChecked = false;
   configData.isIndeterminate = false;
-  drawer.value = !drawer.value;
+  drawer.value = false;
 }
 
 function editConfig(row) {

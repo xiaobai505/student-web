@@ -4,10 +4,10 @@ import { userType } from "./types";
 import { router } from "/@/router";
 import { routerArrays } from "/@/layout/types";
 import { storageSession } from "@pureadmin/utils";
-import { getLogin, refreshToken } from "/@/api/user";
 import { getToken, setToken, removeToken } from "/@/utils/auth";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 import { StorageConfigs } from "/#/index";
+import { getLogin, refreshToken } from "/@/api/system";
 
 const data = storageSession.getItem<StorageConfigs>("info");
 const token = getToken();

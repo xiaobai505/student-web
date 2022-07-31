@@ -5,7 +5,7 @@ import { type FormInstance } from "element-plus";
 import { TableProBar } from "/@/components/ReTable";
 import { type PaginationProps } from "@pureadmin/table";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { roles } from "/@/api/user";
+import { roles } from "/@/api/role";
 
 defineOptions({
   name: "Role"
