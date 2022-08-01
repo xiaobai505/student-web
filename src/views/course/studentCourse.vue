@@ -69,8 +69,12 @@ const gridOptions = reactive<VxeGridProps>({
       title: "用户id"
     },
     {
-      field: "courseId",
-      title: "课程编号"
+      field: "courseName",
+      title: "课程名称"
+    },
+    {
+      field: "courseTeacher",
+      title: "授课老师"
     },
     {
       field: "bestScore",

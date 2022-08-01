@@ -12,6 +12,14 @@ const resultRouter = {
   },
   children: [
     {
+      path: "/result/page",
+      name: "result",
+      component: () => import("/@/views/result/result.vue"),
+      meta: {
+        title: $t("menus.hsResult")
+      }
+    },
+    {
       path: "/result/success",
       name: "Success",
       component: () => import("/@/views/result/success.vue"),
