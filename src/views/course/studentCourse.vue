@@ -106,9 +106,11 @@ const removeRowEvent = async (row: any) => {
   const $grid = xGrid.value;
   if (type === "confirm") {
     delCourseUser(row);
-    await $grid.remove(row);
+    await $grid.remove(row).then(res => {
+      $grid.commitProxy("reload");
+      console.log("删除", res);
+    });
   }
-  console.log("删除" + row.id);
 };
 
 // 父组件接收子组件暴露的方法，使用子组件的ref

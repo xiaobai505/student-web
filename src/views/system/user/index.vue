@@ -5,7 +5,7 @@ import { storageLocal } from "@pureadmin/utils";
 import rowRoles from "/@/views/system/user/rowRoles.vue";
 import Tree from "/@/views/system/user/tree.vue";
 import { delUser, pageUser, saveUser, updateUser } from "/@/api/user";
-import {roles} from "/@/api/role";
+import { roles } from "/@/api/role";
 
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive({
@@ -248,7 +248,6 @@ const handleClose = async (id: number) => {
   const $grid = xGrid.value;
   if ($grid) {
     await $grid.commitProxy("reload", "&userId=");
-    console.log("??");
   }
 };
 </script>
