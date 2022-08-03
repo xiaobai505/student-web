@@ -2,9 +2,10 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN yarn install
+RUN npm install pnpm -g
+RUN pnpm install
 COPY . .
-RUN yarn build
+RUN pnpm build
 
 # production stage
 FROM nginx:stable-alpine as production-stage
