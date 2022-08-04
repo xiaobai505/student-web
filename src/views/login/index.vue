@@ -70,11 +70,10 @@ const onLogin = async (formEl: FormInstance | undefined) => {
       setToken(data);
       storageSession.setItem("info", {
         username: ruleForm.username,
-        accessToken: data
+        accessToken: "eyJhbGciOiJIUzUxMiJ9.test"
       });
-      initRouter("admin").then(() => {
-        message.success("登录成功");
-      });
+      initRouter("admin").then(() => {});
+      message.success("登录成功");
       router.push("/");
     } else {
       loading.value = false;
