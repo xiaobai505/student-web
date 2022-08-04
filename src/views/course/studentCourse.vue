@@ -107,12 +107,18 @@ const removeRowEvent = async (row: any) => {
   if (type === "confirm") {
     await delCourseUser(row);
     await $grid.remove(row).then(res => {
-      $grid.commitProxy("reload");
       console.log("删除", res);
+      refresh();
     });
   }
 };
 
+const refresh = async () => {
+  const $grid = xGrid.value;
+  if ($grid) {
+    await $grid.commitProxy("reload");
+  }
+};
 // 父组件接收子组件暴露的方法，使用子组件的ref
 const electiveRef = ref<{ openElective(): void }>();
 // 使用子组件暴露的内容
@@ -123,7 +129,7 @@ const open = async () => {
 
 <template>
   <div id="course" class="common-layout">
-    <elective ref="electiveRef" />
+    <elective ref="electiveRef" @refresh="refresh" />
     <vxe-grid ref="xGrid" v-bind="gridOptions">
       <!--  查询菜单插槽    -->
       <template #studentName_item="{ data }">

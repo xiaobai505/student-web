@@ -29,7 +29,7 @@ let greetings = computed(() => {
 });
 
 const openDepot = (): void => {
-  window.open("https://github.com/xiaoxian521/vue-pure-admin");
+  window.open("https://www.baidu.com/");
 };
 </script>
 

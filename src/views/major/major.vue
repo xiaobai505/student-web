@@ -95,7 +95,7 @@ const gridOptions = reactive<VxeGridProps>({
     }
   },
   columns: [
-    { field: "id", title: "id" },
+    { field: "id", title: "id", width: 200 },
     {
       field: "school",
       title: "学校",

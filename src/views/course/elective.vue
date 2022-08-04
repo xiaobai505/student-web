@@ -4,10 +4,11 @@ import { getCourse } from "/@/api/course";
 import { VxeGridInstance, VxeGridProps } from "vxe-table";
 import { saveCourseUser } from "/@/api/courseUser";
 
-const xGrid = ref<VxeGridInstance>();
 const electiveCourse = reactive({
   flag: false
 });
+
+const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive<VxeGridProps>({
   border: true,
   height: 530,
@@ -52,15 +53,23 @@ const gridOptions = reactive<VxeGridProps>({
 });
 
 const openElective = async () => {
-  electiveCourse.flag = !electiveCourse.flag;
+  electiveCourse.flag = true;
+  refresh();
+};
+const refresh = async () => {
   const $grid = xGrid.value;
   if ($grid) {
     await $grid.commitProxy("reload");
   }
 };
+
+const emit = defineEmits<{ (e: "refresh") }>();
+
 const saveRowEvent = async (row: any) => {
   await saveCourseUser(row);
-  openElective();
+  electiveCourse.flag = false;
+  // 把id返回给父页面
+  emit("refresh");
 };
 
 // 使用defineExpose暴露inputVal和exposeFun
