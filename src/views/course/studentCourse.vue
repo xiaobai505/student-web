@@ -105,7 +105,7 @@ const removeRowEvent = async (row: any) => {
   const type = await VXETable.modal.confirm("选修课座位数紧张，您确定要放弃?");
   const $grid = xGrid.value;
   if (type === "confirm") {
-    delCourseUser(row);
+    await delCourseUser(row);
     await $grid.remove(row).then(res => {
       $grid.commitProxy("reload");
       console.log("删除", res);
@@ -116,8 +116,8 @@ const removeRowEvent = async (row: any) => {
 // 父组件接收子组件暴露的方法，使用子组件的ref
 const electiveRef = ref<{ openElective(): void }>();
 // 使用子组件暴露的内容
-const open = () => {
-  electiveRef.value?.openElective();
+const open = async () => {
+  await electiveRef.value?.openElective();
 };
 </script>
 

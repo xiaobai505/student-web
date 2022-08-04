@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { getCourse } from "/@/api/course";
-import { VxeGridProps } from "vxe-table";
+import { VxeGridInstance, VxeGridProps } from "vxe-table";
 import { saveCourseUser } from "/@/api/courseUser";
 
+const xGrid = ref<VxeGridInstance>();
 const electiveCourse = reactive({
   flag: false
 });
-
 const gridOptions = reactive<VxeGridProps>({
   border: true,
   height: 530,
@@ -51,8 +51,12 @@ const gridOptions = reactive<VxeGridProps>({
   }
 });
 
-const openElective = () => {
+const openElective = async () => {
   electiveCourse.flag = !electiveCourse.flag;
+  const $grid = xGrid.value;
+  if ($grid) {
+    await $grid.commitProxy("reload");
+  }
 };
 const saveRowEvent = async (row: any) => {
   await saveCourseUser(row);
@@ -68,7 +72,7 @@ defineExpose({
   <div>
     <vxe-modal v-model="electiveCourse.flag" width="1200">
       <template #default>
-        <vxe-grid v-bind="gridOptions">
+        <vxe-grid ref="xGrid" v-bind="gridOptions">
           <!-- 操作列 插槽   -->
           <template #operate="{ row }">
             <vxe-button
