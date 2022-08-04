@@ -247,11 +247,21 @@ const permission = {
   ]
 };
 
+// 添加不同按钮权限到/permission/button页面中
+function setDifAuthority(authority, routes) {
+  routes.children[1].meta.authority = [authority];
+  return routes;
+}
+
 // 初始化路由
 function initRouter(name: string) {
   return new Promise(resolve => {
     getAsyncRoutes({ name }).then(({ info }) => {
-      info = [tabs, iframe, system, permission];
+      if (name === "admin") {
+        info = [tabs, iframe, system, setDifAuthority("v-admin", permission)];
+      } else {
+        info = [tabs, setDifAuthority("v-test", permission)];
+      }
       if (info.length === 0) {
         usePermissionStoreHook().changeSetting(info);
       } else {
