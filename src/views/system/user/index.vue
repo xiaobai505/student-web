@@ -112,7 +112,8 @@ const gridOptions = reactive({
       // 接收 Promise
       query: ({ page, form }) => {
         // delete page.total;
-        return pageUser(Object.assign(page, form));
+        console.log(deptId);
+        return pageUser(Object.assign(page, form, { deptId: deptId.value }));
       },
       // body 对象： { removeRecords }
       delete: ({ body }) => {
@@ -243,11 +244,13 @@ const getRoles = () => {
 };
 const rolesList = ref<any>(getRoles());
 
+const deptId = ref<number>(101);
+
 const handleClose = async (id: number) => {
-  console.log("CLOSED" + id);
+  deptId.value = id;
   const $grid = xGrid.value;
   if ($grid) {
-    await $grid.commitProxy("reload", "&userId=");
+    await $grid.commitProxy("query", ["deptId", id]);
   }
 };
 </script>
