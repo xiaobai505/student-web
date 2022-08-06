@@ -112,7 +112,6 @@ const gridOptions = reactive({
       // 接收 Promise
       query: ({ page, form }) => {
         // delete page.total;
-        console.log(deptId);
         return pageUser(Object.assign(page, form, { deptId: deptId.value }));
       },
       // body 对象： { removeRecords }

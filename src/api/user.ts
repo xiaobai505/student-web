@@ -19,7 +19,7 @@ export const getUserList = (data?: object): ResponseType => {
 };
 
 // 分页查询pageUser
-export const pageUser = (params: object) => {
+export const pageUser = (params?: object) => {
   const stringify = qs
     .stringify(params, { arrayFormat: "comma" })
     .replace("currentPage", "current");

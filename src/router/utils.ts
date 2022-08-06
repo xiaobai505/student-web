@@ -256,7 +256,7 @@ function setDifAuthority(authority, routes) {
 // 初始化路由
 function initRouter(name: string) {
   return new Promise(resolve => {
-    getAsyncRoutes({ name }).then(({ info }) => {
+    getAsyncRoutes(name).then(({ info }) => {
       if (name === "admin") {
         info = [tabs, iframe, system, setDifAuthority("v-admin", permission)];
       } else {
