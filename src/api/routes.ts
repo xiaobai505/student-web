@@ -1,5 +1,11 @@
 import { http } from "../utils/http";
 
-export const getAsyncRoutes = (params?: string) => {
-  return http.request("get", "/routes/getAsyncRoutes/" + params);
+interface ResponseType extends Promise<any> {
+  data?: object;
+  code?: number;
+  msg?: string;
+}
+
+export const getAsyncRoutes = (params?: string): ResponseType => {
+  return http.get("/routes/getAsyncRoutes/" + params);
 };
