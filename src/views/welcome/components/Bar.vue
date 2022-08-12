@@ -37,7 +37,7 @@ setOptions(
           // width: "70",
           // overflow: "truncate"
         },
-        data: ["open_issues", "forks", "watchers", "star"]
+        data: ["计算机、互联网", "继续教育", "科研,研究院", "考公"]
       }
     ],
     yAxis: [
@@ -49,7 +49,7 @@ setOptions(
       {
         name: "GitHub信息",
         type: "bar",
-        data: [3, 204, 1079, 1079]
+        data: [543, 305, 143, 1079]
       }
     ]
   },

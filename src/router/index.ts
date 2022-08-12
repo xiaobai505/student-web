@@ -50,8 +50,8 @@ import courseRouter from "./modules/course";
 
 // 原始静态路由（未做任何处理）
 const routes = [
-  pptRouter,
   homeRouter,
+  pptRouter,
   ableRouter,
   listRouter,
   aboutRouter,

@@ -7,53 +7,53 @@ const scroll = templateRef<ElRef | null>("scroll", null);
 
 let listData = ref([
   {
-    date: "2021-09-01",
-    name: "vue-pure-admin",
+    date: "2022-07-25",
+    name: "北京邮电大学在贵州省长顺县举办“基于新一代的信息技术下的课堂教学模式”专题培训",
     star: "1000"
   },
   {
-    date: "2021-09-02",
-    name: "vue-pure-admin",
+    date: "2022-07-17",
+    name: "网络教育学院（继续教育学院）成功举办 中国留学服务中心/北京邮电大学 出国留学培训项目/英国高等教育文凭项目推介会",
     star: "1100"
   },
   {
-    date: "2021-09-03",
-    name: "vue-pure-admin",
+    date: "2022-07-17",
+    name: "网络教育学院（继续教育学院）举行 “贵州省长顺县教师有效课堂教学评估”专题培训开班仪式",
     star: "1200"
   },
   {
-    date: "2021-09-04",
-    name: "vue-pure-admin",
+    date: "2022-06-27",
+    name: "网络教育学院（继续教育学院）举行 中国留学服务中心/北京邮电大学出国留学项目 2022届学生毕业典礼",
     star: "1300"
   },
   {
-    date: "2021-09-05",
-    name: "vue-pure-admin",
+    date: "2022-04-27",
+    name: "网络教育学院（继续教育学院）参加2022中国留学教育论坛 亮相中国国际教育巡回展",
     star: "1400"
   },
   {
-    date: "2021-09-06",
-    name: "vue-pure-admin",
+    date: "2022-04-27",
+    name: "网络教育学院（继续教育学院）圆满完成2022年上半年自学考试网络答辩工作",
     star: "1500"
   },
   {
-    date: "2021-09-07",
-    name: "vue-pure-admin",
+    date: "2022-04-09",
+    name: "北京邮电大学2022年教育技术研究所硕士生招生调剂复试结果公示",
     star: "1600"
   },
   {
-    date: "2021-09-08",
-    name: "vue-pure-admin",
+    date: "2022-04-07",
+    name: "北京邮电大学2022年教育技术研究所硕士生招生调剂复试名单（一）",
     star: "1700"
   },
   {
-    date: "2021-09-09",
-    name: "vue-pure-admin",
+    date: "2022-03-31",
+    name: "北京邮电大学网络教育学院（教育技术研究所）2022年硕士研究生招生缺额信息公布",
     star: "1800"
   },
   {
-    date: "2021-09-10",
-    name: "vue-pure-admin",
+    date: "2022-03-30",
+    name: "网络教育学院一行到访国际学院交流调研",
     star: "1900"
   }
 ]);
@@ -66,9 +66,9 @@ let classOption = reactive({
 <template>
   <div class="infinite bg-[#fafafa] dark:bg-dark">
     <ul class="top">
-      <li>更新日期</li>
-      <li>项目名称</li>
-      <li>Star数量</li>
+      <li>发布日期</li>
+      <li>学校新闻</li>
+      <li>阅读次数</li>
     </ul>
     <SeamlessScroll
       ref="scroll"

@@ -132,7 +132,7 @@ const openDepot = (): void => {
         <el-card>
           <template #header>
             <span style="font-size: 16px; font-weight: 500">
-              GitHub饼图信息
+              学院教师情况展示
             </span>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
@@ -166,7 +166,7 @@ const openDepot = (): void => {
         <el-card>
           <template #header>
             <span style="font-size: 16px; font-weight: 500">
-              GitHub折线图信息
+              学生考研人数增长趋势图
             </span>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
@@ -200,7 +200,7 @@ const openDepot = (): void => {
         <el-card>
           <template #header>
             <span style="font-size: 16px; font-weight: 500">
-              GitHub柱状图信息
+              毕业生就业分布图
             </span>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">

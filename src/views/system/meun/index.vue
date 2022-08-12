@@ -32,6 +32,18 @@ const onQueryChanged = (query: string) => {
 const filterMethod = (query: string, node: treeNode) => {
   return transformI18n(node.meta.title)!.indexOf(query) !== -1;
 };
+
+const getCheckedNodes = () => {
+  let nodes = (treeRef as any).value!.getCheckedNodes(false);
+  console.log(nodes);
+};
+const getCheckedKeys = () => {
+  let nodes = (treeRef as any).value!.getCheckedKeys(false);
+  console.log(nodes);
+};
+const resetChecked = () => {
+  (treeRef as any).value!.setCheckedKeys([]);
+};
 </script>
 
 <template>
@@ -48,6 +60,11 @@ const filterMethod = (query: string, node: treeNode) => {
       clearable
       @input="onQueryChanged"
     />
+    <div class="buttons">
+      <el-button @click="getCheckedNodes">get by node</el-button>
+      <el-button @click="getCheckedKeys">get by key</el-button>
+      <el-button @click="resetChecked">重置</el-button>
+    </div>
     <el-tree-v2
       ref="treeRef"
       :data="menusData"

@@ -25,15 +25,15 @@ setOptions(
     },
     series: [
       {
-        name: "Github信息",
+        name: "学院教师情况",
         type: "pie",
         radius: "60%",
         center: ["40%", "50%"],
         data: [
-          { value: 1079, name: "watchers" },
-          { value: 1079, name: "star" },
-          { value: 204, name: "forks" },
-          { value: 3, name: "open_issues" }
+          { value: 643, name: "教授" },
+          { value: 832, name: "博士" },
+          { value: 1254, name: "研究生" },
+          { value: 15, name: "外聘国外教授" }
         ],
         emphasis: {
           itemStyle: {

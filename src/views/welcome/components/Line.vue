@@ -28,14 +28,14 @@ setOptions(
       axisLabel: {
         interval: 0
       },
-      data: ["open_issues", "forks", "watchers", "star"]
+      data: ["2019年", "2020年", "2021年", "2022年"]
     },
     yAxis: {
       type: "value"
     },
     series: [
       {
-        data: [3, 204, 1079, 1079],
+        data: [3, 204, 400, 1079],
         type: "line",
         areaStyle: {}
       }

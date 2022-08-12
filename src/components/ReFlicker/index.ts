@@ -32,7 +32,7 @@ export function useRenderFlicker(attrs?: attrsType): Component {
             "--point-background":
               attrs?.background ?? "var(--el-color-primary)",
             "--point-border-radius": attrs?.borderRadius ?? "50%",
-            "--point-scale": attrs?.scale ?? "2"
+            "--point-scale": attrs?.scale ?? "4"
           }
         },
         {
