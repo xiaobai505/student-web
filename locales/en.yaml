@@ -26,6 +26,7 @@ menus:
   hsDict: Dict Manage
   hsRole: Role Manage
   hsDept: Dept Manage
+  hsMeun: Meun Manage
   hseditor: Editor
   hserror: Error Page
   hsfourZeroFour: "404"
