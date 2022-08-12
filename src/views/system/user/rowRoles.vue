@@ -11,17 +11,8 @@ interface Option {
   disabled: boolean;
 }
 
-const generateData = () => {
-  const list: Option[] = [];
-  const rolesList = storageLocal.getItem("rolesList") || [];
-  for (let i = 0; i < rolesList.length; i++) {
-    list.push({
-      id: rolesList[i].id,
-      roleName: rolesList[i].roleName,
-      disabled: false
-    });
-  }
-  return list;
+const generateData = (): Option[] => {
+  return storageLocal.getItem("rolesList");
 };
 
 const rowRoles = reactive({

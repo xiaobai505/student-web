@@ -5,6 +5,7 @@ interface ResponseType extends Promise<any> {
   data?: object;
   code?: number;
   msg?: string;
+  records?: Array<object>;
 }
 
 // Role API接口
@@ -13,8 +14,8 @@ export const roles = (data: object): ResponseType => {
 };
 
 // 获取角色管理列表
-export const getRoleList = (data?: object): ResponseType => {
-  return http.request("post", "/role", { data });
+export const getRoleList = (): ResponseType => {
+  return http.get("/dgy/role");
 };
 
 // user API接口

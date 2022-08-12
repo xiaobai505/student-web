@@ -235,9 +235,8 @@ const getRoles = () => {
   if (rolesList !== null) {
     return rolesList;
   }
-  const promise = roles(null);
-  promise.then(array => {
-    storageLocal.setItem("rolesList", array);
+  roles(null).then(res => {
+    storageLocal.setItem("rolesList", res.records);
     getRoles();
   });
 };
