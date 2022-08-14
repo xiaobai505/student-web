@@ -257,7 +257,7 @@ const handleClose = async (id: number) => {
   <div class="main flex">
     <tree @handleClose="handleClose" />
     <div class="flex-1 ml-4">
-      <rowRoles ref="rolesRef" />
+      <rowRoles ref="rolesRef" @handleClose="handleClose" />
       <vxe-grid ref="xGrid" v-bind="gridOptions">
         <!--  查询条件  -->
         <template #name_item="{ data }">

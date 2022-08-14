@@ -36,10 +36,10 @@ export function useColumns() {
       cellRenderer: ({ row, props }) => (
         <el-tag
           size={props.size}
-          type={row.type === 1 ? "danger" : ""}
+          type={row.roleType === "1" ? "danger" : ""}
           effect="plain"
         >
-          {row.type === 1 ? "内置" : "自定义"}
+          {row.roleType === "1" ? "内置" : "自定义"}
         </el-tag>
       )
     },
@@ -84,7 +84,7 @@ export function useColumns() {
       `确认要<strong>${
         row.status === 0 ? "停用" : "启用"
       }</strong><strong style='color:var(--el-color-primary)'>${
-        row.name
+        row.roleName
       }</strong>角色吗?`,
       "系统提示",
       {

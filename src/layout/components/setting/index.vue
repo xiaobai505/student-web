@@ -27,6 +27,7 @@ import { toggleTheme } from "@pureadmin/theme/dist/browser-utils";
 
 import dayIcon from "/@/assets/svg/day.svg?component";
 import darkIcon from "/@/assets/svg/dark.svg?component";
+import { removeToken } from "/@/utils/auth";
 
 const router = useRouter();
 const { isDark } = useDark();
@@ -137,6 +138,7 @@ function onReset() {
   useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
   storageLocal.clear();
   storageSession.clear();
+  removeToken();
 }
 
 function onChange(label) {

@@ -37,10 +37,15 @@ const exposeFun = (id: number) => {
 defineExpose({
   exposeFun
 });
+
+const emit = defineEmits<{ (e: "handleClose", v: number) }>();
+
 // 保存用户权限
 const submit = () => {
   setRolesById(rowRoles.id, rowRoles.data).then(() => {
     rowRoles.flag = false;
+    // 把id返回给父页面
+    emit("handleClose", null);
   });
 };
 </script>
