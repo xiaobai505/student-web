@@ -9,3 +9,7 @@ interface ResponseType extends Promise<any> {
 export const getAsyncRoutes = (params?: string): ResponseType => {
   return http.get("/routes/getAsyncRoutes/" + params);
 };
+
+export const getRoutes = (): ResponseType => {
+  return http.get("/routes");
+};
