@@ -332,6 +332,7 @@ function onHide() {
           </el-button>
           <el-button
             link
+            v-show="row.parentId == '0'"
             type="primary"
             :icon="useRenderIcon('fa:plus-square-o', { online: true })"
             @click="onAddChild(row)"
@@ -339,7 +340,7 @@ function onHide() {
             新增子类型
           </el-button>
           <el-button
-            v-show="row.model"
+            v-show="row.parentId != '0'"
             link
             type="primary"
             :icon="useRenderIcon('fa:cog', { online: true })"
