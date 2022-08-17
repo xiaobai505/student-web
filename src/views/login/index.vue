@@ -8,11 +8,12 @@ import qrCode from "./components/qrCode.vue";
 import regist from "./components/regist.vue";
 import update from "./components/update.vue";
 import { initRouter } from "/@/router/utils";
-import { useNav } from "/@/layout/hooks/nav";
+import { useNav } from "/@/layout/hooks/useNav";
 import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
 import { storageSession } from "@pureadmin/utils";
 import { $t, transformI18n } from "/@/plugins/i18n";
+import { ref, reactive, watch, computed } from "vue";
 import { operates, thirdParty } from "./utils/enums";
 import { useLayout } from "/@/layout/hooks/useLayout";
 import { useUserStoreHook } from "/@/store/modules/user";
@@ -22,7 +23,6 @@ import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { removeToken, setToken } from "/@/utils/auth";
 import { useTranslationLang } from "/@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "/@/layout/hooks/useDataThemeChange";
-import { ref, reactive, watch, computed, getCurrentInstance } from "vue";
 
 import dayIcon from "/@/assets/svg/day.svg?component";
 import darkIcon from "/@/assets/svg/dark.svg?component";
@@ -32,8 +32,6 @@ import { getLogin } from "/@/api/system";
 defineOptions({
   name: "Login"
 });
-const title =
-  getCurrentInstance().appContext.config.globalProperties.$config?.Title;
 const imgCode = ref("");
 const router = useRouter();
 const loading = ref(false);
@@ -48,7 +46,7 @@ initStorage();
 
 const { t } = useI18n();
 const { dataTheme, dataThemeChange } = useDataThemeChange();
-const { getDropdownItemStyle, getDropdownItemClass } = useNav();
+const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
 const { locale, translationCh, translationEn } = useTranslationLang();
 
 const ruleForm = reactive({
