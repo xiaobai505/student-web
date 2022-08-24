@@ -110,6 +110,7 @@ export function resetRouter() {
       );
     }
   });
+  usePermissionStoreHook().clearAllCachePage();
 }
 
 // 路由白名单
