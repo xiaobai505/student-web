@@ -7,13 +7,13 @@ import {
   RouteRecordNormalized
 } from "vue-router";
 import { router } from "./index";
+import { isProxy, toRaw } from "vue";
 import { loadEnv } from "../../build";
 import { cloneDeep } from "lodash-unified";
 import { useTimeoutFn } from "@vueuse/core";
 import { RouteConfigs } from "/@/layout/types";
 import { buildHierarchyTree } from "@pureadmin/utils";
 import { usePermissionStoreHook } from "/@/store/modules/permission";
-const Layout = () => import("/@/layout/index.vue");
 const IFrame = () => import("/@/layout/frameView.vue");
 // https://cn.vitejs.dev/guide/features.html#glob-import
 const modulesRoutes = import.meta.glob("/src/views/**/*.{vue,tsx}");
@@ -87,7 +87,7 @@ function getParentPaths(path: string, routes: RouteRecordRaw[]) {
 function findRouteByPath(path: string, routes: RouteRecordRaw[]) {
   let res = routes.find((item: { path: string }) => item.path == path);
   if (res) {
-    return res;
+    return isProxy(res) ? toRaw(res) : res;
   } else {
     for (let i = 0; i < routes.length; i++) {
       if (
@@ -96,7 +96,7 @@ function findRouteByPath(path: string, routes: RouteRecordRaw[]) {
       ) {
         res = findRouteByPath(path, routes[i].children);
         if (res) {
-          return res;
+          return isProxy(res) ? toRaw(res) : res;
         }
       }
     }
@@ -104,14 +104,14 @@ function findRouteByPath(path: string, routes: RouteRecordRaw[]) {
   }
 }
 
-// 重置路由
-function resetRouter(): void {
-  router.getRoutes().forEach(route => {
-    const { name } = route;
-    if (name) {
-      router.hasRoute(name) && router.removeRoute(name);
-    }
-  });
+function addPathMatch() {
+  if (!router.hasRoute("pathMatch")) {
+    router.addRoute({
+      path: "/:pathMatch(.*)",
+      name: "pathMatch",
+      redirect: "/error/404"
+    });
+  }
 }
 
 // 初始化路由
@@ -146,10 +146,7 @@ function initRouter(name: string) {
         );
         usePermissionStoreHook().changeSetting(data);
       }
-      router.addRoute({
-        path: "/:pathMatch(.*)",
-        redirect: "/error/404"
-      });
+      addPathMatch();
     });
   });
 }
@@ -230,18 +227,24 @@ function addAsyncRoutes(arrRoutes: Array<RouteRecordRaw>) {
   if (!arrRoutes || !arrRoutes.length) return;
   const modulesRoutesKeys = Object.keys(modulesRoutes);
   arrRoutes.forEach((v: RouteRecordRaw) => {
-    if (v.redirect) {
-      v.component = Layout;
-    } else if (v.meta?.frameSrc) {
+    // 将backstage属性加入meta，标识此路由为后端返回路由
+    v.meta.backstage = true;
+    // 父级的redirect属性取值：如果子级存在且父级的redirect属性不存在，默认取第一个子级的path；如果子级存在且父级的redirect属性存在，取存在的redirect属性，会覆盖默认值
+    if (v?.children && v.children.length && !v.redirect)
+      v.redirect = v.children[0].path;
+    // 父级的name属性取值：如果子级存在且父级的name属性不存在，默认取第一个子级的name；如果子级存在且父级的name属性存在，取存在的name属性，会覆盖默认值
+    if (v?.children && v.children.length && !v.name)
+      v.name = v.children[0].name;
+    if (v.meta?.frameSrc) {
       v.component = IFrame;
     } else {
-      // 对后端传component组件路径和不传做兼容（如果后端传component组件路径，那么path可以随便写，如果不传，component组件路径会根path保持一致）
+      // 对后端传component组件路径和不传做兼容（如果后端传component组件路径，那么path可以随便写，如果不传，component组件路径会跟path保持一致）
       const index = v?.component
         ? modulesRoutesKeys.findIndex(ev => ev.includes(v.component as any))
         : modulesRoutesKeys.findIndex(ev => ev.includes(v.path));
       v.component = modulesRoutes[modulesRoutesKeys[index]];
     }
-    if (v.children) {
+    if (v?.children && v.children.length) {
       addAsyncRoutes(v.children);
     }
   });
@@ -295,7 +298,6 @@ export {
   ascending,
   filterTree,
   initRouter,
-  resetRouter,
   hasPermissions,
   getHistoryMode,
   addAsyncRoutes,

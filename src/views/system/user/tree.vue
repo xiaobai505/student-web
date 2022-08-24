@@ -67,7 +67,7 @@ watch(searchValue, val => {
 
 onMounted(async () => {
   await getDeptList().then(data => {
-    treeData.value = handleTree(data);
+    treeData.value = handleTree(data as any);
   });
   // let { data } = await getDeptList();
   // console.log("data:" + data);

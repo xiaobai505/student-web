@@ -4,7 +4,6 @@ import { MockMethod } from "vite-plugin-mock";
 // http://mockjs.com/examples.html#Object
 const systemRouter = {
   path: "/system",
-  redirect: "/system/user/index",
   meta: {
     icon: "setting",
     title: "menus.hssysManagement",
@@ -50,7 +49,6 @@ const systemRouter = {
 
 const permissionRouter = {
   path: "/permission",
-  redirect: "/permission/page/index",
   meta: {
     title: "menus.permission",
     icon: "lollipop",
@@ -77,7 +75,6 @@ const permissionRouter = {
 
 const frameRouter = {
   path: "/iframe",
-  redirect: "/iframe/pure",
   meta: {
     icon: "monitor",
     title: "menus.hsExternalPage",
@@ -112,7 +109,6 @@ const frameRouter = {
 
 const tabsRouter = {
   path: "/tabs",
-  redirect: "/tabs/index",
   meta: {
     icon: "IF-team-icontabs",
     title: "menus.hstabs",
@@ -127,13 +123,19 @@ const tabsRouter = {
       }
     },
     {
-      path: "/tabs/detail",
-      name: "TabDetail",
+      path: "/tabs/query-detail",
+      name: "TabQueryDetail",
       meta: {
-        title: "",
-        showLink: false,
-        dynamicLevel: 3,
-        refreshRedirect: "/tabs/index"
+        // 不在menu菜单中显示
+        showLink: false
+      }
+    },
+    {
+      path: "/tabs/params-detail/:id",
+      component: "params-detail",
+      name: "TabParamsDetail",
+      meta: {
+        showLink: false
       }
     }
   ]

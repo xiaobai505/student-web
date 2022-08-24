@@ -12,6 +12,7 @@ import { getConfig } from "/@/config";
 import { useRouter } from "vue-router";
 import panel from "../panel/index.vue";
 import { emitter } from "/@/utils/mitt";
+import { resetRouter } from "/@/router";
 import { templateRef } from "@vueuse/core";
 import { routerArrays } from "/@/layout/types";
 import { useNav } from "/@/layout/hooks/useNav";
@@ -141,6 +142,7 @@ function onReset() {
   useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
   storageLocal.clear();
   storageSession.clear();
+  resetRouter();
   removeToken();
 }
 
@@ -211,8 +213,9 @@ function setLayoutModel(layout: string) {
   $storage.layout = {
     layout,
     theme: layoutTheme.value.theme,
-    darkMode: $storage.layout.darkMode,
-    sidebarStatus: $storage.layout.sidebarStatus
+    darkMode: $storage.layout?.darkMode,
+    sidebarStatus: $storage.layout?.sidebarStatus,
+    epThemeColor: $storage.layout?.epThemeColor
   };
   useAppStoreHook().setLayout(layout);
 }

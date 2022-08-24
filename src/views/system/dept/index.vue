@@ -37,7 +37,7 @@ const onSearch = async () => {
   loading.value = true;
   // let { data } = await getDeptList();
   getDeptList().then(data => {
-    dataList.value = handleTree(data);
+    dataList.value = handleTree(data as any);
     loading.value = false;
   });
 };
