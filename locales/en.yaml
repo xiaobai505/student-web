@@ -87,6 +87,7 @@ menus:
   hsVirtualList: Virtual List
   hsPdf: PDF Preview
   hsExecl: Export Excel
+  hsInfiniteScroll: Table Infinite Scroll
   hsMajor: Major
   hsCourse: Course
   hsStudentCourse: Student Add Course
