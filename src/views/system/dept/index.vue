@@ -6,6 +6,7 @@ import { reactive, ref, onMounted } from "vue";
 import { TableProBar } from "/@/components/ReTable";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { getDeptList } from "/@/api/dept";
+import Dept from "/@/views/system/dept/dept.vue";
 
 defineOptions({
   name: "Dept"
@@ -23,7 +24,8 @@ const formRef = ref<FormInstance>();
 const tableRef = ref();
 
 function handleUpdate(row) {
-  console.log(row);
+  // 使用子组件暴露的内容
+  deptRef.value?.showDept(row);
 }
 
 function handleDelete(row) {
@@ -47,6 +49,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields();
   onSearch();
 };
+
+// 父组件接收子组件暴露的方法，使用子组件的ref
+const deptRef = ref<{ showDept(id: any): void }>();
 
 onMounted(() => {
   onSearch();
@@ -144,5 +149,6 @@ onMounted(() => {
         </PureTable>
       </template>
     </TableProBar>
+    <dept ref="deptRef" />
   </div>
 </template>
