@@ -17,7 +17,9 @@ vue-pure-admin 是一个免费开源的中后台模版。使用了最新的`vue3
 
 ## 配套文档
 
-- [点我查看文档](https://pure-admin-doc.vercel.app)
+- [点我查看国内文档站](http://yiming_chang.gitee.io/pure-admin-doc)
+- [点我查看国外文档站 1](https://xiaoxian521.github.io/pure-admin-doc)
+- [点我查看国外文档站 2](https://pure-admin-doc.vercel.app)
 
 ## 精简版
 
@@ -29,7 +31,9 @@ vue-pure-admin 是一个免费开源的中后台模版。使用了最新的`vue3
 
 ## 预览
 
-- [vue-pure-admin](https://vue-pure-admin.vercel.app)
+- [点我查看国内预览站](http://yiming_chang.gitee.io/vue-pure-admin)
+- [点我查看国外预览站 1](https://xiaoxian521.github.io/vue-pure-admin)
+- [点我查看国外预览站 2](https://vue-pure-admin.vercel.app)
 
 - PC 端
 <p align="center">
@@ -141,7 +145,7 @@ pnpm build
 
 一群已满，下面是二群，群里严禁`黄`、`赌`、`毒`、`vpn`等违法行为！
 
-<img src="https://pure-admin-doc.vercel.app/img/support/qq.png" width="150px" height="225px" />
+<img src="http://yiming_chang.gitee.io/pure-admin-doc/img/support/qq.png" width="150px" height="225px" />
 
 ## 许可证
 
