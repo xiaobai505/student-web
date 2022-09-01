@@ -51,7 +51,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
 };
 
 // 父组件接收子组件暴露的方法，使用子组件的ref
-const deptRef = ref<{ showDept(id: any): void }>();
+const deptRef = ref<{ showDept(row: any): void }>();
 
 onMounted(() => {
   onSearch();
