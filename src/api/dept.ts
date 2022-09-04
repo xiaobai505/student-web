@@ -14,3 +14,8 @@ export const getDeptList = (params?: object): ResponseType => {
 export const saveDept = (data: object) => {
   return http.post("/dgy/dept", { data });
 };
+
+// 删除
+export const delDept = (id: number): ResponseType => {
+  return http.delete("/dgy/dept/" + id);
+};

@@ -12,9 +12,7 @@ const dialog = reactive({
   // 是否显示弹出层
   open: false,
   // 表单参数
-  form: {
-    parentId: null
-  },
+  form: {},
   // 表单校验
   rules: {
     parentId: [
@@ -30,7 +28,7 @@ const dialog = reactive({
         required: true,
         type: "email",
         message: "请输入正确的邮箱地址",
-        trigger: ["blur", "change"]
+        trigger: ["blur"]
       }
     ],
     phone: [
@@ -43,24 +41,7 @@ const dialog = reactive({
     ]
   },
   // 部门树选项
-  deptOptions: [
-    {
-      value: "1",
-      label: "Level one 1",
-      children: [
-        {
-          value: "1-1",
-          label: "Level two 1-1",
-          children: [
-            {
-              value: "1-1-1",
-              label: "Level three 1-1-1"
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  deptOptions: [],
   // 用户列表选择
   userOptions: []
 });
@@ -68,7 +49,8 @@ const dialog = reactive({
 // 重置表单
 const reset = () => {
   dialog.title = "修改";
-  dialog.form = { parentId: null };
+  dialog.form = [];
+  dialog.form["status"] = 0;
   dialog.userOptions = [];
 };
 

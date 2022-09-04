@@ -5,7 +5,7 @@ import { FormInstance } from "element-plus";
 import { reactive, ref, onMounted } from "vue";
 import { TableProBar } from "/@/components/ReTable";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { getDeptList } from "/@/api/dept";
+import { delDept, getDeptList } from "/@/api/dept";
 import Dept from "/@/views/system/dept/dept.vue";
 
 defineOptions({
@@ -30,7 +30,10 @@ function handleUpdate(row) {
 }
 
 function handleDelete(row) {
-  console.log(row);
+  delDept(row["id"]).then(res => {
+    console.log(res);
+    onSearch();
+  });
 }
 
 function handleSelectionChange(val) {
@@ -38,7 +41,7 @@ function handleSelectionChange(val) {
 }
 const onSearch = async () => {
   loading.value = true;
-  getDeptList(form).then(data => {
+  await getDeptList(form).then(data => {
     dataList.value = handleTree(data as any);
     loading.value = false;
   });
