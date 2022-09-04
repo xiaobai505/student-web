@@ -1,5 +1,8 @@
 import { http } from "../utils/http";
-import qs from "qs";
+// import qs from "qs";
+// const stringify = qs
+//     .stringify(params, { arrayFormat: "comma" })
+//     .replace("currentPage", "current");
 
 interface ResponseType extends Promise<any> {
   name?: string;
@@ -13,17 +16,9 @@ export const getUser = (): ResponseType => {
   return http.get("/dgy/user");
 };
 
-// 获取用户管理列表
-export const getUserList = (data?: object): ResponseType => {
-  return http.request("post", "/user", { data });
-};
-
 // 分页查询pageUser
 export const pageUser = (params?: object) => {
-  const stringify = qs
-    .stringify(params, { arrayFormat: "comma" })
-    .replace("currentPage", "current");
-  return http.get("/dgy/user/page?" + stringify);
+  return http.get("/dgy/user/page", { params });
 };
 
 // 分页查询

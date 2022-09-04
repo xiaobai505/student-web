@@ -111,8 +111,12 @@ const gridOptions = reactive({
     ajax: {
       // 接收 Promise
       query: ({ page, form }) => {
-        // delete page.total;
-        return pageUser(Object.assign(page, form, { deptId: deptId.value }));
+        const params = Object.assign(page, form, {
+          deptId: deptId.value,
+          current: page.currentPage
+        });
+        delete params.currentPage;
+        return pageUser(params);
       },
       // body 对象： { removeRecords }
       delete: ({ body }) => {
@@ -319,7 +323,7 @@ const handleClose = async (id: number) => {
               status="success"
               title="锁定"
               circle
-              @click="saveRowEvent(row)"
+              @click="saveRowEvent"
             />
             <vxe-button
               icon="vxe-icon--close"

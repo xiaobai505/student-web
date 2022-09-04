@@ -50,6 +50,11 @@ const resetForm = (formEl: FormInstance | undefined) => {
   onSearch();
 };
 
+const addDept = () => {
+  // 使用子组件暴露的内容
+  deptRef.value?.showDept(null);
+};
+
 // 父组件接收子组件暴露的方法，使用子组件的ref
 const deptRef = ref<{ showDept(row: any): void }>();
 
@@ -98,7 +103,11 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button type="primary" :icon="useRenderIcon('add')">
+        <el-button
+          type="primary"
+          :icon="useRenderIcon('add')"
+          @click="addDept()"
+        >
           新增部门
         </el-button>
       </template>
@@ -134,6 +143,7 @@ onMounted(() => {
             <el-popconfirm title="是否确认删除?">
               <template #reference>
                 <el-button
+                  v-if="row.parentId !== 0"
                   class="reset-margin"
                   link
                   type="primary"
@@ -149,6 +159,6 @@ onMounted(() => {
         </PureTable>
       </template>
     </TableProBar>
-    <dept ref="deptRef" />
+    <dept ref="deptRef" @onSearch="onSearch" />
   </div>
 </template>

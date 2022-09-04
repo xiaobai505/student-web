@@ -1,5 +1,4 @@
 import { http } from "/@/utils/http";
-import qs from "qs";
 
 interface ResponseType extends Promise<any> {
   data?: Array<object>;
@@ -7,7 +6,11 @@ interface ResponseType extends Promise<any> {
   msg?: string;
 }
 // 获取部门管理列表
-export const getDeptList = (data?: object): ResponseType => {
-  const stringify = qs.stringify(data, { arrayFormat: "comma" });
-  return http.get("/dgy/dept?" + stringify);
+export const getDeptList = (params?: object): ResponseType => {
+  return http.get("dgy/dept", { params });
+};
+
+// 保存部门
+export const saveDept = (data: object) => {
+  return http.post("/dgy/dept", { data });
 };

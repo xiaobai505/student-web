@@ -30,27 +30,42 @@ export function useColumns() {
     {
       label: "状态",
       prop: "status",
-      width: 80,
+      width: 100,
       cellRenderer: ({ row, props }) => (
         <el-tag
           size={props.size}
           type={row.status === 1 ? "danger" : "success"}
           effect="plain"
         >
-          {row.status === 0 ? "关闭" : "开启"}
+          {row.status === 0 ? "开启" : "关闭"}
         </el-tag>
       )
     },
     {
-      label: "创建时间",
-      width: 180,
-      prop: "createTime",
-      formatter: ({ createTime }) =>
-        dayjs(createTime).format("YYYY-MM-DD HH:mm:ss")
+      label: "负责人",
+      width: 100,
+      prop: "leader"
+    },
+    {
+      label: "负责人电话",
+      width: 120,
+      prop: "phone"
+    },
+    {
+      label: "负责人邮箱",
+      width: 120,
+      prop: "email"
     },
     {
       label: "备注",
       prop: "remark"
+    },
+    {
+      label: "创建时间",
+      width: 180,
+      prop: "email",
+      formatter: ({ createTime }) =>
+        dayjs(createTime).format("YYYY-MM-DD HH:mm:ss")
     },
     {
       label: "操作",

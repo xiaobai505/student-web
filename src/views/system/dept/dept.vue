@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { getDeptList } from "/@/api/dept";
+import { getDeptList, saveDept } from "/@/api/dept";
 import { cloneDeep } from "lodash-unified";
+import { pageUser } from "/@/api/user";
 
 const dialog = reactive({
   // 弹出层标题
   title: "新增部门",
+  // 加载显示
+  loading: false,
   // 是否显示弹出层
   open: false,
   // 表单参数
   form: {
-    parentId: 0
+    parentId: null
   },
   // 表单校验
   rules: {
@@ -19,8 +22,12 @@ const dialog = reactive({
     ],
     name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
     sort: [{ required: true, message: "显示排序不能为空", trigger: "blur" }],
+    leaderuserid: [
+      { required: true, message: "负责人不能为空", trigger: "blur" }
+    ],
     email: [
       {
+        required: true,
         type: "email",
         message: "请输入正确的邮箱地址",
         trigger: ["blur", "change"]
@@ -28,6 +35,7 @@ const dialog = reactive({
     ],
     phone: [
       {
+        required: true,
         pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
         message: "请输入正确的手机号码",
         trigger: "blur"
@@ -51,67 +59,26 @@ const dialog = reactive({
           ]
         }
       ]
-    },
-    {
-      value: "2",
-      label: "Level one 2",
-      children: [
-        {
-          value: "2-1",
-          label: "Level two 2-1",
-          children: [
-            {
-              value: "2-1-1",
-              label: "Level three 2-1-1"
-            }
-          ]
-        },
-        {
-          value: "2-2",
-          label: "Level two 2-2",
-          children: [
-            {
-              value: "2-2-1",
-              label: "Level three 2-2-1"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      value: "3",
-      label: "Level one 3",
-      children: [
-        {
-          value: "3-1",
-          label: "Level two 3-1",
-          children: [
-            {
-              value: "3-1-1",
-              label: "Level three 3-1-1"
-            }
-          ]
-        },
-        {
-          value: "3-2",
-          label: "Level two 3-2",
-          children: [
-            {
-              value: "3-2-1",
-              label: "Level three 3-2-1"
-            }
-          ]
-        }
-      ]
     }
-  ]
+  ],
+  // 用户列表选择
+  userOptions: []
 });
+
+// 重置表单
+const reset = () => {
+  dialog.title = "修改";
+  dialog.form = { parentId: null };
+  dialog.userOptions = [];
+};
 
 // 子组件暴露的方法
 const showDept = (row: any) => {
-  dialog.form = cloneDeep(row);
-  if (row.id == null) {
-    dialog.title = "新增部门";
+  reset();
+  if (row !== null) {
+    dialog.form = cloneDeep(row);
+    dialog.title = "修改部门";
+    dialog.userOptions = [{ id: row.leaderuserid, name: row.leader }];
   }
   getDeptList().then(data => {
     // dialog.deptOptions = handleTree(data as any);
@@ -120,18 +87,31 @@ const showDept = (row: any) => {
   });
 };
 
+// 提交表单
 const submitForm = () => {
-  console.log("submitForm!");
+  saveDept(dialog.form).then(res => {
+    console.log(res);
+    dialog.open = false;
+    // 返回给父页面
+    emit("onSearch");
+  });
 };
 
+const emit = defineEmits<{ (e: "onSearch") }>();
+
 const cancel = () => {
-  reset();
   dialog.open = false;
 };
 
-const reset = () => {
-  dialog.title = "修改";
-  dialog.form = { parentId: 0 };
+const remoteMethod = (query: string) => {
+  dialog.userOptions = [];
+  if (query) {
+    dialog.loading = true;
+    pageUser({ name: query }).then(res => {
+      dialog.userOptions = res["records"];
+      dialog.loading = false;
+    });
+  }
 };
 
 // 使用defineExpose暴露inputVal和exposeFun
@@ -160,9 +140,9 @@ defineExpose({
               <el-select v-model="dialog.form.parentId" class="m-2">
                 <el-option
                   v-for="item in dialog.deptOptions"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="parseInt(item.id)"
+                  :key="item['id']"
+                  :label="item['name']"
+                  :value="parseInt(item['id'])"
                 />
               </el-select>
             </el-form-item>
@@ -172,7 +152,7 @@ defineExpose({
           <el-col :span="12">
             <el-form-item label="部门名称" prop="name">
               <el-input
-                v-model="dialog.form.name"
+                v-model="dialog.form['name']"
                 placeholder="请输入部门名称"
               />
             </el-form-item>
@@ -180,7 +160,7 @@ defineExpose({
           <el-col :span="12">
             <el-form-item label="显示排序" prop="sort">
               <el-input-number
-                v-model="dialog.form.sort"
+                v-model="dialog.form['sort']"
                 controls-position="right"
                 :min="0"
               />
@@ -189,18 +169,28 @@ defineExpose({
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="负责人" prop="leader">
-              <el-input
-                v-model="dialog.form.leader"
+            <el-form-item label="负责人" prop="leaderuserid">
+              <el-select
+                v-model="dialog.form['leaderuserid']"
+                filterable
+                remote
                 placeholder="请输入负责人"
-                maxlength="20"
-              />
+                :remote-method="remoteMethod"
+                :loading="dialog.loading"
+              >
+                <el-option
+                  v-for="item in dialog.userOptions"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="联系电话" prop="phone">
               <el-input
-                v-model="dialog.form.phone"
+                v-model="dialog.form['phone']"
                 placeholder="请输入联系电话"
                 maxlength="11"
               />
@@ -211,15 +201,26 @@ defineExpose({
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
               <el-input
-                v-model="dialog.form.email"
+                v-model="dialog.form['email']"
                 placeholder="请输入邮箱"
                 maxlength="50"
               />
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="备注" prop="remark">
+              <el-input
+                v-model="dialog.form['remark']"
+                placeholder="请输入备注"
+                maxlength="50"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="部门状态">
-              <el-radio-group v-model="dialog.form.status" class="ml-4">
+              <el-radio-group v-model="dialog.form['status']" class="ml-4">
                 <el-radio :label="0" size="small">开启</el-radio>
                 <el-radio :label="1" size="small">关闭</el-radio>
               </el-radio-group>
