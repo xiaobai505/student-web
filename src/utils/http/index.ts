@@ -1,6 +1,5 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import {
-  resultType,
   PureHttpError,
   RequestMethods,
   PureHttpResponse,
@@ -122,9 +121,9 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
-        if (error.response.data.code && error.response.data.code === 50001003) {
+        if (error.response.data["code"] && error.response.data["code"] === 50001003) {
           removeToken();
-          message.success("warning:" + error.response.data.msg);
+          message.success("warning:" + error.response.data["msg"]);
           router.push("/login");
         }
         // 所有的响应异常 区分来源为取消请求/非取消请求
