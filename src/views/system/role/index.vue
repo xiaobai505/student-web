@@ -65,6 +65,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
   onSearch();
 };
 
+const meunRole = () => {
+  console.log("打开菜单权限");
+};
+
 onMounted(() => {
   onSearch();
 });
@@ -178,6 +182,7 @@ onMounted(() => {
                       link
                       type="primary"
                       :size="size"
+                      @click="meunRole"
                       :icon="useRenderIcon('menu')"
                     >
                       菜单权限
