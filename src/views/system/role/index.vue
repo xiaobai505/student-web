@@ -54,8 +54,8 @@ async function onSearch() {
   loading.value = true;
   await roles(null).then(data => {
     loading.value = false;
-    dataList.value = data.records;
-    pagination.total = data.total;
+    dataList.value = data["records"];
+    pagination["total"] = parseInt(data["total"]);
   });
 }
 
@@ -127,7 +127,7 @@ onMounted(() => {
           :columns="columns"
           :checkList="checkList"
           :pagination="pagination"
-          :paginationSmall="size === 'small' ? true : false"
+          :paginationSmall="size === 'small'"
           :header-cell-style="{
             background: 'var(--el-table-row-hover-bg-color)',
             color: 'var(--el-text-color-primary)'
