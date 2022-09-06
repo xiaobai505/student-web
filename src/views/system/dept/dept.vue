@@ -7,10 +7,10 @@ import { pageUser } from "/@/api/user";
 const dialog = reactive({
   // 弹出层标题
   title: "新增部门",
-  // 加载显示
-  loading: false,
   // 是否显示弹出层
   open: false,
+  // 加载显示
+  loading: false,
   // 表单参数
   form: {},
   // 表单校验

@@ -36,10 +36,10 @@ export function useColumns() {
       cellRenderer: ({ row, props }) => (
         <el-tag
           size={props.size}
-          type={row.roleType === "1" ? "danger" : ""}
+          type={row.roleType === 0 ? "danger" : ""}
           effect="plain"
         >
-          {row.roleType === "1" ? "内置" : "自定义"}
+          {row.roleType === 0 ? "内置" : "自定义"}
         </el-tag>
       )
     },

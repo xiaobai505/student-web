@@ -6,6 +6,7 @@ import { TableProBar } from "/@/components/ReTable";
 import { type PaginationProps } from "@pureadmin/table";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { roles } from "/@/api/role";
+import Role from "/@/views/system/role/role.vue";
 
 defineOptions({
   name: "Role"
@@ -30,8 +31,15 @@ const pagination = reactive<PaginationProps>({
   background: true
 });
 
+// 父组件接收子组件暴露的方法，使用子组件的ref
+const roleRef = ref<{ showRole(row: any): void }>();
+
+function handleAdd() {
+  roleRef.value?.showRole(null);
+}
+
 function handleUpdate(row) {
-  console.log(row);
+  roleRef.value?.showRole(row);
 }
 
 function handleDelete(row) {
@@ -116,7 +124,11 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button type="primary" :icon="useRenderIcon('add')">
+        <el-button
+          type="primary"
+          :icon="useRenderIcon('add')"
+          @click="handleAdd"
+        >
           新增角色
         </el-button>
       </template>
@@ -171,7 +183,6 @@ onMounted(() => {
                 link
                 type="primary"
                 :size="size"
-                @click="handleUpdate(row)"
                 :icon="useRenderIcon('more')"
               />
               <template #dropdown>
@@ -206,6 +217,8 @@ onMounted(() => {
         </PureTable>
       </template>
     </TableProBar>
+
+    <role ref="roleRef" />
   </div>
 </template>
 
