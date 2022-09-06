@@ -13,12 +13,22 @@ export const roles = (data: object): ResponseType => {
   return http.get("/dgy/role/page", data);
 };
 
-// 获取角色管理列表
-export const getRoleList = (): ResponseType => {
-  return http.get("/dgy/role");
+// 保存部门
+export const saveRole = (data: object) => {
+  return http.post("/dgy/role", { data });
 };
 
-// user API接口
+// 更新部门
+export const updateRole = (data: object) => {
+  return http.put("/dgy/role", { data });
+};
+
+// 删除
+export const delRole = (id: number) => {
+  return http.delete("/dgy/role/" + id);
+};
+
+// roleUser API接口
 export const setRolesById = (id: number, ids: Array<number>) => {
   return http.post("/dgy/roleUser/" + id, { data: ids });
 };

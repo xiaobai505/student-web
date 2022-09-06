@@ -49,7 +49,7 @@ const dialog = reactive({
 // 重置表单
 const reset = () => {
   dialog.title = "修改";
-  dialog.form = [];
+  dialog.form = {};
   dialog.form["status"] = 0;
   dialog.userOptions = [];
 };

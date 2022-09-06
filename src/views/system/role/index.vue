@@ -218,7 +218,7 @@ onMounted(() => {
       </template>
     </TableProBar>
 
-    <role ref="roleRef" />
+    <role ref="roleRef" @onSearch="onSearch" />
   </div>
 </template>
 

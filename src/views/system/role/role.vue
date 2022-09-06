@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { cloneDeep } from "lodash-unified";
+import { saveRole, updateRole } from "/@/api/role";
 
 const dialog = reactive({
   // 弹出层标题
@@ -26,7 +27,7 @@ const dialog = reactive({
 // 重置表单
 const reset = () => {
   dialog.title = "修改";
-  dialog.form = [];
+  dialog.form = {};
   dialog.form["status"] = 0;
 };
 
@@ -50,9 +51,18 @@ const cancel = () => {
   dialog.open = false;
 };
 
+const emit = defineEmits<{ (e: "onSearch") }>();
+
 // 提交表单
-const submitForm = () => {
-  console.log("ok");
+const submitForm = async () => {
+  if (dialog.form["id"] == null) {
+    await saveRole(dialog.form);
+  } else {
+    await updateRole(dialog.form);
+  }
+  dialog.open = false;
+  // 返回给父页面
+  emit("onSearch");
 };
 </script>
 
