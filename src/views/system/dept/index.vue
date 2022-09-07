@@ -143,7 +143,7 @@ onMounted(() => {
             >
               修改
             </el-button>
-            <el-popconfirm title="是否确认删除?">
+            <el-popconfirm title="是否确认删除?" @confirm="handleDelete(row)">
               <template #reference>
                 <el-button
                   v-if="row.parentId !== 0"
@@ -152,7 +152,6 @@ onMounted(() => {
                   type="primary"
                   :size="size"
                   :icon="useRenderIcon('delete')"
-                  @click="handleDelete(row)"
                 >
                   删除
                 </el-button>

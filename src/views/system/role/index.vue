@@ -5,7 +5,7 @@ import { type FormInstance } from "element-plus";
 import { TableProBar } from "/@/components/ReTable";
 import { type PaginationProps } from "@pureadmin/table";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { roles } from "/@/api/role";
+import { delRole, roles } from "/@/api/role";
 import Role from "/@/views/system/role/role.vue";
 
 defineOptions({
@@ -43,7 +43,10 @@ function handleUpdate(row) {
 }
 
 function handleDelete(row) {
-  console.log(row);
+  delRole(row.id).then(res => {
+    console.log(res);
+    onSearch();
+  });
 }
 
 function handleCurrentChange(val: number) {
@@ -163,7 +166,7 @@ onMounted(() => {
             >
               修改
             </el-button>
-            <el-popconfirm title="是否确认删除?">
+            <el-popconfirm title="是否确认删除?" @confirm="handleDelete(row)">
               <template #reference>
                 <el-button
                   class="reset-margin"
@@ -171,7 +174,6 @@ onMounted(() => {
                   type="primary"
                   :size="size"
                   :icon="useRenderIcon('delete')"
-                  @click="handleDelete(row)"
                 >
                   删除
                 </el-button>
