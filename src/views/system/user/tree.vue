@@ -76,8 +76,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="max-w-260px h-full min-h-780px bg-white dark:bg-dark">
-    <div class="flex items-center h-34px">
+  <div class="max-w-[260px] h-full min-h-[780px] bg-white dark:bg-dark">
+    <div class="flex items-center h-[34px]">
       <p class="flex-1 ml-2 font-bold text-base truncate" title="部门列表">
         部门列表
       </p>
@@ -99,7 +99,7 @@ onMounted(async () => {
       </el-input>
       <el-dropdown>
         <IconifyIconOffline
-          class="w-28px cursor-pointer"
+          class="w-[28px] cursor-pointer"
           width="18px"
           icon="more-vertical"
         />
@@ -107,7 +107,7 @@ onMounted(async () => {
           <el-dropdown-menu>
             <el-dropdown-item>
               <el-button
-                class="reset-margin !h-20px !text-gray-500 !dark:hover:color-primary"
+                class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
                 link
                 type="primary"
                 :icon="useRenderIcon('expand')"
@@ -118,7 +118,7 @@ onMounted(async () => {
             </el-dropdown-item>
             <el-dropdown-item>
               <el-button
-                class="reset-margin !h-20px !text-gray-500 !dark:hover:color-primary"
+                class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
                 link
                 type="primary"
                 :icon="useRenderIcon('unExpand')"
@@ -129,7 +129,7 @@ onMounted(async () => {
             </el-dropdown-item>
             <el-dropdown-item>
               <el-button
-                class="reset-margin !h-20px !text-gray-500 !dark:hover:color-primary"
+                class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
                 link
                 type="primary"
                 :icon="useRenderIcon('reset')"
@@ -166,7 +166,7 @@ onMounted(async () => {
             searchValue.trim().length > 0 &&
               node.label.includes(searchValue) &&
               'text-red-500',
-            highlightMap[node.id]?.highlight ? 'dark:color-primary' : ''
+            highlightMap[node.id]?.highlight ? 'dark:text-primary' : ''
           ]"
           :style="{
             background: highlightMap[node.id]?.highlight

@@ -69,6 +69,7 @@ export const useUserStore = defineStore({
     },
     // 刷新token
     async refreshToken(data) {
+      removeToken();
       return refreshToken(data).then(data => {
         if (data) {
           setToken(data);
