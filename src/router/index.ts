@@ -43,7 +43,6 @@ import remainingRouter from "./modules/remaining";
 import componentsRouter from "./modules/components";
 import formDesignRouter from "./modules/formdesign";
 import majorRouter from "./modules/major";
-import courseRouter from "./modules/course";
 
 /** 原始静态路由（未做任何处理） */
 const routes = [
@@ -60,10 +59,8 @@ const routes = [
   flowChartRouter,
   componentsRouter,
   formDesignRouter,
-  majorRouter,
-  courseRouter
+  majorRouter
 ];
-
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
   formatFlatteningRoutes(buildHierarchyTree(ascending(routes)))
