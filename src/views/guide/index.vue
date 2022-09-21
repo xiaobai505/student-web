@@ -16,14 +16,6 @@ const steps = [
     }
   },
   {
-    element: "#header-screenfull",
-    popover: {
-      title: "全屏",
-      description: "你可以在这里进行全屏切换",
-      position: "left"
-    }
-  },
-  {
     element: "#header-translation",
     popover: {
       title: "国际化",
@@ -32,7 +24,7 @@ const steps = [
     }
   },
   {
-    element: ".el-icon-setting",
+    element: ".set-icon",
     popover: {
       title: "项目配置",
       description: "你可以在这里查看项目配置",
