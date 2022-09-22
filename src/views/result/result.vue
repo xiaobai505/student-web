@@ -2,6 +2,10 @@
 import { reactive, ref } from "vue";
 import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
 import { delResult, getResult, saveResult, updateResult } from "/@/api/result";
+
+defineOptions({
+  name: "Result"
+});
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive<VxeGridProps>({
   border: true,

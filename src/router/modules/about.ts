@@ -7,7 +7,7 @@ const aboutRouter: RouteConfigsTable = {
   meta: {
     // icon: "question-line",
     title: $t("menus.hsAbout"),
-    rank: 15
+    rank: 16
   },
   children: [
     {
