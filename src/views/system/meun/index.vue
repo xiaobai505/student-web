@@ -87,10 +87,10 @@ const searchMethod = async (row: any) => {
         </template>
       </vxe-column>
       <vxe-column field="name" title="英文名" />
-      <vxe-column field="path" title="路径" />
       <vxe-column field="menuType" title="类型" />
-      <vxe-column field="meta.icon" title="图表" />
       <vxe-column field="meta.rank" title="排序" />
+      <vxe-column field="meta.icon" title="图标" />
+      <vxe-column field="path" title="路径" />
       <vxe-column field="meta.title" title="标题" />
       <vxe-column title="操作" width="140">
         <template #default="{ row }">

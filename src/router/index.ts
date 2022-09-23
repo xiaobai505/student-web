@@ -29,22 +29,10 @@ import {
 } from "@pureadmin/utils";
 
 import homeRouter from "./modules/home";
-import ableRouter from "./modules/able";
-import aboutRouter from "./modules/about";
-import errorRouter from "./modules/error";
-import nestedRouter from "./modules/nested";
 import remainingRouter from "./modules/remaining";
-import componentsRouter from "./modules/components";
 
 /** 原始静态路由（未做任何处理） */
-const routes = [
-  homeRouter,
-  ableRouter,
-  aboutRouter,
-  errorRouter,
-  nestedRouter,
-  componentsRouter
-];
+const routes = [homeRouter];
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
   formatFlatteningRoutes(buildHierarchyTree(ascending(routes)))
