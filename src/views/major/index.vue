@@ -2,6 +2,7 @@
 import { reactive, ref } from "vue";
 import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
 import { delMajor, getMajor, saveMajor, updateMajor } from "/@/api/major";
+import Courses from "/@/views/major/courses.vue";
 
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive<VxeGridProps>({
@@ -156,10 +157,19 @@ const removeRowEvent = async (row: any) => {
   }
   console.log("删除" + row.id);
 };
+// 父组件接收子组件暴露的方法，使用子组件的ref
+const coursesRef = ref<{ exposeFun(id: number): void }>();
+// 使用子组件暴露的内容
+const editRowRoles = (row: any) => {
+  coursesRef.value?.exposeFun(row.id);
+};
 </script>
 
 <template>
   <div id="major" class="common-layout">
+    <!-- 专业-课程 弹出窗   -->
+    <courses ref="coursesRef" />
+    <!--  专业列表  -->
     <vxe-grid ref="xGrid" v-bind="gridOptions">
       <template #school_item="{ data }">
         <vxe-input
@@ -228,6 +238,12 @@ const removeRowEvent = async (row: any) => {
             title="删除"
             circle
             @click="removeRowEvent(row)"
+          />
+          <vxe-button
+            icon="fa fa-gear"
+            title="权限"
+            @click="editRowRoles(row)"
+            circle
           />
         </template>
       </template>

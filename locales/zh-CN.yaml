@@ -74,6 +74,7 @@ menus:
   hsResult: 结果页面
   hsSuccess: 成功页面
   hsFail: 失败页面
+  hsTask: 任务计划
   hsIconSelect: 图标选择器
   hsTimeline: 时间线
   hsLineTree: 树形连接线

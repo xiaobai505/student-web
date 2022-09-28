@@ -15,6 +15,6 @@ export const saveCourseUser = (data: object) => {
 };
 
 // 删除
-export const delCourseUser = (data: object) => {
-  return http.delete("/dgy/courseUser", { data });
+export const delCourseUser = (id: number, ids: Array<number>) => {
+  return http.delete("/dgy/courseUser" + id, { data: ids });
 };

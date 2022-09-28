@@ -23,19 +23,12 @@ const gridOptions = reactive<VxeGridProps>({
   formConfig: {
     items: [
       {
-        field: "school",
-        title: "学校",
-        itemRender: {},
-        slots: { default: "school_item" }
-      },
-      {
-        field: "major",
-        title: "专业",
+        field: "course",
+        title: "课程名",
         itemRender: {},
         slots: { default: "major_item" }
       },
-      { itemRender: {}, slots: { default: "submit_item" } },
-      { itemRender: {}, slots: { default: "reset_item" } }
+      { itemRender: {}, slots: { default: "submit_item" } }
     ]
   },
   editConfig: {
@@ -100,23 +93,28 @@ const gridOptions = reactive<VxeGridProps>({
   columns: [
     { field: "id", title: "id" },
     {
-      field: "userId",
-      title: "用户id",
-      editRender: {}
-    },
-    {
       field: "studentName",
-      title: "学生名字",
+      title: "学生名",
       editRender: {}
     },
     {
-      field: "courseId",
-      title: "课程id",
+      field: "courseName",
+      title: "课程名",
       editRender: {}
     },
     {
       field: "result",
       title: "考试分数",
+      editRender: {}
+    },
+    {
+      field: "isReset",
+      title: "补考标记",
+      editRender: {}
+    },
+    {
+      field: "graduate",
+      title: "学分",
       editRender: {}
     },
     {
@@ -171,21 +169,11 @@ const removeRowEvent = async (row: any) => {
 <template>
   <div id="course" class="common-layout">
     <vxe-grid ref="xGrid" v-bind="gridOptions">
-      <template #school_item="{ data }">
-        <vxe-input
-          v-model="data.school"
-          type="text"
-          placeholder="请输入学校名称"
-        />
-      </template>
       <template #major_item="{ data }">
         <vxe-input v-model="data.major" type="text" placeholder="专业检索" />
       </template>
       <template #submit_item>
         <vxe-button type="submit" status="primary" content="查询" />
-      </template>
-      <template #reset_item>
-        <vxe-button type="reset" content="重置" />
       </template>
 
       <!-- 编辑页面插槽   -->

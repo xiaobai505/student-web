@@ -1,6 +1,17 @@
 import { http } from "../utils/http";
 import qs from "qs";
 
+interface ResponseType extends Promise<any> {
+  data?: Array<object>;
+  code?: number;
+  msg?: string;
+}
+
+// 分页查询
+export const CourseList = (): ResponseType => {
+  return http.get("/dgy/course/list");
+};
+
 // 分页查询
 export const getCourse = (params: object) => {
   const stringify = qs

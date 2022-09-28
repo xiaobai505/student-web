@@ -21,11 +21,6 @@ export const pageUser = (params?: object) => {
   return http.get("/dgy/user/page", { params });
 };
 
-// 分页查询
-export const userPage = (data: object) => {
-  return http.post("/dgy/user/selectPage", { data });
-};
-
 // 保存用户
 export const saveUser = (data: object) => {
   return http.post("/dgy/user", { data });
