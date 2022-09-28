@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import draggable from "vuedraggable/src/vuedraggable";
 
 defineOptions({
   name: "Draggable"
 });
+
+const data = reactive({
+  id: 1,
+  addStr: ""
+});
+
 let id = 1;
 
 let list1 = ref<Array<Object>>([
@@ -27,10 +33,7 @@ let list3 = ref<Array<Object>>([
 ]);
 
 const add = async () => {
-  list1.value.push({ name: "Juan " + id, id: id++ });
-};
-const replace = async () => {
-  list1.value = [{ name: "Edgard", id: id++ }];
+  list1.value.push({ name: data.addStr + id, id: id++ });
 };
 </script>
 
@@ -61,10 +64,11 @@ const replace = async () => {
             </template>
 
             <template #footer>
-              <div class="btn-group list-group-item" role="group">
-                <button @click="add">Add</button>
-                <button @click="replace">Replace</button>
-              </div>
+              <el-input v-model="data.addStr" placeholder="Approved by">
+                <template #append>
+                  <el-button type="primary" @click="add">ADD</el-button>
+                </template>
+              </el-input>
             </template>
           </draggable>
         </el-card>
