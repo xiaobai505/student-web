@@ -6,9 +6,9 @@ const rowRoles = reactive({
   flag: false,
   // 专业id
   id: null,
-  // 已选课程
+  // 已关联学生
   data: [],
-  // 所有课程
+  // 所有的学生
   options: []
 });
 

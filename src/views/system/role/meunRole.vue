@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import type { ElTreeV2 } from "element-plus";
 import { transformI18n } from "/@/plugins/i18n";
 import ElTreeLine from "/@/components/ReTreeLine";
@@ -12,6 +12,16 @@ interface treeNode extends TreeNode {
     title: string;
   };
 }
+
+const dialog = reactive({
+  // 弹出层标题
+  title: "菜单树结构",
+  // 是否显示弹出层
+  open: false,
+  // 加载显示
+  loading: false
+});
+
 const query = ref("");
 let dataProps = ref({
   value: "uniqueId",
@@ -44,15 +54,26 @@ const getCheckedKeys = () => {
 const resetChecked = () => {
   (treeRef as any).value!.setCheckedKeys([]);
 };
+
+// 子组件暴露的方法
+const showMeun = (row: any) => {
+  console.log(row);
+  dialog.open = true;
+};
+
+// 使用defineExpose暴露showRole
+defineExpose({
+  showMeun
+});
 </script>
 
 <template>
-  <el-card>
-    <template #header>
-      <div class="card-header">
-        <span class="font-medium"> 普通树结构 </span>
-      </div>
-    </template>
+  <el-dialog
+    :title="dialog.title"
+    v-model="dialog.open"
+    width="500px"
+    append-to-body
+  >
     <el-input
       class="mb-4"
       v-model="query"
@@ -89,5 +110,5 @@ const resetChecked = () => {
         </el-tree-line>
       </template>
     </el-tree-v2>
-  </el-card>
+  </el-dialog>
 </template>

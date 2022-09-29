@@ -212,14 +212,14 @@ const editRowRoles = (row: any) => {
       <template #operate="{ row }">
         <template v-if="$refs.xGrid.isActiveByRow(row)">
           <vxe-button
-            icon="vxe-icon--check"
+            icon="fa fa-check"
             status="success"
             title="锁定"
             circle
             @click="saveRowEvent()"
           />
           <vxe-button
-            icon="vxe-icon--close"
+            icon="fa fa-close"
             status="danger"
             title="取消"
             circle
@@ -241,6 +241,12 @@ const editRowRoles = (row: any) => {
           />
           <vxe-button
             icon="fa fa-gear"
+            title="权限"
+            @click="editRowRoles(row)"
+            circle
+          />
+          <vxe-button
+            icon="vxe-icon-arrow-up"
             title="权限"
             @click="editRowRoles(row)"
             circle

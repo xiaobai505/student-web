@@ -7,6 +7,7 @@ import { type PaginationProps } from "@pureadmin/table";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { delRole, roles } from "/@/api/role";
 import Role from "/@/views/system/role/role.vue";
+import MeunRole from "/@/views/system/role/meunRole.vue";
 
 defineOptions({
   name: "Role"
@@ -33,6 +34,7 @@ const pagination = reactive<PaginationProps>({
 
 // 父组件接收子组件暴露的方法，使用子组件的ref
 const roleRef = ref<{ showRole(row: any): void }>();
+const meunRef = ref<{ showMeun(row: any): void }>();
 
 function handleAdd() {
   roleRef.value?.showRole(null);
@@ -76,8 +78,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
   onSearch();
 };
 
-const meunRole = () => {
+const openMeunRole = () => {
   console.log("打开菜单权限");
+  meunRef.value?.showMeun(null);
 };
 
 onMounted(() => {
@@ -195,7 +198,7 @@ onMounted(() => {
                       link
                       type="primary"
                       :size="size"
-                      @click="meunRole"
+                      @click="openMeunRole"
                       :icon="useRenderIcon('menu')"
                     >
                       菜单权限
@@ -221,6 +224,8 @@ onMounted(() => {
     </TableProBar>
 
     <role ref="roleRef" @onSearch="onSearch" />
+
+    <MeunRole ref="meunRef" />
   </div>
 </template>
 

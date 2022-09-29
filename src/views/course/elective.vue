@@ -85,7 +85,7 @@ defineExpose({
           <!-- 操作列 插槽   -->
           <template #operate="{ row }">
             <vxe-button
-              icon="vxe-icon--check"
+              icon="fa fa-check"
               status="success"
               circle
               @click="saveRowEvent(row)"

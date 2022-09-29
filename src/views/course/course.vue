@@ -109,7 +109,7 @@ const gridOptions = reactive<VxeGridProps>({
       slots: { default: "courseTeacher_default", edit: "courseTeacher_edit" }
     },
     {
-      field: "isMust",
+      field: "isMustDisplay",
       title: "是否必修",
       editRender: {},
       slots: { default: "isMust_default", edit: "isMust_edit" }
@@ -204,7 +204,7 @@ const removeRowEvent = async (row: any) => {
         <vxe-input v-model="row.courseTeacher" transfer />
       </template>
       <template #isMust_default="{ row }">
-        <span>{{ row.isMust }}</span>
+        <span>{{ row.isMustDisplay }}</span>
       </template>
       <template #isMust_edit="{ row }">
         <vxe-input v-model="row.isMust" transfer />
@@ -227,14 +227,14 @@ const removeRowEvent = async (row: any) => {
       <template #operate="{ row }">
         <template v-if="$refs.xGrid.isActiveByRow(row)">
           <vxe-button
-            icon="vxe-icon--check"
+            icon="fa fa-check"
             status="success"
             title="锁定"
             circle
             @click="saveRowEvent(row)"
           />
           <vxe-button
-            icon="vxe-icon--close"
+            icon="fa fa-close"
             status="danger"
             title="取消"
             circle

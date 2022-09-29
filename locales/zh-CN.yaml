@@ -74,7 +74,7 @@ menus:
   hsResult: 结果页面
   hsSuccess: 成功页面
   hsFail: 失败页面
-  hsTask: 任务计划
+  hsTask: 毕业规划
   hsIconSelect: 图标选择器
   hsTimeline: 时间线
   hsLineTree: 树形连接线
@@ -95,7 +95,7 @@ menus:
   hsInfiniteScroll: 表格无限滚动
   hsMajor: 专业
   hsCourse: 课程
-  hsStudentCourse: 选修课
+  hsStudentCourse: 报名选修课
 status:
   hsLoad: 加载中...
 login:

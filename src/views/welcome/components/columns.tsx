@@ -1,6 +1,4 @@
 import { IconifyIconOffline } from "/@/components/ReIcon";
-import { getUser } from "/@/api/user";
-import { reactive } from "vue";
 
 export function useColumns() {
   const lists = [
@@ -10,21 +8,6 @@ export function useColumns() {
     { type: "danger", label: "学生会主席" },
     { type: "warning", label: "国家奖学金" }
   ];
-
-  const data1: {
-    user: {
-      name: string;
-      phone: number;
-    };
-  } = reactive({
-    user: {
-      name: "asd",
-      phone: null
-    }
-  });
-  console.log(data1.user);
-  const { name } = getUser();
-  console.log(name);
 
   const columnsA = [
     {
@@ -36,7 +19,7 @@ export function useColumns() {
           用户名
         </div>
       ),
-      value: "xiaoxian"
+      value: "admin"
     },
     {
       labelRenderer: () => (

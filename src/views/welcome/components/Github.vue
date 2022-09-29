@@ -2,6 +2,7 @@
 import { useColumns } from "./columns";
 const { columnsA, columnsB, columnsC } = useColumns();
 
+const data = [];
 const list = [
   {
     columns: columnsA,
@@ -21,6 +22,7 @@ const list = [
 <template>
   <PureDescriptions
     v-for="(item, index) in list"
+    :data="data"
     :key="index"
     :columns="item.columns"
     :column="item.column"

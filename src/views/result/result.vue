@@ -200,14 +200,14 @@ const removeRowEvent = async (row: any) => {
       <template #operate="{ row }">
         <template v-if="$refs.xGrid.isActiveByRow(row)">
           <vxe-button
-            icon="vxe-icon--check"
+            icon="fa fa-check"
             status="success"
             title="锁定"
             circle
             @click="saveRowEvent(row)"
           />
           <vxe-button
-            icon="vxe-icon--close"
+            icon="fa fa-close"
             status="danger"
             title="取消"
             circle

@@ -7,33 +7,31 @@ defineOptions({
 });
 
 const data = reactive({
-  id: 1,
   addStr: ""
 });
 
-let id = 1;
-
 let list1 = ref<Array<Object>>([
-  { name: "aaa 1", id: 0 },
-  { name: "bbb 2", id: 1 },
-  { name: "ccc 3", id: 2 }
+  { name: "英语雅思", id: 0 },
+  { name: "java复习", id: 1 },
+  { name: "计算机4级考试", id: 2 }
 ]);
 
 let list2 = ref<Array<Object>>([
-  { name: "John 1", id: 0 },
-  { name: "Joao 2", id: 1 },
-  { name: "Jean 3", id: 2 }
+  { name: "滑雪", id: 0 },
+  { name: "计算机3级考试", id: 1 },
+  { name: "毕业设计", id: 2 },
+  { name: "游泳", id: 3 }
 ]);
 
 let list3 = ref<Array<Object>>([
-  { name: "Guisepe 1", id: 1 },
-  { name: "Guisepe 2", id: 2 },
-  { name: "Jonny 4", id: 3 },
-  { name: "Guisepe 5", id: 4 }
+  { name: "英语4级考试", id: 1 },
+  { name: "计算机初级工程师", id: 2 },
+  { name: "软件设计初级", id: 3 },
+  { name: "教师资格证", id: 4 }
 ]);
 
 const add = async () => {
-  list1.value.push({ name: data.addStr + id, id: id++ });
+  list1.value.push({ name: data.addStr });
 };
 </script>
 
