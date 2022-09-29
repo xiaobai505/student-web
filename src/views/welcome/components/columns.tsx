@@ -11,6 +11,7 @@ export function useColumns() {
 
   const columnsA = [
     {
+      prop: "name",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
@@ -18,10 +19,10 @@ export function useColumns() {
           </el-icon>
           用户名
         </div>
-      ),
-      value: "admin"
+      )
     },
     {
+      prop: "phone",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
@@ -29,10 +30,10 @@ export function useColumns() {
           </el-icon>
           手机号
         </div>
-      ),
-      value: "123456789"
+      )
     },
     {
+      prop: "address",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
@@ -40,8 +41,7 @@ export function useColumns() {
           </el-icon>
           居住地
         </div>
-      ),
-      value: "上海"
+      )
     }
   ];
 
@@ -66,29 +66,29 @@ export function useColumns() {
       }
     },
     {
+      prop: "email",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
             <IconifyIconOffline icon="office-building" />
           </el-icon>
-          联系地址
+          电子邮箱
         </div>
-      ),
-      value: "上海市徐汇区"
+      )
     }
   ];
 
   const columnsC = [
     {
+      prop: "deptName",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
             <IconifyIconOffline icon="notebook" />
           </el-icon>
-          好好学习，天天向上
+          所属学校（部门）信息
         </div>
-      ),
-      value: "上海市徐汇区"
+      )
     }
   ];
 
