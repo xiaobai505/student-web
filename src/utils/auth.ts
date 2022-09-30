@@ -7,6 +7,8 @@ type paramsMapType = {
   name: string;
   expires: number;
   accessToken: string;
+  authorizedToken: string;
+  roles: Array<string>;
 };
 
 // 获取token
@@ -27,7 +29,9 @@ export function setToken1(data) {
   const paramsMap: paramsMapType = {
     name,
     expires: Date.now() + parseInt(expires),
-    accessToken
+    accessToken,
+    authorizedToken: "",
+    roles: []
   };
   const dataString = JSON.stringify(paramsMap);
   useUserStoreHook().SET_TOKEN(accessToken);
