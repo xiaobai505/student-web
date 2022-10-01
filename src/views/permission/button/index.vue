@@ -30,7 +30,7 @@ function changRole(value) {
         </el-radio-group>
       </div>
     </template>
-    <p v-auth="'v-admin'">只有admin可看</p>
-    <p v-auth="'v-test'">只有test可看</p>
+    <p v-auth="'ROLE_ADMIN'">只有 admin 可看</p>
+    <p v-auth="'ROLE_STUDENT'">只有 student 可看</p>
   </el-card>
 </template>
