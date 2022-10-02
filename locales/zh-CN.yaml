@@ -32,6 +32,7 @@ menus:
   hsRole: 角色管理
   hsDept: 部门管理
   hsMeun: 菜单管理
+  hsLog: 登录记录
   hseditor: 编辑器
   hserror: 错误页面
   hsfourZeroFour: "404"

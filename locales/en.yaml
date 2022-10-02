@@ -32,6 +32,7 @@ menus:
   hsRole: Role Manage
   hsDept: Dept Manage
   hsMeun: Meun Manage
+  hsLog: HsLog Manage
   hseditor: Editor
   hserror: Error Page
   hsfourZeroFour: "404"
