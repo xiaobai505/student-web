@@ -59,7 +59,8 @@ const permissionRouter = {
       path: "/permission/page/index",
       name: "PermissionPage",
       meta: {
-        title: "menus.permissionPage"
+        title: "menus.permissionPage",
+        authority: ["v-admin", "v-test"]
       }
     },
     {
@@ -67,7 +68,7 @@ const permissionRouter = {
       name: "PermissionButton",
       meta: {
         title: "menus.permissionButton",
-        authority: []
+        authority: ["v-test"]
       }
     }
   ]

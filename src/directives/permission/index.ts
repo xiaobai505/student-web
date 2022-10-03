@@ -8,6 +8,7 @@ export const auth: Directive = {
     if (value) {
       const authRoles = value;
       const hasAuth = usePermissionStoreHook().buttonAuth.includes(authRoles);
+      console.log(usePermissionStoreHook().buttonAuth);
       if (!hasAuth) {
         el.parentNode.removeChild(el);
       }

@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
-import { delResult, getResult, saveResult, updateResult } from "/@/api/result";
+import { getResult, updateResult } from "/@/api/result";
+import { usePermissionStoreHook } from "/@/store/modules/permission";
+import { useColumns } from "/@/views/result/columns";
 
 defineOptions({
   name: "Result"
 });
+
+let { columns } = useColumns();
+
+// 判断当前用户是否有学生权限
+const buttonAuth = usePermissionStoreHook().buttonAuth.includes("ROLE_STUDENT");
+if (buttonAuth) {
+  // 操作列 删除
+  columns.splice(columns.length - 1);
+}
+
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive<VxeGridProps>({
   border: true,
@@ -37,21 +49,7 @@ const gridOptions = reactive<VxeGridProps>({
     showStatus: true
   },
   toolbarConfig: {
-    perfect: true,
-    buttons: [
-      {
-        code: "insert_actived",
-        name: "新增",
-        status: "perfect",
-        icon: "fa fa-plus"
-      },
-      {
-        code: "save",
-        name: "提交",
-        status: "success",
-        icon: "fa fa-save"
-      }
-    ]
+    perfect: true
   },
   proxyConfig: {
     form: true, // 启用表单代理
@@ -63,67 +61,10 @@ const gridOptions = reactive<VxeGridProps>({
       // 接收 Promise API
       query: ({ page, form }) => {
         return getResult(Object.assign(page, form));
-      },
-      delete: ({ body }) => {
-        return new Promise(resolve => {
-          console.log("刪除" + body);
-          resolve({});
-        });
-      },
-      save: ({ body }) => {
-        if (body.insertRecords.length > 0) {
-          console.log("新增:" + body.insertRecords);
-          saveResult(body.insertRecords);
-        }
-        if (body.updateRecords.length > 0) {
-          console.log("更新:" + body.insertRecords);
-          updateResult(body.updateRecords);
-        }
-        if (body.removeRecords.length > 0 || body.pendingRecords.length > 0) {
-          const array = [...body.removeRecords, ...body.pendingRecords];
-          console.log("删除:" + array);
-          delResult(array);
-        }
-        return new Promise(resolve => {
-          resolve({});
-        });
       }
     }
   },
-  columns: [
-    { field: "id", title: "id" },
-    {
-      field: "studentName",
-      title: "学生名",
-      editRender: {}
-    },
-    {
-      field: "courseName",
-      title: "课程名",
-      editRender: {}
-    },
-    {
-      field: "result",
-      title: "考试分数",
-      editRender: {}
-    },
-    {
-      field: "isReset",
-      title: "补考标记",
-      editRender: {}
-    },
-    {
-      field: "graduate",
-      title: "学分",
-      editRender: {}
-    },
-    {
-      field: "endTime",
-      title: "考试时间",
-      editRender: {}
-    },
-    { title: "操作", width: 200, slots: { default: "operate" } }
-  ]
+  columns: columns
 });
 // Table "解锁" 按钮
 const editRowEvent = (row: any) => {
@@ -134,16 +75,16 @@ const editRowEvent = (row: any) => {
   }
 };
 // Table "锁定" 按钮
-const saveRowEvent = async () => {
+const saveRowEvent = async (row: any) => {
   const $grid = xGrid.value;
   if ($grid) {
     await $grid.clearActived();
     gridOptions.loading = true;
     // 模拟异步保存
-    setTimeout(() => {
+    updateResult([row]).then(() => {
       gridOptions.loading = false;
       VXETable.modal.message({ content: "锁定成功🔒！", status: "success" });
-    }, 300);
+    });
   }
 };
 // Table "恢复" 按钮
@@ -153,21 +94,13 @@ const cancelRowEvent = async () => {
     await $grid.clearActived();
   }
 };
-// Table "删除" 按钮
-const removeRowEvent = async (row: any) => {
-  const type = await VXETable.modal.confirm("您确定要删除该数据?");
-  const $grid = xGrid.value;
-  if ($grid) {
-    if (type === "confirm") {
-      await $grid.remove(row);
-    }
-  }
-  console.log("删除" + row.id);
-};
 </script>
 
 <template>
   <div id="course" class="common-layout">
+    <p v-auth="'ROLE_ADMIN'">管理员权限</p>
+    <p v-auth="'ROLE_TEACHER'">教师权限</p>
+    <p v-auth="'ROLE_STUDENT'">学生权限</p>
     <vxe-grid ref="xGrid" v-bind="gridOptions">
       <template #major_item="{ data }">
         <vxe-input v-model="data.major" type="text" placeholder="专业检索" />
@@ -177,25 +110,12 @@ const removeRowEvent = async (row: any) => {
       </template>
 
       <!-- 编辑页面插槽   -->
-      <template #school_default="{ row }">
-        <span>{{ row.school }}</span>
+      <template #result_default="{ row }">
+        <span>{{ row.result }}</span>
       </template>
-      <template #school_edit="{ row }">
-        <vxe-input v-model="row.school" transfer />
+      <template #result_edit="{ row }">
+        <vxe-input v-model="row.result" transfer />
       </template>
-      <template #major_default="{ row }">
-        <span>{{ row.major }}</span>
-      </template>
-      <template #major_edit="{ row }">
-        <vxe-input v-model="row.major" transfer />
-      </template>
-      <template #code_default="{ row }">
-        <span>{{ row.majorCode }}</span>
-      </template>
-      <template #cede_edit="{ row }">
-        <vxe-input v-model="row.majorCode" transfer />
-      </template>
-
       <!-- 操作列 插槽   -->
       <template #operate="{ row }">
         <template v-if="$refs.xGrid.isActiveByRow(row)">
@@ -220,12 +140,6 @@ const removeRowEvent = async (row: any) => {
             title="编辑"
             circle
             @click="editRowEvent(row)"
-          />
-          <vxe-button
-            icon="fa fa-trash"
-            title="删除"
-            circle
-            @click="removeRowEvent(row)"
           />
         </template>
       </template>

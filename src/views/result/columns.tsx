@@ -1,7 +1,7 @@
 import { IconifyIconOffline } from "/@/components/ReIcon";
 
 export function useColumns() {
-  const columns = [
+  const failColumns = [
     {
       cellRenderer: () => {
         return (
@@ -59,8 +59,44 @@ export function useColumns() {
       }
     }
   ];
+  const columns = [
+    { field: "id", title: "id" },
+    {
+      field: "studentName",
+      title: "学生名"
+    },
+    {
+      field: "courseName",
+      title: "课程名"
+    },
+    {
+      field: "result",
+      title: "考试分数",
+      editRender: {},
+      slots: { default: "result_default", edit: "result_edit" }
+    },
+    {
+      field: "isReset",
+      title: "补考标记",
+      editRender: {}
+    },
+    {
+      field: "graduate",
+      title: "学分"
+    },
+    {
+      field: "endTime",
+      title: "考试时间"
+    },
+    {
+      title: "操作",
+      width: "200",
+      slots: { default: "operate" }
+    }
+  ];
 
   return {
+    failColumns,
     columns
   };
 }

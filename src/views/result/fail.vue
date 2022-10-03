@@ -4,7 +4,7 @@ defineOptions({
   name: "Fail"
 });
 
-const { columns } = useColumns();
+const { failColumns } = useColumns();
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const { columns } = useColumns();
       </template>
     </el-result>
     <PureDescriptions
-      :columns="columns"
+      :columns="failColumns"
       title="您提交的内容有如下错误："
       class="p-6 ml-10 mr-10 bg-[#fafafa] dark:bg-[#1d1d1d]"
     />
