@@ -77,23 +77,19 @@ const gridOptions = reactive<VxeGridProps>({
       title: "授课老师"
     },
     {
-      field: "bestScore",
-      title: "最高成绩"
-    },
-    {
-      field: "listScore",
-      title: "历史成绩"
+      field: "graduate",
+      title: "学分"
     },
     {
       field: "createTime",
       title: "选课时间"
     },
     {
-      field: "createBy",
+      field: "username",
       title: "选课账号"
     },
     {
-      field: "createByName",
+      field: "name",
       title: "选课人"
     },
     { title: "操作", width: 200, slots: { default: "operate" } }
@@ -103,13 +99,9 @@ const gridOptions = reactive<VxeGridProps>({
 // Table "删除" 按钮
 const removeRowEvent = async (row: any) => {
   const type = await VXETable.modal.confirm("选修课座位数紧张，您确定要放弃?");
-  const $grid = xGrid.value;
   if (type === "confirm") {
     await delCourseUser(row);
-    await $grid.remove(row).then(res => {
-      console.log("删除", res);
-      refresh();
-    });
+    refresh();
   }
 };
 

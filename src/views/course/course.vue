@@ -77,7 +77,9 @@ const gridOptions = reactive<VxeGridProps>({
       save: ({ body }) => {
         if (body.insertRecords.length > 0) {
           console.log("新增:" + body.insertRecords);
-          saveCourse(body.insertRecords);
+          saveCourse(body.insertRecords).then(() => {
+            window.location.reload();
+          });
         }
         if (body.updateRecords.length > 0) {
           console.log("更新:" + body.insertRecords);
@@ -88,6 +90,10 @@ const gridOptions = reactive<VxeGridProps>({
           console.log("删除:" + array);
           delCourse(array);
         }
+        VXETable.modal.message({
+          content: `新增 ${body.insertRecords.length},更新 ${body.updateRecords.length},删除 ${body.removeRecords.length} 记录！`,
+          status: "success"
+        });
         return new Promise(resolve => {
           resolve({});
         });
@@ -109,10 +115,28 @@ const gridOptions = reactive<VxeGridProps>({
       slots: { default: "courseTeacher_default", edit: "courseTeacher_edit" }
     },
     {
+      field: "timeTable",
+      title: "上课时间",
+      editRender: {},
+      slots: { default: "timeTable_default", edit: "timeTable_edit" }
+    },
+    {
+      field: "stock",
+      title: "座位数量",
+      editRender: {},
+      slots: { default: "stock_default", edit: "stock_edit" }
+    },
+    {
       field: "isMustDisplay",
       title: "是否必修",
       editRender: {},
       slots: { default: "isMust_default", edit: "isMust_edit" }
+    },
+    {
+      field: "graduate",
+      title: "学分",
+      editRender: {},
+      slots: { default: "graduate_default", edit: "graduate_edit" }
     },
     {
       field: "startTime",
@@ -138,13 +162,14 @@ const editRowEvent = (row: any) => {
   }
 };
 // Table "锁定" 按钮
-const saveRowEvent = async () => {
+const saveRowEvent = async (row: any) => {
   const $grid = xGrid.value;
   if ($grid) {
     await $grid.clearActived();
     gridOptions.loading = true;
     // 模拟异步保存
     setTimeout(() => {
+      console.log(row);
       gridOptions.loading = false;
       VXETable.modal.message({ content: "锁定成功🔒！", status: "success" });
     }, 300);
@@ -167,6 +192,15 @@ const removeRowEvent = async (row: any) => {
     }
   }
   console.log("删除" + row.id);
+};
+
+// fk: 翻译字段不变，提交不了。
+const change = (row: any) => {
+  if (row.isMust == "1") {
+    row.isMustDisplay = "必修";
+  } else {
+    row.isMustDisplay = "选修";
+  }
 };
 </script>
 
@@ -203,11 +237,32 @@ const removeRowEvent = async (row: any) => {
       <template #courseTeacher_edit="{ row }">
         <vxe-input v-model="row.courseTeacher" transfer />
       </template>
+      <template #timeTable_default="{ row }">
+        <span>{{ row.timeTable }}</span>
+      </template>
+      <template #timeTable_edit="{ row }">
+        <vxe-input v-model="row.timeTable" transfer />
+      </template>
+      <template #stock_default="{ row }">
+        <span>{{ row.stock }}</span>
+      </template>
+      <template #stock_edit="{ row }">
+        <vxe-input v-model="row.stock" transfer />
+      </template>
       <template #isMust_default="{ row }">
         <span>{{ row.isMustDisplay }}</span>
       </template>
       <template #isMust_edit="{ row }">
-        <vxe-input v-model="row.isMust" transfer />
+        <vxe-select v-model="row.isMust" @change="change(row)">
+          <vxe-option value="0" label="选修" />
+          <vxe-option value="1" label="必修" />
+        </vxe-select>
+      </template>
+      <template #graduate_default="{ row }">
+        <span>{{ row.graduate }}</span>
+      </template>
+      <template #graduate_edit="{ row }">
+        <vxe-input v-model="row.graduate" transfer />
       </template>
       <template #startTime_default="{ row }">
         <span>{{ row.startTime }}</span>

@@ -78,7 +78,8 @@ export function useColumns() {
     {
       field: "isReset",
       title: "补考标记",
-      editRender: {}
+      editRender: {},
+      slots: { default: "isReset_default", edit: "isReset_edit" }
     },
     {
       field: "graduate",

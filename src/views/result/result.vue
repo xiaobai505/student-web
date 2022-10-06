@@ -84,6 +84,7 @@ const saveRowEvent = async (row: any) => {
     updateResult([row]).then(() => {
       gridOptions.loading = false;
       VXETable.modal.message({ content: "锁定成功🔒！", status: "success" });
+      window.location.reload();
     });
   }
 };
@@ -115,6 +116,15 @@ const cancelRowEvent = async () => {
       </template>
       <template #result_edit="{ row }">
         <vxe-input v-model="row.result" transfer />
+      </template>
+      <template #isReset_default="{ row }">
+        <span>{{ row.isReset }}</span>
+      </template>
+      <template #isReset_edit="{ row }">
+        <vxe-select v-model="row.isReset" transfer>
+          <vxe-option value="0" label="未补考" />
+          <vxe-option value="1" label="已补考" />
+        </vxe-select>
       </template>
       <!-- 操作列 插槽   -->
       <template #operate="{ row }">
