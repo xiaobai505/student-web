@@ -1,5 +1,6 @@
 buttons:
   hsLoginOut: LoginOut
+  info: Info
   hsfullscreen: FullScreen
   hsexitfullscreen: ExitFullscreen
   hsrefreshRoute: RefreshRoute

@@ -88,6 +88,13 @@ const { t, locale, translationCh, translationEn } = useTranslationLang();
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
+            <el-dropdown-item @click="$router.push('/profile')">
+              <IconifyIconOffline
+                icon="logout-circle-r-line"
+                style="margin: 5px"
+              />
+              {{ t("buttons.info") }}
+            </el-dropdown-item>
             <el-dropdown-item @click="logout">
               <IconifyIconOffline
                 icon="logout-circle-r-line"

@@ -1,4 +1,4 @@
-<script script setup lang="ts">
+<script setup lang="ts">
 import { reactive } from "vue";
 import { CourseList } from "/@/api/course";
 import { getMajorCourse, setCoursesByMajorId } from "/@/api/majorCourse";

@@ -33,3 +33,8 @@ export const updateUser = (data: object) => {
 export const delUser = (data: object) => {
   return http.delete("/dgy/user", { data });
 };
+
+// 更新用户
+export const resetPwd = (data: object) => {
+  return http.put("/dgy/user/resetPwd", { data });
+};

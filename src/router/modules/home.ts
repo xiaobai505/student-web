@@ -20,6 +20,15 @@ const homeRouter: RouteConfigsTable = {
       meta: {
         title: $t("menus.hshome")
       }
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: () => import("/@/views/welcome/profile/index.vue"),
+      meta: {
+        title: $t("buttons.info"),
+        showLink: false
+      }
     }
   ]
 };
