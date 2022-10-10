@@ -42,6 +42,8 @@ async function onSearch() {
 
 function handleCurrentChange(val: number) {
   console.log(`current page: ${val}`);
+  pagination.currentPage = val;
+  onSearch();
 }
 
 function handleSizeChange(val: number) {

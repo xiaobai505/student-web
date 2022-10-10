@@ -27,10 +27,10 @@ const gridOptions = reactive<VxeGridProps>({
         slots: { default: "studentName_item" }
       },
       {
-        field: "major",
+        field: "courseName",
         title: "课程",
         itemRender: {},
-        slots: { default: "major_item" }
+        slots: { default: "courseName_item" }
       },
       { itemRender: {}, slots: { default: "submit_item" } },
       { itemRender: {}, slots: { default: "reset_item" } }
@@ -131,8 +131,12 @@ const open = async () => {
           placeholder="请输入学生姓名"
         />
       </template>
-      <template #major_item="{ data }">
-        <vxe-input v-model="data.major" type="text" placeholder="专业检索" />
+      <template #courseName_item="{ data }">
+        <vxe-input
+          v-model="data.courseName"
+          type="text"
+          placeholder="专业检索"
+        />
       </template>
       <template #submit_item>
         <vxe-button type="submit" status="primary" content="查询" />
