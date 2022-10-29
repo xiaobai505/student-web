@@ -13,7 +13,6 @@ import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
 import { storageSession } from "@pureadmin/utils";
 import { $t, transformI18n } from "/@/plugins/i18n";
-import { ref, reactive, watch, computed } from "vue";
 import { operates, thirdParty } from "./utils/enums";
 import { useLayout } from "/@/layout/hooks/useLayout";
 import { useUserStoreHook } from "/@/store/modules/user";
@@ -23,6 +22,14 @@ import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { removeToken, setToken } from "/@/utils/auth";
 import { useTranslationLang } from "/@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "/@/layout/hooks/useDataThemeChange";
+import {
+  ref,
+  reactive,
+  watch,
+  computed,
+  onMounted,
+  onBeforeUnmount
+} from "vue";
 
 import dayIcon from "/@/assets/svg/day.svg?component";
 import darkIcon from "/@/assets/svg/dark.svg?component";
@@ -94,6 +101,21 @@ watch(imgCode, value => {
 });
 
 dataThemeChange();
+
+/** 使用公共函数，避免`removeEventListener`失效 */
+function onkeypress({ code }: KeyboardEvent) {
+  if (code === "Enter") {
+    onLogin(ruleFormRef.value);
+  }
+}
+
+onMounted(() => {
+  window.document.addEventListener("keypress", onkeypress);
+});
+
+onBeforeUnmount(() => {
+  window.document.removeEventListener("keypress", onkeypress);
+});
 </script>
 
 <template>
@@ -158,7 +180,6 @@ dataThemeChange();
             :model="ruleForm"
             :rules="loginRules"
             size="large"
-            @keyup.enter="onLogin(ruleFormRef)"
           >
             <Motion :delay="100">
               <el-form-item
