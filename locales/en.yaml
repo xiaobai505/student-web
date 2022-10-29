@@ -68,6 +68,7 @@ menus:
   hsMenuTree: Menu Tree
   hsWatermark: Water Mark
   hsPrint: Print
+  hsDownload: Download
   hsExternalPage: External Page
   hsPureDocument: Pure Doc(Embedded)
   externalLink: Pure Doc(External)
