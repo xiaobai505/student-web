@@ -14,6 +14,7 @@ import panel from "../panel/index.vue";
 import { emitter } from "/@/utils/mitt";
 import { resetRouter } from "/@/router";
 import { templateRef } from "@vueuse/core";
+import { removeToken } from "/@/utils/auth";
 import { routerArrays } from "/@/layout/types";
 import { useNav } from "/@/layout/hooks/useNav";
 import { useAppStoreHook } from "/@/store/modules/app";
@@ -30,7 +31,6 @@ import { toggleTheme } from "@pureadmin/theme/dist/browser-utils";
 
 import dayIcon from "/@/assets/svg/day.svg?component";
 import darkIcon from "/@/assets/svg/dark.svg?component";
-import { removeToken } from "/@/utils/auth";
 
 const router = useRouter();
 const { device } = useNav();
@@ -132,7 +132,7 @@ const multiTagsCacheChange = () => {
 
 /** 清空缓存并返回登录页 */
 function onReset() {
-  router.push("/login");
+  removeToken();
   storageLocal.clear();
   storageSession.clear();
   const { Grey, Weak, MultiTagsCache, EpThemeColor, Layout } = getConfig();
@@ -141,9 +141,9 @@ function onReset() {
   useMultiTagsStoreHook().multiTagsCacheChange(MultiTagsCache);
   toggleClass(Grey, "html-grey", document.querySelector("html"));
   toggleClass(Weak, "html-weakness", document.querySelector("html"));
+  router.push("/login");
   useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
   resetRouter();
-  removeToken();
 }
 
 function onChange(label) {
