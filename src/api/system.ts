@@ -1,31 +1,26 @@
 import { http } from "../utils/http";
 
-interface ResponseType extends Promise<any> {
-  data?: object;
-  code?: number;
-  msg?: string;
-}
-
-// 登录
-export const getLogin = (data: object): ResponseType => {
-  return http.post("/auth/login", { data });
+type Result = {
+  success: boolean;
+  data?: {
+    /** 列表数据 */
+    list: Array<any>;
+    /** 总数 */
+    total?: number;
+  };
 };
 
-// 获取验证码
-export const getVerify = (): ResponseType => {
-  return http.get("/captcha");
+/** 获取用户管理列表 */
+export const getUserList = (data?: object) => {
+  return http.request<Result>("post", "/user", { data });
 };
 
-// 刷新token
-export const refreshToken = (data: object): ResponseType => {
-  return http.post("/refreshToken", { data });
+/** 获取角色管理列表 */
+export const getRoleList = (data?: object) => {
+  return http.request<Result>("post", "/role", { data });
 };
 
-export const searchVague = (data: object) => {
-  return http.request("post", "/searchVague", { data });
-};
-
-// user API接口
-export const getRolesById = (id: number) => {
-  return http.get("/dgy/roleUser/" + id);
+/** 获取部门管理列表 */
+export const getDeptList = (data?: object) => {
+  return http.request<Result>("post", "/dept", { data });
 };

@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import {
+  ref,
+  reactive,
+  watch,
+  computed,
+  onMounted,
+  onBeforeUnmount
+} from "vue";
 import { useI18n } from "vue-i18n";
 import Motion from "./utils/motion";
 import { useRouter } from "vue-router";
@@ -12,7 +20,6 @@ import { initRouter } from "/@/router/utils";
 import { useNav } from "/@/layout/hooks/useNav";
 import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
-import { storageSession } from "@pureadmin/utils";
 import { $t, transformI18n } from "/@/plugins/i18n";
 import { operates, thirdParty } from "./utils/enums";
 import { useLayout } from "/@/layout/hooks/useLayout";
@@ -20,26 +27,17 @@ import { useUserStoreHook } from "/@/store/modules/user";
 import { bg, avatar, currentWeek } from "./utils/static";
 import { ReImageVerify } from "/@/components/ReImageVerify";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { removeToken, setToken } from "/@/utils/auth";
 import { useTranslationLang } from "/@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "/@/layout/hooks/useDataThemeChange";
-import {
-  ref,
-  reactive,
-  watch,
-  computed,
-  onMounted,
-  onBeforeUnmount
-} from "vue";
 
 import dayIcon from "/@/assets/svg/day.svg?component";
 import darkIcon from "/@/assets/svg/dark.svg?component";
 import globalization from "/@/assets/svg/globalization.svg?component";
-import { getLogin } from "/@/api/system";
 
 defineOptions({
   name: "Login"
 });
+
 const imgCode = ref("");
 const router = useRouter();
 const loading = ref(false);
@@ -49,11 +47,11 @@ const currentPage = computed(() => {
   return useUserStoreHook().currentPage;
 });
 
+const { t } = useI18n();
 const { initStorage } = useLayout();
 initStorage();
-
-const { t } = useI18n();
 const { dataTheme, dataThemeChange } = useDataThemeChange();
+dataThemeChange();
 const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
 const { locale, translationCh, translationEn } = useTranslationLang();
 
@@ -66,42 +64,25 @@ const ruleForm = reactive({
 const onLogin = async (formEl: FormInstance | undefined) => {
   loading.value = true;
   if (!formEl) return;
-  await formEl.validate(async (valid, fields) => {
+  await formEl.validate((valid, fields) => {
     if (valid) {
-      // 模拟请求，需根据实际开发进行修改
-      removeToken();
-      // 项目需要表单提交
-      let userInfo = new window.FormData();
-      userInfo.append("username", ruleForm.username);
-      userInfo.append("password", ruleForm.password);
-      let { data } = await getLogin(userInfo);
-      loading.value = false;
-      setToken(data);
-      storageSession.setItem("info", {
-        username: ruleForm.username,
-        authorizedToken: data,
-        accessToken: "eyJhbGciOiJIUzUxMiJ9." + ruleForm.username
-      });
-      initRouter("admin").then(() => {});
-      message.success("登录成功");
-      router.push("/");
+      useUserStoreHook()
+        .loginByUsername({ username: ruleForm.username })
+        .then(res => {
+          if (res.success) {
+            // 获取后端路由
+            initRouter().then(() => {
+              message.success("登录成功");
+              router.push("/");
+            });
+          }
+        });
     } else {
       loading.value = false;
       return fields;
     }
   });
 };
-
-function onHandle(value) {
-  useUserStoreHook().SET_CURRENTPAGE(value);
-}
-
-watch(imgCode, value => {
-  console.log("验证码是：" + value);
-  useUserStoreHook().SET_VERIFYCODE(value);
-});
-
-dataThemeChange();
 
 /** 使用公共函数，避免`removeEventListener`失效 */
 function onkeypress({ code }: KeyboardEvent) {
@@ -116,6 +97,10 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.document.removeEventListener("keypress", onkeypress);
+});
+
+watch(imgCode, value => {
+  useUserStoreHook().SET_VERIFYCODE(value);
 });
 </script>
 
@@ -267,7 +252,7 @@ onBeforeUnmount(() => {
                     :key="index"
                     class="w-full mt-4"
                     size="default"
-                    @click="onHandle(index + 1)"
+                    @click="useUserStoreHook().SET_CURRENTPAGE(index + 1)"
                   >
                     {{ t(item.title) }}
                   </el-button>

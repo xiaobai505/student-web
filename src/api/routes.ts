@@ -1,16 +1,10 @@
 import { http } from "../utils/http";
 
-interface ResponseType extends Promise<any> {
-  data?: object;
-  code?: number;
-  msg?: string;
-}
-
-// RouteConfigsTable 路由配置类型
-export const getAsyncRoutes = (params?: string): ResponseType => {
-  return http.get("/routes/getAsyncRoutes/" + params);
+type Result = {
+  success: boolean;
+  data: Array<any>;
 };
 
-export const getRoutes = (): ResponseType => {
-  return http.get("/routes");
+export const getAsyncRoutes = () => {
+  return http.request<Result>("get", "/getAsyncRoutes");
 };

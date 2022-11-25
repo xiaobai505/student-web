@@ -35,7 +35,7 @@ menus:
   hsMeun: 菜单管理
   hsLog: 登录记录
   hseditor: 编辑器
-  hserror: 错误页面
+  hsabnormal: 异常页面
   hsfourZeroFour: "404"
   hsfourZeroOne: "403"
   hsFive: "500"

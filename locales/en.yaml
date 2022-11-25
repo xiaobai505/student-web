@@ -35,7 +35,7 @@ menus:
   hsMeun: Meun Manage
   hsLog: HsLog Manage
   hseditor: Editor
-  hserror: Error Page
+  hsabnormal: Abnormal Page
   hsfourZeroFour: "404"
   hsfourZeroOne: "403"
   hsFive: "500"
