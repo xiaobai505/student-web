@@ -28,12 +28,45 @@ export type RefreshTokenResult = {
   };
 };
 
+// 登录
+export const getLogin = (data: object) => {
+  return http.post("/auth/login", { data });
+};
+
 /** 登录 */
-export const getLogin = (data?: object) => {
+export const getLogin2 = (data?: object) => {
   return http.request<UserResult>("post", "/login", { data });
 };
 
 /** 刷新token */
 export const refreshTokenApi = (data?: object) => {
   return http.request<RefreshTokenResult>("post", "/refreshToken", { data });
+};
+
+// 获取用户
+export const getUser = () => {
+  return http.get("/dgy/user");
+};
+
+// 分页查询pageUser
+export const pageUser = (params?: object) => {
+  return http.get("/dgy/user/page", { params });
+};
+
+// 保存用户
+export const saveUser = (data: object) => {
+  return http.post("/dgy/user", { data });
+};
+// 更新用户
+export const updateUser = (data: object) => {
+  return http.put("/dgy/user", { data });
+};
+// 删除用户
+export const delUser = (data: object) => {
+  return http.delete("/dgy/user", { data });
+};
+
+// 更新用户
+export const resetPwd = (data: object) => {
+  return http.put("/dgy/user/resetPwd", { data });
 };

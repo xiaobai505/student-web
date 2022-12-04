@@ -4,7 +4,7 @@ import { userType } from "./types";
 import { routerArrays } from "/@/layout/types";
 import { router, resetRouter } from "/@/router";
 import { storageSession } from "@pureadmin/utils";
-import { getLogin, refreshTokenApi } from "/@/api/user";
+import { getLogin, refreshTokenApi} from "/@/api/user";
 import { UserResult, RefreshTokenResult } from "/@/api/user";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 import {
@@ -46,10 +46,14 @@ export const useUserStore = defineStore({
     /** 登入 */
     async loginByUsername(data) {
       return new Promise<UserResult>((resolve, reject) => {
-        getLogin(data)
+        // 项目需要表单提交
+        const userInfo = new window.FormData();
+        userInfo.append("username", data.username);
+        userInfo.append("password", data.password);
+        getLogin(userInfo)
           .then(data => {
             if (data) {
-              setToken(data.data);
+              // setToken(data.data);
               resolve(data);
             }
           })

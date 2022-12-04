@@ -67,7 +67,10 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username })
+        .loginByUsername({
+          username: ruleForm.username,
+          password: ruleForm.password
+        })
         .then(res => {
           if (res.success) {
             // 获取后端路由
@@ -100,6 +103,7 @@ onBeforeUnmount(() => {
 });
 
 watch(imgCode, value => {
+  console.log("imgCode:" + value);
   useUserStoreHook().SET_VERIFYCODE(value);
 });
 </script>
