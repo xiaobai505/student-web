@@ -54,7 +54,6 @@ export const useUserStore = defineStore({
           .then(data => {
             if (data) {
               setToken(data.data);
-              debugger;
               resolve(data);
             }
           })
