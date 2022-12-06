@@ -4,7 +4,7 @@ import { userType } from "./types";
 import { routerArrays } from "/@/layout/types";
 import { router, resetRouter } from "/@/router";
 import { storageSession } from "@pureadmin/utils";
-import { getLogin, refreshTokenApi} from "/@/api/user";
+import { getLogin, refreshTokenApi } from "/@/api/user";
 import { UserResult, RefreshTokenResult } from "/@/api/user";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 import {
@@ -53,7 +53,8 @@ export const useUserStore = defineStore({
         getLogin(userInfo)
           .then(data => {
             if (data) {
-              // setToken(data.data);
+              setToken(data.data);
+              debugger;
               resolve(data);
             }
           })
