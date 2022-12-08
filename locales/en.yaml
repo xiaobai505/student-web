@@ -98,6 +98,7 @@ menus:
   hsPdf: PDF Preview
   hsExecl: Export Excel
   hsInfiniteScroll: Table Infinite Scroll
+  hsdanmaku: Danmaku Components
   hsMajor: Major
   hsCourse: Course
   hsStudentCourse: Student Add Course

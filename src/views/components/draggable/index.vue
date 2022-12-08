@@ -2,7 +2,7 @@
 import Sortable from "sortablejs";
 import { ref, onMounted } from "vue";
 import draggable from "vuedraggable/src/vuedraggable";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 
 defineOptions({
   name: "Draggable"
@@ -54,7 +54,7 @@ onMounted(() => {
   <el-card>
     <template #header>
       <div class="card-header">
-        <span>
+        <span class="font-medium">
           拖拽组件，采用开源的
           <el-link
             href="https://sortablejs.github.io/vue.draggable.next/#/simple"

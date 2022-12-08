@@ -98,6 +98,7 @@ menus:
   hsPdf: PDF预览
   hsExecl: 导出Excel
   hsInfiniteScroll: 表格无限滚动
+  hsdanmaku: 弹幕组件
   hsMajor: 专业
   hsCourse: 课程
   hsStudentCourse: 报名选修课
