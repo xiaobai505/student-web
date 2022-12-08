@@ -1,11 +1,15 @@
-import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import Axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  CustomParamsSerializer
+} from "axios";
 import {
   PureHttpError,
   RequestMethods,
   PureHttpResponse,
   PureHttpRequestConfig
 } from "./types.d";
-import qs from "qs";
+import { stringify } from "qs";
 import NProgress from "../progress";
 import { loadEnv } from "@build/index";
 import { getToken, removeToken } from "/@/utils/auth";
@@ -30,8 +34,10 @@ const defaultConfig: AxiosRequestConfig = {
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest"
   },
-  // 数组格式参数序列化
-  paramsSerializer: params => qs.stringify(params, { indices: false })
+  // 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
+  paramsSerializer: {
+    serialize: stringify as unknown as CustomParamsSerializer
+  }
 };
 
 class PureHttp {
@@ -61,7 +67,7 @@ class PureHttp {
           PureHttp.initConfig.beforeRequestCallback($config);
           return $config;
         }
-        /** 请求白名单（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
+        /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
         const whiteList = ["/refreshToken", "/login"];
         return whiteList.some(v => config.url.indexOf(v) > -1)
           ? config
