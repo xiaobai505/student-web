@@ -24,7 +24,7 @@ const homeRouter: RouteConfigsTable = {
     {
       path: "/profile",
       name: "Profile",
-      component: () => import("/@/views/welcome/profile/index.vue"),
+      component: () => import("@/views/welcome/profile/index.vue"),
       meta: {
         title: $t("buttons.info"),
         showLink: false

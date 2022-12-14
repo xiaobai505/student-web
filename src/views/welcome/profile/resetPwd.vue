@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { ElMessage, FormInstance } from "element-plus";
-import { resetPwd } from "/@/api/user";
+import { resetPwd } from "@/api/user";
 
 const equalToPassword = (rule, value, callback) => {
   if (data.user.newPassword !== value) {

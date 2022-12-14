@@ -42,10 +42,10 @@ export const useUserStore = defineStore({
     async loginByUsername(data) {
       return new Promise<UserResult>((resolve, reject) => {
         // 项目需要表单提交
-        const userInfo = new window.FormData();
-        userInfo.append("username", data.username);
-        userInfo.append("password", data.password);
-        getLogin(userInfo)
+        const formData = new FormData();
+        formData.append("username", data.username);
+        formData.append("password", data.password);
+        getLogin(formData)
           .then(data => {
             if (data) {
               setToken(data.data);

@@ -28,14 +28,24 @@ export type RefreshTokenResult = {
   };
 };
 
-// 登录
-export const getLogin = (data: object) => {
+/** 登录 */
+export const getLogin2 = (data?: FormData) => {
   return http.post("/auth/login", { data });
 };
 
 /** 登录 */
-export const getLogin2 = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+export const getLogin = (data?: object) => {
+  return http.request<UserResult>(
+    "post",
+    "/auth/login",
+    { data },
+    // 自定义的axios配置在下面对象填写即可
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }
+  );
 };
 
 /** 刷新token */

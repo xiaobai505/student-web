@@ -12,9 +12,9 @@ import {
 import { stringify } from "qs";
 import NProgress from "../progress";
 import { loadEnv } from "@build/index";
-import { getToken, removeToken } from "/@/utils/auth";
-import { useUserStoreHook } from "/@/store/modules/user";
-import router from "/@/router";
+import { getToken, removeToken } from "@/utils/auth";
+import { useUserStoreHook } from "@/store/modules/user";
+import router from "@/router";
 import { message } from "@pureadmin/components";
 
 // 加载环境变量 VITE_PROXY_DOMAIN（开发环境）  VITE_PROXY_DOMAIN_REAL（打包后的线上环境）

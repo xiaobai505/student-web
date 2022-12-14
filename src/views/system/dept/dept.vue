@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { getDeptList, saveDept } from "/@/api/dept";
+import { getDeptList, saveDept } from "@/api/dept";
 import { cloneDeep } from "lodash-unified";
-import { pageUser } from "/@/api/user";
+import { pageUser } from "@/api/user";
 
 const dialog = reactive({
   // 弹出层标题

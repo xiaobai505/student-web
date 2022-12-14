@@ -4,8 +4,8 @@ import { VxeGridInstance, VxeGridProps, VXETable } from "vxe-table";
 import { storageLocal } from "@pureadmin/utils";
 import rowRoles from "/@/views/system/user/rowRoles.vue";
 import Tree from "/@/views/system/user/tree.vue";
-import { delUser, pageUser, saveUser, updateUser } from "/@/api/user";
-import { roles } from "/@/api/role";
+import { delUser, pageUser, saveUser, updateUser } from "@/api/user";
+import { roles } from "@/api/role";
 
 const xGrid = ref<VxeGridInstance>();
 const gridOptions = reactive({

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { getUser, updateUser } from "/@/api/user";
+import { getUser, updateUser } from "@/api/user";
 import { ElMessage, FormInstance } from "element-plus";
 
 const data = reactive({

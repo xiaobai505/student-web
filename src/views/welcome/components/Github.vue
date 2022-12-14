@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useColumns } from "./columns";
-import { getUser } from "/@/api/user";
+import { getUser } from "@/api/user";
 import { reactive } from "vue";
 const { columnsA, columnsB, columnsC } = useColumns();
 
