@@ -2,13 +2,14 @@
 import { useI18n } from "vue-i18n";
 import { ref, reactive } from "vue";
 import Motion from "../utils/motion";
+import { message } from "@/utils/message";
 import { phoneRules } from "../utils/rule";
-import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { useVerifyCode } from "../utils/verifyCode";
 import { useUserStoreHook } from "@/store/modules/user";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Iphone from "@iconify-icons/ep/iphone";
 
 const { t } = useI18n();
 const loading = ref(false);
@@ -26,7 +27,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
     if (valid) {
       // 模拟登录请求，需根据实际开发进行修改
       setTimeout(() => {
-        message.success(transformI18n($t("login.loginSuccess")));
+        message(transformI18n($t("login.loginSuccess")), { type: "success" });
         loading.value = false;
       }, 2000);
     } else {
@@ -50,7 +51,7 @@ function onBack() {
           clearable
           v-model="ruleForm.phone"
           :placeholder="t('login.phone')"
-          :prefix-icon="useRenderIcon('iphone')"
+          :prefix-icon="useRenderIcon(Iphone)"
         />
       </el-form-item>
     </Motion>

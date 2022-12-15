@@ -1,9 +1,18 @@
-<script lang="ts" setup>
+<script setup lang="ts">
+import { handleTree } from "@/utils/tree";
 import type { ElTree } from "element-plus";
-import { handleTree } from "@pureadmin/utils";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { getCurrentInstance, onMounted, ref, watch } from "vue";
-import { getDeptList } from "/@/api/dept";
+import { getDeptList } from "@/api/system";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { ref, watch, onMounted, getCurrentInstance } from "vue";
+
+import LocationCompany from "@iconify-icons/ep/add-location";
+import UnExpand from "@iconify-icons/mdi/arrow-expand-right";
+import Expand from "@iconify-icons/mdi/arrow-expand-down";
+import More2Fill from "@iconify-icons/ri/more-2-fill";
+import Reset from "@iconify-icons/ri/restart-line";
+import Dept from "@iconify-icons/ri/git-branch-line";
+import OfficeBuilding from "@iconify-icons/ep/office-building";
+import Search from "@iconify-icons/ep/search";
 
 interface Tree {
   id: number;
@@ -21,13 +30,12 @@ const searchValue = ref("");
 const { proxy } = getCurrentInstance();
 const treeRef = ref<InstanceType<typeof ElTree>>();
 
-let highlightMap = ref({});
+const highlightMap = ref({});
 
 const filterNode = (value: string, data: Tree) => {
   if (!value) return true;
   return data.name.includes(value);
 };
-const emit = defineEmits<{ (e: "handleClose", v: number) }>();
 
 function nodeClick(value) {
   const nodeId = value.$treeNodeId;
@@ -43,13 +51,11 @@ function nodeClick(value) {
       v.highlight = false;
     }
   });
-  // 把id返回给父页面
-  emit("handleClose", value.id);
 }
 
 function toggleRowExpansionAll(status) {
-  let nodes = (proxy.$refs["treeRef"] as any).store._getAllNodes();
-  for (var i = 0; i < nodes.length; i++) {
+  const nodes = (proxy.$refs["treeRef"] as any).store._getAllNodes();
+  for (let i = 0; i < nodes.length; i++) {
     nodes[i].expanded = status;
   }
 }
@@ -66,12 +72,8 @@ watch(searchValue, val => {
 });
 
 onMounted(async () => {
-  await getDeptList().then(data => {
-    treeData.value = handleTree(data as any);
-  });
-  // let { data } = await getDeptList();
-  // console.log("data:" + data);
-  // treeData.value = handleTree(data);
+  const { data } = await getDeptList();
+  treeData.value = handleTree(data as any);
 });
 </script>
 
@@ -92,7 +94,7 @@ onMounted(async () => {
           <el-icon class="el-input__icon">
             <IconifyIconOffline
               v-show="searchValue.length === 0"
-              icon="search"
+              :icon="Search"
             />
           </el-icon>
         </template>
@@ -101,7 +103,7 @@ onMounted(async () => {
         <IconifyIconOffline
           class="w-[28px] cursor-pointer"
           width="18px"
-          icon="more-vertical"
+          :icon="More2Fill"
         />
         <template #dropdown>
           <el-dropdown-menu>
@@ -110,7 +112,7 @@ onMounted(async () => {
                 class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
                 link
                 type="primary"
-                :icon="useRenderIcon('expand')"
+                :icon="useRenderIcon(Expand)"
                 @click="toggleRowExpansionAll(true)"
               >
                 展开全部
@@ -121,7 +123,7 @@ onMounted(async () => {
                 class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
                 link
                 type="primary"
-                :icon="useRenderIcon('unExpand')"
+                :icon="useRenderIcon(UnExpand)"
                 @click="toggleRowExpansionAll(false)"
               >
                 折叠全部
@@ -132,7 +134,7 @@ onMounted(async () => {
                 class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
                 link
                 type="primary"
-                :icon="useRenderIcon('reset')"
+                :icon="useRenderIcon(Reset)"
                 @click="onReset"
               >
                 重置状态
@@ -177,10 +179,10 @@ onMounted(async () => {
           <IconifyIconOffline
             :icon="
               data.type === 1
-                ? 'office-building'
+                ? OfficeBuilding
                 : data.type === 2
-                ? 'location-company'
-                : 'dept'
+                ? LocationCompany
+                : Dept
             "
           />
           {{ node.label }}

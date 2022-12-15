@@ -6,8 +6,8 @@ defineOptions({
   name: "Selector"
 });
 
-let selectRange = ref<string>("");
-let dataLists = ref([
+const selectRange = ref<string>("");
+const dataLists = ref([
   {
     title: "基本使用",
     echo: [],
@@ -39,7 +39,7 @@ const selectedVal = ({ left, right }): void => {
         @selectedVal="selectedVal"
         :disabled="item.disabled"
       />
-      <h4 v-if="!item.disabled">选中范围：{{ selectRange }}</h4>
+      <h4 class="mt-3" v-if="!item.disabled">选中范围：{{ selectRange }}</h4>
     </el-card>
   </div>
 </template>

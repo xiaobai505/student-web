@@ -19,8 +19,8 @@ buttons:
   hscloseRightTabs: Close RightTabs
   hscloseOtherTabs: Close OtherTabs
   hscloseAllTabs: Close AllTabs
-  hswholeFullScreen: Whole FullScreen
-  hswholeExitFullScreen: Whole ExitFullScreen
+  hswholeFullScreen: FullScreen
+  hswholeExitFullScreen: ExitFull
   hscontentFullScreen: Content FullScreen
   hscontentExitFullScreen: Content ExitFullScreen
 menus:
@@ -40,6 +40,7 @@ menus:
   hsfourZeroOne: "403"
   hsFive: "500"
   hscomponents: Components
+  hsmessage: Message Tips Components
   hsvideo: Video Components
   hsmap: Map Components
   hsdraggable: Draggable Components
@@ -75,6 +76,11 @@ menus:
   hsPureDocument: Pure Doc(Embedded)
   externalLink: Pure Doc(External)
   hsEpDocument: Element Plus Doc(Embedded)
+  hsVueDocument: Vue3 Doc(Embedded)
+  hsViteDocument: Vite Doc(Embedded)
+  hsPiniaDocument: Pinia Doc(Embedded)
+  hsRouterDocument: Vue Router Doc(Embedded)
+  hsTailwindcssDocument: Tailwindcss Doc(Embedded)
   hsAbout: About
   hsResult: Result Page
   hsSuccess: Success Page
@@ -83,9 +89,6 @@ menus:
   hsIconSelect: Icon Select
   hsTimeline: Time Line
   hsLineTree: LineTree
-  hsAntTabs: Imitate Antdv Tabs
-  hsAntAnchor: Imitate Antdv Anchor
-  hsAntTreeSelect: Imitate Antdv TreeSelector
   hsList: List Page
   hsListCard: Card List Page
   hsDebounce: Debounce & Throttle
@@ -99,6 +102,9 @@ menus:
   hsExecl: Export Excel
   hsInfiniteScroll: Table Infinite Scroll
   hsdanmaku: Danmaku Components
+  hsPureTableBase: Base Usage
+  hsPureTableHigh: High Usage
+  hsTree: Big Data Tree
   hsMajor: Major
   hsCourse: Course
   hsStudentCourse: Student Add Course

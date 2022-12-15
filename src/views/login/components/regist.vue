@@ -2,13 +2,16 @@
 import { useI18n } from "vue-i18n";
 import { ref, reactive } from "vue";
 import Motion from "../utils/motion";
+import { message } from "@/utils/message";
 import { updateRules } from "../utils/rule";
-import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
 import { useVerifyCode } from "../utils/verifyCode";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { useUserStoreHook } from "@/store/modules/user";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Lock from "@iconify-icons/ri/lock-fill";
+import Iphone from "@iconify-icons/ep/iphone";
+import User from "@iconify-icons/ri/user-3-fill";
 
 const { t } = useI18n();
 const checked = ref(false);
@@ -45,12 +48,14 @@ const onUpdate = async (formEl: FormInstance | undefined) => {
       if (checked.value) {
         // 模拟请求，需根据实际开发进行修改
         setTimeout(() => {
-          message.success(transformI18n($t("login.registerSuccess")));
+          message(transformI18n($t("login.registerSuccess")), {
+            type: "success"
+          });
           loading.value = false;
         }, 2000);
       } else {
         loading.value = false;
-        message.warning(transformI18n($t("login.tickPrivacy")));
+        message(transformI18n($t("login.tickPrivacy")), { type: "warning" });
       }
     } else {
       loading.value = false;
@@ -87,7 +92,7 @@ function onBack() {
           clearable
           v-model="ruleForm.username"
           :placeholder="t('login.username')"
-          :prefix-icon="useRenderIcon('user')"
+          :prefix-icon="useRenderIcon(User)"
         />
       </el-form-item>
     </Motion>
@@ -98,7 +103,7 @@ function onBack() {
           clearable
           v-model="ruleForm.phone"
           :placeholder="t('login.phone')"
-          :prefix-icon="useRenderIcon('iphone')"
+          :prefix-icon="useRenderIcon(Iphone)"
         />
       </el-form-item>
     </Motion>
@@ -134,7 +139,7 @@ function onBack() {
           show-password
           v-model="ruleForm.password"
           :placeholder="t('login.password')"
-          :prefix-icon="useRenderIcon('lock')"
+          :prefix-icon="useRenderIcon(Lock)"
         />
       </el-form-item>
     </Motion>
@@ -146,7 +151,7 @@ function onBack() {
           show-password
           v-model="ruleForm.repeatPassword"
           :placeholder="t('login.sure')"
-          :prefix-icon="useRenderIcon('lock')"
+          :prefix-icon="useRenderIcon(Lock)"
         />
       </el-form-item>
     </Motion>

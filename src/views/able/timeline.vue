@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { markRaw } from "vue";
 import { useRenderFlicker } from "@/components/ReFlicker";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Iphone from "@iconify-icons/ep/iphone";
 
 defineOptions({
   name: "TimeLine"
@@ -11,12 +13,12 @@ const activities = [
   {
     content: "支持圆点闪动",
     timestamp: lastBuildTime,
-    icon: useRenderFlicker()
+    icon: markRaw(useRenderFlicker())
   },
   {
     content: "支持方形闪动",
     timestamp: lastBuildTime,
-    icon: useRenderFlicker({ borderRadius: 0, background: "#67C23A" })
+    icon: markRaw(useRenderFlicker({ borderRadius: 0, background: "#67C23A" }))
   },
   {
     content: "支持默认颜色",
@@ -31,7 +33,7 @@ const activities = [
     content: "支持自定义图标",
     timestamp: lastBuildTime,
     color: "transparent",
-    icon: useRenderIcon("iphone", {
+    icon: useRenderIcon(Iphone, {
       color: "#0bbd87"
     })
   }

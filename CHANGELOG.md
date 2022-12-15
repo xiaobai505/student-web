@@ -1,3 +1,102 @@
+# 3.9.0 (2022-11-30)
+
+### 🐞 Bug fixes
+
+- Fixed the jitter problem caused by the scroll bar on the page when the text is too long when exiting the full screen
+- Fix some type errors
+
+### 🍏 Perf
+
+- perf: Great optimization of the first screen loading. Compared with the version before `3.9.0`, the first screen requests are reduced by `71`, and the first screen loading resources are reduced by `4.1 MB`
+
+# 3.8.7 (2022-11-28)
+
+### 🍏 Perf
+
+- perf: Great package optimization, please be sure to upgrade! Use `unplugin-vue-define-options` to replace `unplugin-vue-macros`, the packaging speed is increased several times, use `unplugin-vue-macros` to take `mac` with moderate performance as an example, the packaging time of the full version is` 6` minutes😭, after replacing it with `unplugin-vue-define-options`, the packaging time on the same computer is `50` seconds☺️
+
+# 3.8.6 (2022-11-27)
+
+### 🎫 Feat
+
+- Add `message` message prompt function, compatible with `Element Plus` and `Ant ​​Design` two `Message` style styles, use and package size are extremely low cost and adapt to dark mode, really fragrant 😂
+
+### 🍏 Perf
+
+- perf: No need to install `@vue/runtime-core`, compatible with `volar` hints of all `element-plus` components
+
+# 3.8.5 (2022-11-26)
+
+### 🍏 Perf
+
+- Great optimization, remove `@pureadmin/components` and use compatible writing, the package size of the platform is reduced by `0.4` MB before compression is not enabled, and the resource of `2.3` MB is reduced for the first screen request, which is for the [lite version ](https://github.com/xiaoxian521/pure-admin-thin) is a very big optimization, the streamlined version has synchronized code
+
+# 3.8.0 (2022-11-26)
+
+### 🎫 Feat
+
+- Add `@pureadmin/table` multiple data format (deep structure) examples
+- Add `@pureadmin/table` image preview example
+- Add `@pureadmin/table` row and column drag example
+- Add `@pureadmin/table` context menu example
+- Add `@pureadmin/table` export `Excel` example
+- Add `@pureadmin/table` edit cell example
+- Add `@pureadmin/table` watermark example
+- Add `@pureadmin/table` print example
+- Add `@pureadmin/table` embedded `echarts` chart example
+- Add `svgo` to compress all `svg` files on the platform to reduce the size
+
+### 🍏 Perf
+
+- The static routing platform automatically imports without manual import
+- Improved global type hints
+- Optimize `vite` to rely on pre-built configurations in the platform, and the loading speed of page switching is significantly accelerated
+
+# 3.7.1 (2022-11-22)
+
+### 🔥 hotfix
+
+- Fixed the problem that the tab page may not be reset when logging out when the tab page cache is not turned on
+
+# 3.7.0 (2022-11-21)
+
+### ✔️ refactor
+
+- Replace `driver.js` with `intro.js`
+
+### 🎫 Feat
+
+- Add front-end single sign-on, test address https://yiming_chang.gitee.io/vue-pure-admin/#/pure-table/index?username=sso&roles=admin&accessToken=eyJhbGciOiJIUzUxMiJ9.admin
+- Add more examples for [@pureadmin/table](https://github.com/xiaoxian521/pure-admin-table) and `element-plus` [table](https://element-plus.org /zh-CN/component/table.html) example remains the same
+- Rich watermark function page (supports customizing various colors, shadows, text, additional attributes, setting undeletable watermarks and setting watermarks for specified elements)
+- Optimize the menu, add `MenuArrowIconNoTransition` global configuration, configure it in `public/serverConfig.json`, for the left menu mode, the menu expansion can be set `MenuArrowIconNoTransition: true` to solve
+- Replacement form designer component demo
+
+### 🐞 Bug fixes
+
+- Repair the in-page menu with parameters to jump to each other, the label is not selected and highlighted
+
+### 🍏 Perf
+
+- Removed deprecated `$baseUrl`
+- Compatible importing a certain library leads to `global is not defined` error, importing `src/utils/globalPolyfills.ts` file into `src/main.ts` can solve the problem
+- Remove `@vitejs/plugin-legacy`, `vue3` cannot make it support `ie` through any tool
+
+# 3.6.4 (2022-11-10)
+
+### 🎫 Feat
+
+- Menu icon `icon` supports using online icons
+
+### 🐞 Bug fixes
+
+- Fixed `vxe-button` font color issue after mouse overlay and some other style issues
+
+### 🍏 Perf
+
+- Optimize the routing guard, if you have logged in and there is login information, you cannot jump to the routing whitelist, but continue to stay on the current page
+- Removed `baseURL` and global environment proxy, and can be written directly in `vite.config.ts`, which is convenient and supports multiple proxy addresses
+
 # 3.6.3 (2022-11-01)
 
 ### 🎫 Feat
@@ -106,7 +205,7 @@
 
 - Secondary encapsulation of `Table` of `element-plus` into [@pureadmin/table](https://github.com/xiaoxian521/pure-admin-table), providing flexible configuration items and integrating into the platform
 - Secondary encapsulation of `Descriptions` of `element-plus` into [@pureadmin/descriptions](https://github.com/xiaoxian521/pure-admin-descriptions), providing flexible configuration items and integrating into the platform
-- Centralize most of the tools and hooks of the platform to [@pureadmin/utils](https://pure-admin-utils-docs.vercel.app/), and delete the code concentrated in this library to reduce the size of the platform
+- Centralize most of the tools and hooks of the platform to [@pureadmin/utils](https://pure-admin-utils.netlify.app), and delete the code concentrated in this library to reduce the size of the platform
 - Add [unplugin-vue-define-options](https://www.npmjs.com/package/unplugin-vue-define-options) plugin, the page can directly write `defineOptions({name: custom name})`
 - Add project files, language analysis tool [cloc](https://www.npmjs.com/package/cloc)
 - Added landing page internationalization
@@ -267,7 +366,6 @@
 - Optimize the tab page to bring a better interactive experience
 - Routing title supports direct writing in Chinese, which can be separated from internationalization
 - Route history mode is read from env and supports base parameter
-- Packaged files provide traditional browser compatibility support, configure VITE_LEGACY to true
 
 # 2.6.0(2021-11-10)
 

@@ -1,24 +1,27 @@
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
+import { formdesign } from "@/router/enums";
+const IFrame = () => import("@/layout/frameView.vue");
 
-const formDesignRouter: RouteConfigsTable = {
+import TerminalWindowLine from "@iconify-icons/ri/terminal-window-line";
+
+export default {
   path: "/formDesign",
   redirect: "/formDesign/index",
   meta: {
-    icon: "terminal-window-line",
+    icon: TerminalWindowLine,
     title: $t("menus.hsFormDesign"),
-    rank: 2
+    rank: formdesign
   },
   children: [
     {
       path: "/formDesign/index",
       name: "FormDesign",
-      component: () => import("@/views/form-design/index.vue"),
+      component: IFrame,
       meta: {
-        title: $t("menus.hsFormDesign")
+        title: $t("menus.hsFormDesign"),
+        frameSrc:
+          "https://haixin-fang.github.io/starfish-vue3-lowcode/playground/index.html#/"
       }
     }
   ]
-};
-
-export default formDesignRouter;
+} as RouteConfigsTable;

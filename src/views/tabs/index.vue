@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { cloneDeep } from "lodash-unified";
-import { transformI18n } from "@/plugins/i18n";
-import { TreeSelect } from "@pureadmin/components";
-import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
-import { usePermissionStoreHook } from "@/store/modules/permission";
 import {
   deleteChildren,
   getNodeByUniqueId,
   appendFieldByUniqueId
-} from "@pureadmin/utils";
+} from "@/utils/tree";
 import { useDetail } from "./hooks";
+import { ref, computed } from "vue";
+import { clone } from "@pureadmin/utils";
+import { transformI18n } from "@/plugins/i18n";
+import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+import { usePermissionStoreHook } from "@/store/modules/permission";
 
 defineOptions({
   name: "Tabs"
 });
 
 const { toDetail, router } = useDetail();
-let menusTree = cloneDeep(usePermissionStoreHook().wholeMenus);
+const menusTree = clone(usePermissionStoreHook().wholeMenus, true);
 
-let treeData = computed(() => {
+const treeData = computed(() => {
   return appendFieldByUniqueId(deleteChildren(menusTree), 0, {
     disabled: true
   });
 });
 
-const value = ref<string[]>([]);
+const currentValues = ref<string[]>([]);
 
-let multiTags = computed(() => {
+const multiTags = computed(() => {
   return useMultiTagsStoreHook()?.multiTags;
 });
 
 function onCloseTags() {
-  value.value.forEach(uniqueId => {
-    let currentPath =
+  if (currentValues.value.length === 0) return;
+  currentValues.value.forEach(uniqueId => {
+    const currentPath =
       getNodeByUniqueId(treeData.value, uniqueId).redirect ??
       getNodeByUniqueId(treeData.value, uniqueId).path;
     useMultiTagsStoreHook().handleTags("splice", currentPath);
@@ -77,32 +77,27 @@ function onCloseTags() {
     </div>
 
     <el-divider />
-    <TreeSelect
+    <el-tree-select
       class="w-[300px]"
-      v-model:value="value"
-      show-search
-      :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+      node-key="uniqueId"
       placeholder="请选择要关闭的标签"
-      :fieldNames="{
-        children: 'children',
-        key: 'uniqueId',
-        value: 'uniqueId'
-      }"
-      allow-clear
+      clearable
       multiple
-      tree-default-expand-all
-      :tree-data="treeData"
+      filterable
+      default-expand-all
+      :props="{
+        label: data => transformI18n(data.meta.title),
+        value: 'uniqueId',
+        children: 'children',
+        disabled: 'disabled'
+      }"
+      :data="treeData"
+      v-model="currentValues"
     >
-      <template #tagRender="{ closable, onClose, option }">
-        <el-tag class="mr-[3px]" :closable="closable" @close="onClose">
-          {{ transformI18n(option.meta.title) }}
-        </el-tag>
-      </template>
-
-      <template #title="{ data }">
+      <template #default="{ data }">
         <span>{{ transformI18n(data.meta.title) }}</span>
       </template>
-    </TreeSelect>
+    </el-tree-select>
     <el-button class="m-2" @click="onCloseTags">关闭标签</el-button>
 
     <el-divider />
@@ -116,6 +111,28 @@ function onCloseTags() {
       @click="$router.push({ path: '/nested/menu1/menu1-2/menu1-2-2' })"
     >
       跳转页内菜单（传path对象）
+    </el-button>
+
+    <el-divider />
+    <el-button
+      @click="
+        $router.push({
+          name: 'Menu1-2-2',
+          query: { text: '传name对象，优先推荐' }
+        })
+      "
+    >
+      携参跳转页内菜单（传name对象，优先推荐）
+    </el-button>
+    <el-button
+      @click="
+        $router.push({
+          path: '/nested/menu1/menu1-2/menu1-2-2',
+          query: { text: '传path对象' }
+        })
+      "
+    >
+      携参跳转页内菜单（传path对象）
     </el-button>
     <el-link
       class="ml-4"

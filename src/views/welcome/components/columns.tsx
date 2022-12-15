@@ -1,47 +1,54 @@
 import { IconifyIconOffline } from "@/components/ReIcon";
+import TypeIt from "@/components/ReTypeit";
+import OfficeBuilding from "@iconify-icons/ep/office-building";
+import Tickets from "@iconify-icons/ep/tickets";
+import Location from "@iconify-icons/ep/location";
+import Iphone from "@iconify-icons/ep/iphone";
+import Notebook from "@iconify-icons/ep/notebook";
+import User from "@iconify-icons/ri/user-3-fill";
 
 export function useColumns() {
   const lists = [
-    { type: "", label: "学霸" },
-    { type: "success", label: "三好学生" },
-    { type: "info", label: "文艺委员" },
-    { type: "danger", label: "学生会主席" },
-    { type: "warning", label: "国家奖学金" }
+    { type: "", label: "善良" },
+    { type: "success", label: "好学" },
+    { type: "info", label: "幽默" },
+    { type: "danger", label: "旅游" },
+    { type: "warning", label: "追剧" }
   ];
 
   const columnsA = [
     {
-      prop: "name",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="user" />
+            <IconifyIconOffline icon={User} />
           </el-icon>
           用户名
         </div>
-      )
+      ),
+      value: "xiaoxian"
     },
     {
-      prop: "phone",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="iphone" />
+            <IconifyIconOffline icon={Iphone} />
           </el-icon>
           手机号
         </div>
-      )
+      ),
+      value: "123456789"
     },
     {
-      prop: "address",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="location" />
+            <IconifyIconOffline icon={Location} />
           </el-icon>
           居住地
         </div>
-      )
+      ),
+      value: "杭州"
     }
   ];
 
@@ -50,7 +57,7 @@ export function useColumns() {
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="tickets" />
+            <IconifyIconOffline icon={Tickets} />
           </el-icon>
           标签
         </div>
@@ -66,28 +73,35 @@ export function useColumns() {
       }
     },
     {
-      prop: "email",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="office-building" />
+            <IconifyIconOffline icon={OfficeBuilding} />
           </el-icon>
-          电子邮箱
+          联系地址
         </div>
-      )
+      ),
+      value: "杭州市西湖区"
     }
   ];
 
   const columnsC = [
     {
-      prop: "deptName",
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="notebook" />
+            <IconifyIconOffline icon={Notebook} />
           </el-icon>
-          所属学校（部门）信息
+          好好学习，天天向上
         </div>
+      ),
+      cellRenderer: () => (
+        <TypeIt
+          className={"github"}
+          values={["Coding as art. Keep open source. Enjoy open source."]}
+          cursor={false}
+          speed={40}
+        />
       )
     }
   ];

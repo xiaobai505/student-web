@@ -4,7 +4,7 @@ import { useDark, useECharts, type EchartOptions } from "@pureadmin/utils";
 
 const { isDark } = useDark();
 
-let theme: EchartOptions["theme"] = computed(() => {
+const theme: EchartOptions["theme"] = computed(() => {
   return isDark.value ? "dark" : "light";
 });
 
@@ -22,9 +22,11 @@ setOptions(
       }
     },
     grid: {
-      bottom: "20%",
-      height: "68%",
-      containLabel: true
+      containLabel: true,
+      top: "10px",
+      bottom: "0",
+      left: "0",
+      right: "0"
     },
     xAxis: [
       {
@@ -37,21 +39,24 @@ setOptions(
           // width: "70",
           // overflow: "truncate"
         },
-        data: ["计算机、互联网", "继续教育", "科研,研究院", "考公"]
+        data: ["open_issues", "forks", "watchers", "star"],
+        triggerEvent: true
       }
     ],
     yAxis: [
       {
-        type: "value"
+        type: "value",
+        triggerEvent: true
       }
     ],
     series: [
       {
         name: "GitHub信息",
         type: "bar",
-        data: [543, 305, 143, 1079]
+        data: [1000, 10000, 20000, 66666]
       }
-    ]
+    ],
+    addTooltip: true
   },
   {
     name: "click",

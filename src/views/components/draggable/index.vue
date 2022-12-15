@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import Sortable from "sortablejs";
 import { ref, onMounted } from "vue";
+import Sortable, { Swap } from "sortablejs";
 import draggable from "vuedraggable/src/vuedraggable";
+import { useAppStoreHook } from "@/store/modules/app";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Rank from "@iconify-icons/ep/rank";
 
 defineOptions({
   name: "Draggable"
 });
 
-let gridLists = ref<Array<Object>>([
+const { setSortSwap } = useAppStoreHook();
+
+const gridLists = ref<Array<Object>>([
   { grid: "cn", num: 1 },
   { grid: "cn", num: 2 },
   { grid: "cn", num: 3 },
@@ -20,14 +24,14 @@ let gridLists = ref<Array<Object>>([
   { grid: "cn", num: 9 }
 ]);
 
-let lists = ref<Array<Object>>([
+const lists = ref<Array<Object>>([
   { people: "cn", id: 1, name: "www.itxst.com" },
   { people: "cn", id: 2, name: "www.baidu.com" },
   { people: "cn", id: 3, name: "www.taobao.com" },
   { people: "cn", id: 4, name: "www.google.com" }
 ]);
 
-let cutLists = ref([
+const cutLists = ref([
   { people: "cn", id: 1, name: "cut1" },
   { people: "cn", id: 2, name: "cut2" },
   { people: "cn", id: 3, name: "cut3" },
@@ -39,7 +43,8 @@ const change = (evt): void => {
 };
 
 onMounted(() => {
-  // 使用原生sortable实现元素位置切换
+  if (!useAppStoreHook().sortSwap) Sortable.mount(new Swap());
+  setSortSwap(true);
   new Sortable(document.querySelector(".cut-container"), {
     swap: true,
     forceFallback: true,
@@ -59,7 +64,7 @@ onMounted(() => {
           <el-link
             href="https://sortablejs.github.io/vue.draggable.next/#/simple"
             target="_blank"
-            :icon="useRenderIcon('rank')"
+            :icon="useRenderIcon(Rank)"
             style="font-size: 16px; margin: 0 4px 5px"
           >
             vuedraggable
@@ -121,7 +126,7 @@ onMounted(() => {
           <el-card>
             <template #header>
               <div class="card-header">
-                <span>拖拽实现元素位置切换</span>
+                <span>拖拽实现元素位置交换</span>
               </div>
             </template>
             <!-- 拖拽实现元素位置切换 -->

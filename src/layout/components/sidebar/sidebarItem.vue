@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import path from "path";
+import { getConfig } from "@/config";
 import { childrenType } from "../../types";
 import { useNav } from "@/layout/hooks/useNav";
 import { transformI18n } from "@/plugins/i18n";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, toRaw, PropType, nextTick, computed, CSSProperties } from "vue";
+
+import ArrowUp from "@iconify-icons/ep/arrow-up";
+import EpArrowDown from "@iconify-icons/ep/arrow-down";
+import ArrowLeft from "@iconify-icons/ep/arrow-left";
+import ArrowRight from "@iconify-icons/ep/arrow-right";
 
 const { layout, isCollapse } = useNav();
 
@@ -73,6 +79,16 @@ const getSpanStyle = computed(() => {
   return {
     overflow: "hidden",
     textOverflow: "ellipsis"
+  };
+});
+
+const expandCloseIcon = computed(() => {
+  if (!getConfig()?.MenuArrowIconNoTransition) return "";
+  return {
+    "expand-close-icon": useRenderIcon(EpArrowDown),
+    "expand-open-icon": useRenderIcon(ArrowUp),
+    "collapse-close-icon": useRenderIcon(ArrowRight),
+    "collapse-open-icon": useRenderIcon(ArrowLeft)
   };
 });
 
@@ -212,7 +228,12 @@ function resolvePath(routePath) {
     </el-menu-item>
   </template>
 
-  <el-sub-menu v-else ref="subMenu" :index="resolvePath(props.item.path)">
+  <el-sub-menu
+    v-else
+    ref="subMenu"
+    v-bind="expandCloseIcon"
+    :index="resolvePath(props.item.path)"
+  >
     <template #title>
       <div v-if="toRaw(props.item.meta.icon)" class="sub-menu-icon">
         <component

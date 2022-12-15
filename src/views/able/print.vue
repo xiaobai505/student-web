@@ -77,7 +77,7 @@ const options = [
 ];
 
 function onPrint() {
-  let el = options.filter(v => v.value === value.value)[0]?.el;
+  const el = options.filter(v => v.value === value.value)[0]?.el;
   Print(el).toPrint;
 }
 
@@ -270,7 +270,7 @@ const tableData: User[] = [
         }"
       >
         <p class="font-medium pt-1">Echart</p>
-        <Line class="echart" style="margin: 0 auto" />
+        <Line class="echart" style="margin: 0 auto; height: 300px" />
       </el-col>
 
       <el-col

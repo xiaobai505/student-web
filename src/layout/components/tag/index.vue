@@ -11,6 +11,13 @@ import { handleAliveRoute, delAliveRoutes } from "@/router/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { useResizeObserver, useDebounceFn, useFullscreen } from "@vueuse/core";
 
+import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
+import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
+import ArrowDown from "@iconify-icons/ri/arrow-down-s-line";
+import ArrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";
+import ArrowLeftSLine from "@iconify-icons/ri/arrow-left-s-line";
+import CloseBold from "@iconify-icons/ep/close-bold";
+
 const {
   route,
   router,
@@ -42,7 +49,7 @@ const {
 const tabDom = ref();
 const containerDom = ref();
 const scrollbarDom = ref();
-let isShowArrow = ref(false);
+const isShowArrow = ref(false);
 const { isFullscreen, toggle } = useFullscreen();
 
 const dynamicTagView = () => {
@@ -129,7 +136,7 @@ function dynamicRouteTag(value: string, parentPath: string): void {
   function concatPath(arr: object[], value: string, parentPath: string) {
     if (!hasValue) {
       arr.forEach((arrItem: any) => {
-        let pathConcat = parentPath + arrItem.path;
+        const pathConcat = parentPath + arrItem.path;
         if (arrItem.path === value || pathConcat === value) {
           useMultiTagsStoreHook().handleTags("push", {
             path: value,
@@ -160,7 +167,7 @@ function onFresh() {
 function deleteDynamicTag(obj: any, current: any, tag?: string) {
   // 存放被删除的缓存路由
   let delAliveRouteList = [];
-  let valueIndex: number = multiTags.value.findIndex((item: any) => {
+  const valueIndex: number = multiTags.value.findIndex((item: any) => {
     if (item.query) {
       if (item.path === obj.path) {
         return item.query === obj.query;
@@ -199,7 +206,7 @@ function deleteDynamicTag(obj: any, current: any, tag?: string) {
     // 从当前匹配到的路径中删除
     spliceRoute(valueIndex, 1);
   }
-  let newRoute = useMultiTagsStoreHook().handleTags("slice");
+  const newRoute = useMultiTagsStoreHook().handleTags("slice");
   if (current === route.path) {
     // 删除缓存路由
     tag
@@ -284,10 +291,10 @@ function onClickDrop(key, item, selectRoute?: RouteConfigs) {
       toggle();
       setTimeout(() => {
         if (isFullscreen.value) {
-          tagsViews[6].icon = "exit-fullscreen";
+          tagsViews[6].icon = ExitFullscreen;
           tagsViews[6].text = $t("buttons.hswholeExitFullScreen");
         } else {
-          tagsViews[6].icon = "fullscreen";
+          tagsViews[6].icon = Fullscreen;
           tagsViews[6].text = $t("buttons.hswholeFullScreen");
         }
       }, 100);
@@ -297,10 +304,10 @@ function onClickDrop(key, item, selectRoute?: RouteConfigs) {
       onContentFullScreen();
       setTimeout(() => {
         if (pureSetting.hiddenSideBar) {
-          tagsViews[7].icon = "exit-fullscreen";
+          tagsViews[7].icon = ExitFullscreen;
           tagsViews[7].text = $t("buttons.hscontentExitFullScreen");
         } else {
-          tagsViews[7].icon = "fullscreen";
+          tagsViews[7].icon = Fullscreen;
           tagsViews[7].text = $t("buttons.hscontentFullScreen");
         }
       }, 100);
@@ -339,8 +346,8 @@ function showMenuModel(
   query: object = {},
   refresh = false
 ) {
-  let allRoute = multiTags.value;
-  let routeLength = multiTags.value.length;
+  const allRoute = multiTags.value;
+  const routeLength = multiTags.value.length;
   let currentIndex = -1;
   if (isEmpty(query)) {
     currentIndex = allRoute.findIndex(v => v.path === currentPath);
@@ -496,7 +503,7 @@ onMounted(() => {
 <template>
   <div ref="containerDom" class="tags-view" v-if="!showTags">
     <span v-show="isShowArrow" class="arrow-left">
-      <IconifyIconOffline icon="arrow-left-s-line" @click="handleScroll(200)" />
+      <IconifyIconOffline :icon="ArrowLeftSLine" @click="handleScroll(200)" />
     </span>
     <div ref="scrollbarDom" class="scroll-container">
       <div class="tab select-none" ref="tabDom" :style="getTabStyle">
@@ -530,7 +537,7 @@ onMounted(() => {
             class="el-icon-close"
             @click.stop="deleteMenu(item)"
           >
-            <IconifyIconOffline icon="close-bold" />
+            <IconifyIconOffline :icon="CloseBold" />
           </span>
           <div
             :ref="'schedule' + index"
@@ -541,10 +548,7 @@ onMounted(() => {
       </div>
     </div>
     <span v-show="isShowArrow" class="arrow-right">
-      <IconifyIconOffline
-        icon="arrow-right-s-line"
-        @click="handleScroll(-200)"
-      />
+      <IconifyIconOffline :icon="ArrowRightSLine" @click="handleScroll(-200)" />
     </span>
     <!-- 右键菜单按钮 -->
     <transition name="el-zoom-in-top">
@@ -573,7 +577,7 @@ onMounted(() => {
       @command="handleCommand"
     >
       <span class="arrow-down">
-        <IconifyIconOffline icon="arrow-down" class="dark:text-white" />
+        <IconifyIconOffline :icon="ArrowDown" class="dark:text-white" />
       </span>
       <template #dropdown>
         <el-dropdown-menu>

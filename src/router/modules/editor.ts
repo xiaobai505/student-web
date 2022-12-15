@@ -1,13 +1,14 @@
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
+import { editor } from "@/router/enums";
+import Edit from "@iconify-icons/ep/edit";
 
-const editorRouter: RouteConfigsTable = {
+export default {
   path: "/editor",
   redirect: "/editor/index",
   meta: {
-    icon: "edit",
+    icon: Edit,
     title: $t("menus.hseditor"),
-    rank: 2
+    rank: editor
   },
   children: [
     {
@@ -20,6 +21,4 @@ const editorRouter: RouteConfigsTable = {
       }
     }
   ]
-};
-
-export default editorRouter;
+} as RouteConfigsTable;

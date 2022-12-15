@@ -4,7 +4,6 @@ import { useRoute } from "vue-router";
 import { emitter } from "@/utils/mitt";
 import SidebarItem from "./sidebarItem.vue";
 import leftCollapse from "./leftCollapse.vue";
-import type { StorageConfigs } from "/#/index";
 import { useNav } from "@/layout/hooks/useNav";
 import { storageLocal } from "@pureadmin/utils";
 import { ref, computed, watch, onBeforeMount } from "vue";
@@ -19,7 +18,7 @@ const showLogo = ref(
 const { routers, device, pureApp, isCollapse, menuSelect, toggleSideBar } =
   useNav();
 
-let subMenuData = ref([]);
+const subMenuData = ref([]);
 
 const menuData = computed(() => {
   return pureApp.layout === "mix" && device.value !== "mobile"

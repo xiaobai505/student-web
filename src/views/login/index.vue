@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   ref,
+  toRaw,
   reactive,
   watch,
   computed,
@@ -10,6 +11,7 @@ import {
 import { useI18n } from "vue-i18n";
 import Motion from "./utils/motion";
 import { useRouter } from "vue-router";
+import { message } from "@/utils/message";
 import { loginRules } from "./utils/rule";
 import phone from "./components/phone.vue";
 import TypeIt from "@/components/ReTypeit";
@@ -18,13 +20,12 @@ import regist from "./components/regist.vue";
 import update from "./components/update.vue";
 import { initRouter } from "@/router/utils";
 import { useNav } from "@/layout/hooks/useNav";
-import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { operates, thirdParty } from "./utils/enums";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
-import { bg, avatar, currentWeek } from "./utils/static";
+import { bg, avatar, illustration } from "./utils/static";
 import { ReImageVerify } from "@/components/ReImageVerify";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
@@ -33,6 +34,9 @@ import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
 import globalization from "@/assets/svg/globalization.svg?component";
+import Lock from "@iconify-icons/ri/lock-fill";
+import Check from "@iconify-icons/ep/check";
+import User from "@iconify-icons/ri/user-3-fill";
 
 defineOptions({
   name: "Login"
@@ -75,8 +79,8 @@ const onLogin = async (formEl: FormInstance | undefined) => {
           if (res.success) {
             // 获取后端路由
             initRouter().then(() => {
-              message.success("登录成功");
               router.push("/");
+              message("登录成功", { type: "success" });
             });
           }
         });
@@ -135,7 +139,7 @@ watch(imgCode, value => {
               <IconifyIconOffline
                 class="check-zh"
                 v-show="locale === 'zh'"
-                icon="check"
+                :icon="Check"
               />
               简体中文
             </el-dropdown-item>
@@ -145,7 +149,7 @@ watch(imgCode, value => {
               @click="translationEn"
             >
               <span class="check-en" v-show="locale === 'en'">
-                <IconifyIconOffline icon="check" />
+                <IconifyIconOffline :icon="Check" />
               </span>
               English
             </el-dropdown-item>
@@ -155,7 +159,7 @@ watch(imgCode, value => {
     </div>
     <div class="login-container">
       <div class="img">
-        <component :is="currentWeek" />
+        <component :is="toRaw(illustration)" />
       </div>
       <div class="login-box">
         <div class="login-form">
@@ -188,7 +192,7 @@ watch(imgCode, value => {
                   clearable
                   v-model="ruleForm.username"
                   :placeholder="t('login.username')"
-                  :prefix-icon="useRenderIcon('user')"
+                  :prefix-icon="useRenderIcon(User)"
                 />
               </el-form-item>
             </Motion>
@@ -200,7 +204,7 @@ watch(imgCode, value => {
                   show-password
                   v-model="ruleForm.password"
                   :placeholder="t('login.password')"
-                  :prefix-icon="useRenderIcon('lock')"
+                  :prefix-icon="useRenderIcon(Lock)"
                 />
               </el-form-item>
             </Motion>

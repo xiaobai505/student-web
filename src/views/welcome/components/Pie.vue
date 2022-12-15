@@ -4,7 +4,7 @@ import { useDark, useECharts, type EchartOptions } from "@pureadmin/utils";
 
 const { isDark } = useDark();
 
-let theme: EchartOptions["theme"] = computed(() => {
+const theme: EchartOptions["theme"] = computed(() => {
   return isDark.value ? "dark" : "light";
 });
 
@@ -25,15 +25,16 @@ setOptions(
     },
     series: [
       {
-        name: "学院教师情况",
+        name: "Github信息",
         type: "pie",
-        radius: "60%",
+        top: "20%",
+        radius: "80%",
         center: ["40%", "50%"],
         data: [
-          { value: 643, name: "教授" },
-          { value: 832, name: "博士" },
-          { value: 1254, name: "研究生" },
-          { value: 15, name: "外聘国外教授" }
+          { value: 20000, name: "watchers" },
+          { value: 66666, name: "star" },
+          { value: 10000, name: "forks" },
+          { value: 1000, name: "open_issues" }
         ],
         emphasis: {
           itemStyle: {

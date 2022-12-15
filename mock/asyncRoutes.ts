@@ -1,5 +1,14 @@
 // 模拟后端动态生成路由
 import { MockMethod } from "vite-plugin-mock";
+import { system, permission, frame, tabs } from "@/router/enums";
+
+import FlUser from "@iconify-icons/ri/admin-line";
+import Role from "@iconify-icons/ri/admin-fill";
+import Dict from "@iconify-icons/ri/git-repository-line";
+import Setting from "@iconify-icons/ri/settings-3-line";
+import Dept from "@iconify-icons/ri/git-branch-line";
+import Lollipop from "@iconify-icons/ep/lollipop";
+import Monitor from "@iconify-icons/ep/monitor";
 
 /**
  * roles：页面级别权限，这里模拟二种 "admin"、"common"
@@ -10,16 +19,16 @@ import { MockMethod } from "vite-plugin-mock";
 const systemRouter = {
   path: "/system",
   meta: {
-    icon: "setting",
+    icon: Setting,
     title: "menus.hssysManagement",
-    rank: 11
+    rank: system
   },
   children: [
     {
       path: "/system/user/index",
       name: "User",
       meta: {
-        icon: "flUser",
+        icon: FlUser,
         title: "menus.hsUser",
         roles: ["admin"]
       }
@@ -28,7 +37,7 @@ const systemRouter = {
       path: "/system/role/index",
       name: "Role",
       meta: {
-        icon: "role",
+        icon: Role,
         title: "menus.hsRole",
         roles: ["admin"]
       }
@@ -37,7 +46,7 @@ const systemRouter = {
       path: "/system/dept/index",
       name: "Dept",
       meta: {
-        icon: "dept",
+        icon: Dept,
         title: "menus.hsDept",
         roles: ["admin"]
       }
@@ -47,7 +56,7 @@ const systemRouter = {
       component: "/system/dict/index",
       name: "Dict",
       meta: {
-        icon: "dict",
+        icon: Dict,
         title: "menus.hsDict",
         keepAlive: true,
         roles: ["admin"]
@@ -60,8 +69,8 @@ const permissionRouter = {
   path: "/permission",
   meta: {
     title: "menus.permission",
-    icon: "lollipop",
-    rank: 10
+    icon: Lollipop,
+    rank: permission
   },
   children: [
     {
@@ -87,25 +96,25 @@ const permissionRouter = {
 const frameRouter = {
   path: "/iframe",
   meta: {
-    icon: "monitor",
+    icon: Monitor,
     title: "menus.hsExternalPage",
-    rank: 7
+    rank: frame
   },
   children: [
+    {
+      path: "/external",
+      name: "https://yiming_chang.gitee.io/pure-admin-doc",
+      meta: {
+        title: "menus.externalLink",
+        roles: ["admin", "common"]
+      }
+    },
     {
       path: "/iframe/pure",
       name: "FramePure",
       meta: {
         title: "menus.hsPureDocument",
-        frameSrc: "http://yiming_chang.gitee.io/pure-admin-doc",
-        roles: ["admin", "common"]
-      }
-    },
-    {
-      path: "/external",
-      name: "http://yiming_chang.gitee.io/pure-admin-doc",
-      meta: {
-        title: "menus.externalLink",
+        frameSrc: "https://yiming_chang.gitee.io/pure-admin-doc",
         roles: ["admin", "common"]
       }
     },
@@ -117,6 +126,51 @@ const frameRouter = {
         frameSrc: "https://element-plus.org/zh-CN/",
         roles: ["admin", "common"]
       }
+    },
+    {
+      path: "/iframe/vue3",
+      name: "FrameVue",
+      meta: {
+        title: "menus.hsVueDocument",
+        frameSrc: "https://cn.vuejs.org/",
+        roles: ["admin", "common"]
+      }
+    },
+    {
+      path: "/iframe/vite",
+      name: "FrameVite",
+      meta: {
+        title: "menus.hsViteDocument",
+        frameSrc: "https://cn.vitejs.dev/",
+        roles: ["admin", "common"]
+      }
+    },
+    {
+      path: "/iframe/pinia",
+      name: "FramePinia",
+      meta: {
+        title: "menus.hsPiniaDocument",
+        frameSrc: "https://pinia.vuejs.org/zh/index.html",
+        roles: ["admin", "common"]
+      }
+    },
+    {
+      path: "/iframe/vue-router",
+      name: "FrameRouter",
+      meta: {
+        title: "menus.hsRouterDocument",
+        frameSrc: "https://router.vuejs.org/zh/",
+        roles: ["admin", "common"]
+      }
+    },
+    {
+      path: "/iframe/tailwindcss",
+      name: "FrameTailwindcss",
+      meta: {
+        title: "menus.hsTailwindcssDocument",
+        frameSrc: "https://tailwindcss.com/docs/installation",
+        roles: ["admin", "common"]
+      }
     }
   ]
 };
@@ -126,7 +180,7 @@ const tabsRouter = {
   meta: {
     icon: "IF-team-icontabs",
     title: "menus.hstabs",
-    rank: 13
+    rank: tabs
   },
   children: [
     {
@@ -137,6 +191,7 @@ const tabsRouter = {
         roles: ["admin", "common"]
       }
     },
+    // query 传参模式
     {
       path: "/tabs/query-detail",
       name: "TabQueryDetail",
@@ -146,11 +201,13 @@ const tabsRouter = {
         roles: ["admin", "common"]
       }
     },
+    // params 传参模式
     {
       path: "/tabs/params-detail/:id",
       component: "params-detail",
       name: "TabParamsDetail",
       meta: {
+        // 不在menu菜单中显示
         showLink: false,
         roles: ["admin", "common"]
       }

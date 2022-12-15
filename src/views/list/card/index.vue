@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import Card from "./components/Card.vue";
 import { getCardList } from "@/api/list";
+import { message } from "@/utils/message";
+import { ElMessageBox } from "element-plus";
 import { ref, onMounted, nextTick } from "vue";
 import dialogForm from "./components/DialogForm.vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Search from "@iconify-icons/ep/search";
+import AddFill from "@iconify-icons/ri/add-circle-line";
 
 defineOptions({
   name: "ListCard"
@@ -77,10 +80,7 @@ const handleDeleteItem = product => {
     }
   )
     .then(() => {
-      ElMessage({
-        type: "success",
-        message: "删除成功"
-      });
+      message("删除成功", { type: "success" });
     })
     .catch(() => {});
 };
@@ -95,7 +95,10 @@ const handleManageProduct = product => {
 <template>
   <div class="main">
     <div class="w-full flex justify-between mb-4">
-      <el-button :icon="useRenderIcon('add')" @click="formDialogVisible = true">
+      <el-button
+        :icon="useRenderIcon(AddFill)"
+        @click="formDialogVisible = true"
+      >
         新建产品
       </el-button>
       <el-input
@@ -108,7 +111,7 @@ const handleManageProduct = product => {
           <el-icon class="el-input__icon">
             <IconifyIconOffline
               v-show="searchValue.length === 0"
-              icon="search"
+              :icon="Search"
             />
           </el-icon>
         </template>

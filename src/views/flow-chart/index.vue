@@ -11,14 +11,16 @@ import { Snapshot, BpmnElement, Menu } from "@logicflow/extension";
 import { Control, NodePanel, DataDialog } from "@/components/ReFlowChart";
 import { toLogicflowData } from "@/components/ReFlowChart/src/adpterForTurbo";
 
+import SetUp from "@iconify-icons/ep/set-up";
+
 defineOptions({
   name: "FlowChart"
 });
 
-let lf = ref(null);
-let graphData = ref(null);
-let dataVisible = ref<boolean>(false);
-let config = ref({
+const lf = ref(null);
+const graphData = ref(null);
+const dataVisible = ref<boolean>(false);
+const config = ref({
   grid: true,
   background: {
     color: "#f7f9ff"
@@ -27,7 +29,7 @@ let config = ref({
     enabled: true
   }
 });
-let nodeList = BpmnNode;
+const nodeList = BpmnNode;
 
 function initLf() {
   // 画布配置
@@ -71,7 +73,7 @@ onMounted(() => {
           <el-link
             href="http://logic-flow.org/"
             target="_blank"
-            :icon="useRenderIcon('set-up')"
+            :icon="useRenderIcon(SetUp)"
             style="font-size: 16px; margin: 0 4px 5px"
           >
             LogicFlow
@@ -94,7 +96,7 @@ onMounted(() => {
       <div id="LF-Turbo" />
       <!-- 数据查看面板 -->
       <el-dialog
-        customClass="flow-dialog"
+        class="flow-dialog"
         title="数据"
         v-model="dataVisible"
         width="50%"

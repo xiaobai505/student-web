@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import "animate.css";
+// vxe-table的所有icon不支持component模式，间接依赖了font-awesome
+import "font-awesome/css/font-awesome.min.css";
 import { setType } from "./types";
 import { emitter } from "@/utils/mitt";
 import { useLayout } from "./hooks/useLayout";
@@ -70,7 +73,7 @@ let isAutoCloseSidebar = true;
 // 监听容器
 emitter.on("resize", ({ detail }) => {
   if (isMobile) return;
-  let { width } = detail;
+  const { width } = detail;
   width <= 760 ? setTheme("vertical") : setTheme(useAppStoreHook().layout);
   /** width app-wrapper类容器宽度
    * 0 < width <= 760 隐藏侧边栏

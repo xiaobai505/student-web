@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { cloneDeep } from "lodash-unified";
+import { clone } from "@pureadmin/utils";
 import { transformI18n } from "@/plugins/i18n";
 import ElTreeLine from "@/components/ReTreeLine";
-import { extractPathList, deleteChildren } from "@pureadmin/utils";
+import { extractPathList, deleteChildren } from "@/utils/tree";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 
 defineOptions({
   name: "LineTree"
 });
 
-let menusTree = cloneDeep(usePermissionStoreHook().wholeMenus);
-let menusData = computed(() => {
+const menusTree = clone(usePermissionStoreHook().wholeMenus, true);
+const menusData = computed(() => {
   return deleteChildren(menusTree);
 });
-let expandedKeys = extractPathList(menusData.value);
-let dataProps = {
+const expandedKeys = extractPathList(menusData.value);
+const dataProps = {
   value: "uniqueId",
   children: "children"
 };

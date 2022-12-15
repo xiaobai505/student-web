@@ -2,23 +2,22 @@
 import XEUtils from "xe-utils";
 import Config from "./config.vue";
 import { useI18n } from "vue-i18n";
-import { cloneDeep } from "lodash-unified";
+import { clone } from "@pureadmin/utils";
 import { reactive, ref, unref, nextTick } from "vue";
-import { handleTree, useCopyToClipboard } from "@pureadmin/utils";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { useCopyToClipboard } from "@pureadmin/utils";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import {
   VXETable,
   type TablePublicMethods,
-  // type VxeTableInstance,
+  type VxeTableInstance,
   type VxeFormPropTypes,
   type VxeTableEvents,
   type FormMethods
 } from "vxe-table";
-import { delDict, getDict, saveDict, updateDict } from "/@/api/dict";
+import Delete from "@iconify-icons/ep/delete";
+import EditPen from "@iconify-icons/ep/edit-pen";
 
 type onEditNRow = {
-  id: number;
-  parentId: number;
   name: string;
   model: string;
 };
@@ -52,12 +51,9 @@ const dictData = reactive({
         }
       ]
     },
-    { id: 2, name: "系统字段", model: "operatingSystem" },
-    { id: 3, name: "性别", model: "sex" }
+    { id: 2, name: "操作系统", model: "operatingSystem" }
   ],
   formData: {
-    id: null,
-    parentId: 0,
     name: "",
     model: ""
   },
@@ -80,17 +76,8 @@ const dictData = reactive({
         props: {
           placeholder: "请输入字典类型",
           //这里vxe-table文档并没有提到，可以配置所选组件的所有属性，比如这里可以配置关于vxe-input的所有属性
-          disabled: false
+          disabled: true
         }
-      }
-    },
-    {
-      field: "remark",
-      title: "字典备注",
-      span: 24,
-      itemRender: {
-        name: "$input",
-        props: { placeholder: "请输入字典备注" }
       }
     },
     {
@@ -107,11 +94,7 @@ const dictData = reactive({
   ] as VxeFormPropTypes.Items
 });
 
-getDict().then(data => {
-  dictData.tableData = handleTree(data);
-});
-
-let originData = cloneDeep(dictData.tableData);
+const originData = clone(dictData.tableData, true);
 
 const xTree = ref<TablePublicMethods>();
 const xForm = ref<FormMethods>();
@@ -151,13 +134,13 @@ const searchEvent = XEUtils.debounce(
   { leading: false, trailing: true }
 );
 
-const confirmEvent = async id => {
+const confirmEvent = async () => {
   const type = await VXETable.modal.confirm("您确定要删除吗？");
-  (await type) === "confirm" && (await delDict(id).then());
-  VXETable.modal.message({
-    content: "删除成功！",
-    status: "success"
-  });
+  (await type) === "confirm" &&
+    VXETable.modal.message({
+      content: "测试数据，不可删除",
+      status: "error"
+    });
 };
 
 function commonFn(value, disabled) {
@@ -172,18 +155,14 @@ function onAdd() {
 }
 
 // 新增子类型
-function onAddChild(row?: onEditNRow) {
+function onAddChild(row?: object) {
   console.log("onAddChild", row);
-  console.log("onAddChild parentId", dictData.formData.parentId);
-  dictData.formData.parentId = row.id;
   commonFn(null, false);
 }
 
 // 编辑
 function onEdit(row?: onEditNRow) {
   dictData.formData = {
-    id: row.id,
-    parentId: row.parentId,
     name: row.name,
     model: row.model ? row.model : "暂无字典类型"
   };
@@ -200,31 +179,33 @@ const cellDBLClickEvent: VxeTableEvents.CellDblclick = ({ row }) => {
   clipboardValue.value = unref(row).model;
 };
 
-// const xTable = ref({} as VxeTableInstance);
+const xTable = ref({} as VxeTableInstance);
 
-const submitEvent = async () => {
+const submitEvent = () => {
   dictData.submitLoading = true;
-  // const $table = xTable.value;
-  dictData.submitLoading = false;
-  dictData.showEdit = false;
-  if (dictData.selectRow) {
-    VXETable.modal.message({ content: "保存成功", status: "success" });
-    // Object.assign(dictData.selectRow, dictData.formData);
-    updateDict(dictData.formData).then();
-  } else {
-    VXETable.modal.message({ content: "新增成功", status: "success" });
-    // $table.insert(dictData.formData);
-    saveDict(dictData.formData).then();
-  }
+  setTimeout(() => {
+    const $table = xTable.value;
+    dictData.submitLoading = false;
+    dictData.showEdit = false;
+    if (dictData.selectRow) {
+      VXETable.modal.message({ content: "保存成功", status: "success" });
+      Object.assign(dictData.selectRow, dictData.formData);
+    } else {
+      VXETable.modal.message({ content: "新增成功", status: "success" });
+      $table.insert(dictData.formData);
+    }
+  }, 500);
 };
 
-// 父组件接收子组件暴露的方法，使用子组件的ref
-const config = ref<{ getdata(id: number): void }>();
+const drawer = ref(false);
 
-function onDeploy(value?: onEditNRow) {
-  console.log("onDeploy-打开字典配置", value.id);
-  // 使用子组件暴露的内容
-  config.value?.getdata(value.id);
+function onDeploy(value?: object) {
+  console.log("onDeploy", value);
+  drawer.value = true;
+}
+
+function handleClose() {
+  drawer.value = false;
 }
 
 function onExpand() {
@@ -309,30 +290,18 @@ function onHide() {
           </el-tooltip>
         </template>
       </vxe-table-column>
-      <vxe-table-column title="字典备注">
-        <template #default="{ row }">
-          <el-tooltip
-            effect="dark"
-            :content="'双击复制：' + row.remark"
-            placement="right"
-          >
-            <span class="text-model">{{ row.remark }}</span>
-          </el-tooltip>
-        </template>
-      </vxe-table-column>
       <vxe-table-column title="操作" width="360" fixed="right">
         <template #default="{ row }">
           <el-button
             link
             type="primary"
-            :icon="useRenderIcon('edits')"
+            :icon="useRenderIcon(EditPen)"
             @click="onEdit(row)"
           >
             编辑
           </el-button>
           <el-button
             link
-            v-show="row.parentId === '0'"
             type="primary"
             :icon="useRenderIcon('fa:plus-square-o')"
             @click="onAddChild(row)"
@@ -340,7 +309,7 @@ function onHide() {
             新增子类型
           </el-button>
           <el-button
-            v-show="row.parentId !== '0'"
+            v-show="row.model"
             link
             type="primary"
             :icon="useRenderIcon('fa:cog')"
@@ -351,8 +320,8 @@ function onHide() {
           <el-button
             link
             type="primary"
-            :icon="useRenderIcon('delete')"
-            @click="confirmEvent(row.id)"
+            :icon="useRenderIcon(Delete)"
+            @click="confirmEvent"
           >
             删除
           </el-button>
@@ -381,7 +350,7 @@ function onHide() {
       </template>
     </vxe-modal>
 
-    <Config ref="config" />
+    <Config :drawer="drawer" drawTitle="字典列表" @handleClose="handleClose" />
   </div>
 </template>
 

@@ -4,7 +4,7 @@ import { useDark, useECharts, type EchartOptions } from "@pureadmin/utils";
 
 const { isDark } = useDark();
 
-let theme: EchartOptions["theme"] = computed(() => {
+const theme: EchartOptions["theme"] = computed(() => {
   return isDark.value ? "dark" : "light";
 });
 
@@ -15,31 +15,36 @@ const { setOptions } = useECharts(lineChartRef as Ref<HTMLDivElement>, {
 
 setOptions(
   {
-    grid: {
-      bottom: "20%",
-      height: "68%",
-      containLabel: true
-    },
     tooltip: {
       trigger: "item"
+    },
+    grid: {
+      containLabel: true,
+      top: "10px",
+      bottom: "0",
+      left: "0",
+      right: "0"
     },
     xAxis: {
       type: "category",
       axisLabel: {
         interval: 0
       },
-      data: ["2019年", "2020年", "2021年", "2022年"]
+      data: ["open_issues", "forks", "watchers", "star"],
+      triggerEvent: true
     },
     yAxis: {
-      type: "value"
+      type: "value",
+      triggerEvent: true
     },
     series: [
       {
-        data: [3, 204, 400, 1079],
+        data: [1000, 10000, 20000, 66666],
         type: "line",
         areaStyle: {}
       }
-    ]
+    ],
+    addTooltip: true
   },
   {
     name: "click",

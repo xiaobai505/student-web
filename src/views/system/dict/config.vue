@@ -4,19 +4,24 @@ import { ref, reactive } from "vue";
 import { type Direction } from "element-plus";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { type VxeTableEvents, type VxeTableInstance } from "vxe-table";
-import { getDictConfig } from "/@/api/dictConfig";
+import Delete from "@iconify-icons/ep/delete";
+import EditPen from "@iconify-icons/ep/edit-pen";
 
 interface Props {
+  drawer: boolean;
   drawTitle?: string;
   direction?: Direction;
 }
 
 withDefaults(defineProps<Props>(), {
-  drawTitle: "字典列表",
+  drawer: false,
+  drawTitle: "",
   direction: "rtl"
 });
 
-let drawer = ref(false);
+const emit = defineEmits<{
+  (e: "handleClose"): void;
+}>();
 
 const { t } = useI18n();
 
@@ -25,12 +30,12 @@ const xTable = ref({} as VxeTableInstance);
 const configData = reactive({
   tableData: [
     {
-      dictDisplay: "禁用",
-      dictValue: "0"
+      name: "禁用",
+      dataval: "0"
     },
     {
-      dictDisplay: "启用",
-      dictValue: "1"
+      name: "启用",
+      dataval: "1"
     }
   ],
   isAllChecked: false,
@@ -43,23 +48,11 @@ const configData = reactive({
   }
 });
 
-async function getdata(id: number) {
-  drawer.value = !drawer.value;
-  await getDictConfig(id).then(data => {
-    configData.tableData = data;
-  });
-}
-
-// 使用defineExpose暴露inputVal和exposeFun
-defineExpose({
-  getdata
-});
-
 // 抽屉关闭
 function handleClose() {
   configData.isAllChecked = false;
   configData.isIndeterminate = false;
-  drawer.value = false;
+  emit("handleClose");
 }
 
 function editConfig(row) {
@@ -110,15 +103,14 @@ const checkboxChangeEvent: VxeTableEvents.CheckboxChange = ({ records }) => {
           @checkbox-all="checkboxChangeEvent"
         >
           <vxe-table-column type="checkbox" width="60" />
-          <vxe-table-column field="dictDisplay" title="名称" />
-          <vxe-table-column field="dictValue" title="数据值" />
-          <vxe-table-column field="remark" title="备注" />
+          <vxe-table-column field="name" title="名称" />
+          <vxe-table-column field="dataval" title="数据值" />
           <vxe-table-column title="操作" fixed="right">
             <template #default="{ row }">
               <el-button
                 link
                 type="primary"
-                :icon="useRenderIcon('edits')"
+                :icon="useRenderIcon(EditPen)"
                 @click="editConfig(row)"
               >
                 编辑
@@ -126,7 +118,7 @@ const checkboxChangeEvent: VxeTableEvents.CheckboxChange = ({ records }) => {
               <el-button
                 link
                 type="primary"
-                :icon="useRenderIcon('delete')"
+                :icon="useRenderIcon(Delete)"
                 @click="delConfig(row)"
               >
                 删除

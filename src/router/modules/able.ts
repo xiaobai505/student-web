@@ -1,13 +1,14 @@
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
+import { able } from "@/router/enums";
+import UbuntuFill from "@iconify-icons/ri/ubuntu-fill";
 
-const ableRouter: RouteConfigsTable = {
+export default {
   path: "/able",
   redirect: "/able/watermark",
   meta: {
-    icon: "ubuntu-fill",
+    icon: UbuntuFill,
     title: $t("menus.hsAble"),
-    rank: 4
+    rank: able
   },
   children: [
     {
@@ -64,30 +65,6 @@ const ableRouter: RouteConfigsTable = {
       component: () => import("@/views/able/line-tree.vue"),
       meta: {
         title: $t("menus.hsLineTree")
-      }
-    },
-    {
-      path: "/able/antTabs",
-      name: "AntTabs",
-      component: () => import("@/views/able/ant-tabs.vue"),
-      meta: {
-        title: $t("menus.hsAntTabs")
-      }
-    },
-    {
-      path: "/able/antAnchor",
-      name: "AntAnchor",
-      component: () => import("@/views/able/ant-anchor.vue"),
-      meta: {
-        title: $t("menus.hsAntAnchor")
-      }
-    },
-    {
-      path: "/able/antTreeSelect",
-      name: "AntTreeSelect",
-      component: () => import("@/views/able/ant-treeSelect.vue"),
-      meta: {
-        title: $t("menus.hsAntTreeSelect")
       }
     },
     {
@@ -163,6 +140,4 @@ const ableRouter: RouteConfigsTable = {
       }
     }
   ]
-};
-
-export default ableRouter;
+} as RouteConfigsTable;

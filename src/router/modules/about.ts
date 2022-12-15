@@ -1,13 +1,12 @@
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
+import { about } from "@/router/enums";
 
-const aboutRouter: RouteConfigsTable = {
+export default {
   path: "/about",
   redirect: "/about/index",
   meta: {
-    // icon: "question-line",
     title: $t("menus.hsAbout"),
-    rank: 15
+    rank: about
   },
   children: [
     {
@@ -19,6 +18,4 @@ const aboutRouter: RouteConfigsTable = {
       }
     }
   ]
-};
-
-export default aboutRouter;
+} as RouteConfigsTable;

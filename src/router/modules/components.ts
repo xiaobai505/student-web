@@ -1,15 +1,32 @@
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
+import { components } from "@/router/enums";
+import Menu from "@iconify-icons/ep/menu";
 
-const componentsRouter: RouteConfigsTable = {
+export default {
   path: "/components",
   redirect: "/components/video",
   meta: {
-    icon: "menu",
+    icon: Menu,
     title: $t("menus.hscomponents"),
-    rank: 5
+    rank: components
   },
   children: [
+    {
+      path: "/components/message",
+      name: "Message",
+      component: () => import("@/views/components/message/index.vue"),
+      meta: {
+        title: $t("menus.hsmessage"),
+        extraIcon: {
+          svg: true,
+          name: "team-iconxinpinrenqiwang"
+        },
+        transition: {
+          enterTransition: "animate__fadeInLeft",
+          leaveTransition: "animate__fadeOutRight"
+        }
+      }
+    },
     {
       path: "/components/video",
       name: "Video",
@@ -47,11 +64,7 @@ const componentsRouter: RouteConfigsTable = {
       name: "SplitPane",
       component: () => import("@/views/components/split-pane/index.vue"),
       meta: {
-        title: $t("menus.hssplitPane"),
-        extraIcon: {
-          svg: true,
-          name: "team-iconxinpinrenqiwang"
-        }
+        title: $t("menus.hssplitPane")
       }
     },
     {
@@ -127,6 +140,4 @@ const componentsRouter: RouteConfigsTable = {
       }
     }
   ]
-};
-
-export default componentsRouter;
+} as RouteConfigsTable;

@@ -1,65 +1,58 @@
 <script setup lang="ts">
 import { useColumns } from "./columns";
-import { handleTree } from "@pureadmin/utils";
+import { handleTree } from "@/utils/tree";
+import { getDeptList } from "@/api/system";
 import { FormInstance } from "element-plus";
 import { reactive, ref, onMounted } from "vue";
-import { TableProBar } from "/@/components/ReTable";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { delDept, getDeptList } from "/@/api/dept";
-import Dept from "/@/views/system/dept/dept.vue";
+import { TableProBar } from "@/components/ReTable";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Delete from "@iconify-icons/ep/delete";
+import EditPen from "@iconify-icons/ep/edit-pen";
+import Search from "@iconify-icons/ep/search";
+import Refresh from "@iconify-icons/ep/refresh";
+import AddFill from "@iconify-icons/ri/add-circle-line";
 
 defineOptions({
   name: "Dept"
 });
 
 const form = reactive({
-  name: "",
+  user: "",
   status: ""
 });
-
-let dataList = ref([]);
-let loading = ref(true);
+const dataList = ref([]);
+const loading = ref(true);
 const { columns } = useColumns();
 
 const formRef = ref<FormInstance>();
 const tableRef = ref();
 
 function handleUpdate(row) {
-  // 使用子组件暴露的内容
-  deptRef.value?.showDept(row);
+  console.log(row);
 }
 
 function handleDelete(row) {
-  delDept(row["id"]).then(res => {
-    console.log(res);
-    onSearch();
-  });
+  console.log(row);
 }
 
 function handleSelectionChange(val) {
   console.log("handleSelectionChange", val);
 }
-const onSearch = async () => {
+
+async function onSearch() {
   loading.value = true;
-  await getDeptList(form).then(data => {
-    dataList.value = handleTree(data as any);
+  const { data } = await getDeptList();
+  dataList.value = handleTree(data as any);
+  setTimeout(() => {
     loading.value = false;
-  });
-};
+  }, 500);
+}
 
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
   onSearch();
 };
-
-const addDept = () => {
-  // 使用子组件暴露的内容
-  deptRef.value?.showDept(null);
-};
-
-// 父组件接收子组件暴露的方法，使用子组件的ref
-const deptRef = ref<{ showDept(row: any): void }>();
 
 onMounted(() => {
   onSearch();
@@ -74,25 +67,25 @@ onMounted(() => {
       :model="form"
       class="bg-bg_color w-[99/100] pl-8 pt-4"
     >
-      <el-form-item label="部门名称：" prop="name">
-        <el-input v-model="form.name" placeholder="请输入部门名称" clearable />
+      <el-form-item label="部门名称：" prop="user">
+        <el-input v-model="form.user" placeholder="请输入部门名称" clearable />
       </el-form-item>
       <el-form-item label="状态：" prop="status">
         <el-select v-model="form.status" placeholder="请选择状态" clearable>
-          <el-option label="开启" value="0" />
-          <el-option label="关闭" value="1" />
+          <el-option label="开启" value="1" />
+          <el-option label="关闭" value="0" />
         </el-select>
       </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
-          :icon="useRenderIcon('search')"
+          :icon="useRenderIcon(Search)"
           :loading="loading"
           @click="onSearch"
         >
           搜索
         </el-button>
-        <el-button :icon="useRenderIcon('refresh')" @click="resetForm(formRef)">
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">
           重置
         </el-button>
       </el-form-item>
@@ -106,20 +99,17 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button
-          type="primary"
-          :icon="useRenderIcon('add')"
-          @click="addDept()"
-        >
+        <el-button type="primary" :icon="useRenderIcon(AddFill)">
           新增部门
         </el-button>
       </template>
       <template v-slot="{ size, checkList }">
-        <PureTable
+        <pure-table
           ref="tableRef"
           border
-          align="center"
+          align-whole="center"
           row-key="id"
+          showOverflowTooltip
           table-layout="auto"
           default-expand-all
           :size="size"
@@ -139,28 +129,27 @@ onMounted(() => {
               type="primary"
               :size="size"
               @click="handleUpdate(row)"
-              :icon="useRenderIcon('edits')"
+              :icon="useRenderIcon(EditPen)"
             >
               修改
             </el-button>
-            <el-popconfirm title="是否确认删除?" @confirm="handleDelete(row)">
+            <el-popconfirm title="是否确认删除?">
               <template #reference>
                 <el-button
-                  v-if="row.parentId !== 0"
                   class="reset-margin"
                   link
                   type="primary"
                   :size="size"
-                  :icon="useRenderIcon('delete')"
+                  :icon="useRenderIcon(Delete)"
+                  @click="handleDelete(row)"
                 >
                   删除
                 </el-button>
               </template>
             </el-popconfirm>
           </template>
-        </PureTable>
+        </pure-table>
       </template>
     </TableProBar>
-    <dept ref="deptRef" @onSearch="onSearch" />
   </div>
 </template>

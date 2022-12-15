@@ -5,6 +5,7 @@ import laptopIcon from "@/assets/svg/laptop.svg?component";
 import serviceIcon from "@/assets/svg/service.svg?component";
 import calendarIcon from "@/assets/svg/calendar.svg?component";
 import userAvatarIcon from "@/assets/svg/user_avatar.svg?component";
+import More2Fill from "@iconify-icons/ri/more-2-fill";
 
 defineOptions({
   name: "ReCard"
@@ -63,12 +64,8 @@ const cardLogoClass = computed(() => [
           >
             {{ product.isSetup ? "已启用" : "已停用" }}
           </el-tag>
-          <el-dropdown
-            trigger="click"
-            :disabled="!product.isSetup"
-            max-height="2"
-          >
-            <IconifyIconOffline icon="more-vertical" class="text-[24px]" />
+          <el-dropdown trigger="click" :disabled="!product.isSetup">
+            <IconifyIconOffline :icon="More2Fill" class="text-[24px]" />
             <template #dropdown>
               <el-dropdown-menu :disabled="!product.isSetup">
                 <el-dropdown-item @click="handleClickManage(product)">

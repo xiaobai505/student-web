@@ -19,8 +19,8 @@ buttons:
   hscloseRightTabs: 关闭右侧标签页
   hscloseOtherTabs: 关闭其他标签页
   hscloseAllTabs: 关闭全部标签页
-  hswholeFullScreen: 整体页面全屏
-  hswholeExitFullScreen: 整体页面退出全屏
+  hswholeFullScreen: 全屏
+  hswholeExitFullScreen: 退出全屏
   hscontentFullScreen: 内容区全屏
   hscontentExitFullScreen: 内容区退出全屏
 menus:
@@ -40,6 +40,7 @@ menus:
   hsfourZeroOne: "403"
   hsFive: "500"
   hscomponents: 组件
+  hsmessage: 消息提示组件
   hsvideo: 视频组件
   hsmap: 地图组件
   hsdraggable: 拖拽组件
@@ -72,9 +73,14 @@ menus:
   hsPrint: 打印
   hsDownload: 下载
   hsExternalPage: 外部页面
-  hsPureDocument: 平台文档(内嵌)
-  externalLink: 平台文档(外链)
-  hsEpDocument: Element Plus文档(内嵌)
+  hsPureDocument: 平台文档（内嵌）
+  externalLink: 平台文档（外链）
+  hsEpDocument: Element Plus 文档（内嵌）
+  hsVueDocument: Vue3 文档（内嵌）
+  hsViteDocument: Vite 文档（内嵌）
+  hsPiniaDocument: Pinia 文档（内嵌）
+  hsRouterDocument: Vue Router 文档（内嵌）
+  hsTailwindcssDocument: Tailwindcss 文档（内嵌）
   hsAbout: 关于
   hsResult: 成绩查询
   hsSuccess: 成功页面
@@ -83,9 +89,6 @@ menus:
   hsIconSelect: 图标选择器
   hsTimeline: 时间线
   hsLineTree: 树形连接线
-  hsAntTabs: 仿antdv标签页
-  hsAntAnchor: 仿antdv锚点
-  hsAntTreeSelect: 仿antdv树型选择器
   hsList: 列表页
   hsListCard: 卡片列表页
   hsDebounce: 防抖节流
@@ -99,6 +102,9 @@ menus:
   hsExecl: 导出Excel
   hsInfiniteScroll: 表格无限滚动
   hsdanmaku: 弹幕组件
+  hsPureTableBase: 基础用法（23个示例）
+  hsPureTableHigh: 高级用法（8个示例）
+  hsTree: 大数据树业务组件
   hsMajor: 专业
   hsCourse: 课程
   hsStudentCourse: 报名选修课

@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { useColumns } from "./columns";
+import { getRoleList } from "@/api/system";
 import { reactive, ref, onMounted } from "vue";
 import { type FormInstance } from "element-plus";
-import { TableProBar } from "/@/components/ReTable";
+import { TableProBar } from "@/components/ReTable";
 import { type PaginationProps } from "@pureadmin/table";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { delRole, roles } from "/@/api/role";
-import Role from "/@/views/system/role/role.vue";
-import MeunRole from "/@/views/system/role/meunRole.vue";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Database from "@iconify-icons/ri/database-2-line";
+import More from "@iconify-icons/ep/more-filled";
+import Delete from "@iconify-icons/ep/delete";
+import EditPen from "@iconify-icons/ep/edit-pen";
+import Search from "@iconify-icons/ep/search";
+import Refresh from "@iconify-icons/ep/refresh";
+import Menu from "@iconify-icons/ep/menu";
+import AddFill from "@iconify-icons/ri/add-circle-line";
 
 defineOptions({
   name: "Role"
@@ -19,8 +25,8 @@ const form = reactive({
   status: ""
 });
 
-let dataList = ref([]);
-let loading = ref(true);
+const dataList = ref([]);
+const loading = ref(true);
 const { columns } = useColumns();
 
 const formRef = ref<FormInstance>();
@@ -32,23 +38,12 @@ const pagination = reactive<PaginationProps>({
   background: true
 });
 
-// 父组件接收子组件暴露的方法，使用子组件的ref
-const roleRef = ref<{ showRole(row: any): void }>();
-const meunRef = ref<{ showMeun(row: any): void }>();
-
-function handleAdd() {
-  roleRef.value?.showRole(null);
-}
-
 function handleUpdate(row) {
-  roleRef.value?.showRole(row);
+  console.log(row);
 }
 
 function handleDelete(row) {
-  delRole(row.id).then(res => {
-    console.log(res);
-    onSearch();
-  });
+  console.log(row);
 }
 
 function handleCurrentChange(val: number) {
@@ -65,22 +60,18 @@ function handleSelectionChange(val) {
 
 async function onSearch() {
   loading.value = true;
-  await roles(null).then(data => {
+  const { data } = await getRoleList();
+  dataList.value = data.list;
+  pagination.total = data.total;
+  setTimeout(() => {
     loading.value = false;
-    dataList.value = data["records"];
-    pagination["total"] = parseInt(data["total"]);
-  });
+  }, 500);
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
   onSearch();
-};
-
-const openMeunRole = () => {
-  console.log("打开菜单权限");
-  meunRef.value?.showMeun(null);
 };
 
 onMounted(() => {
@@ -111,13 +102,13 @@ onMounted(() => {
       <el-form-item>
         <el-button
           type="primary"
-          :icon="useRenderIcon('search')"
+          :icon="useRenderIcon(Search)"
           :loading="loading"
           @click="onSearch"
         >
           搜索
         </el-button>
-        <el-button :icon="useRenderIcon('refresh')" @click="resetForm(formRef)">
+        <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">
           重置
         </el-button>
       </el-form-item>
@@ -130,18 +121,14 @@ onMounted(() => {
       @refresh="onSearch"
     >
       <template #buttons>
-        <el-button
-          type="primary"
-          :icon="useRenderIcon('add')"
-          @click="handleAdd"
-        >
+        <el-button type="primary" :icon="useRenderIcon(AddFill)">
           新增角色
         </el-button>
       </template>
       <template v-slot="{ size, checkList }">
-        <PureTable
+        <pure-table
           border
-          align="center"
+          align-whole="center"
           showOverflowTooltip
           table-layout="auto"
           :size="size"
@@ -149,7 +136,7 @@ onMounted(() => {
           :columns="columns"
           :checkList="checkList"
           :pagination="pagination"
-          :paginationSmall="size === 'small'"
+          :paginationSmall="size === 'small' ? true : false"
           :header-cell-style="{
             background: 'var(--el-table-row-hover-bg-color)',
             color: 'var(--el-text-color-primary)'
@@ -165,18 +152,19 @@ onMounted(() => {
               type="primary"
               :size="size"
               @click="handleUpdate(row)"
-              :icon="useRenderIcon('edits')"
+              :icon="useRenderIcon(EditPen)"
             >
               修改
             </el-button>
-            <el-popconfirm title="是否确认删除?" @confirm="handleDelete(row)">
+            <el-popconfirm title="是否确认删除?">
               <template #reference>
                 <el-button
                   class="reset-margin"
                   link
                   type="primary"
                   :size="size"
-                  :icon="useRenderIcon('delete')"
+                  :icon="useRenderIcon(Delete)"
+                  @click="handleDelete(row)"
                 >
                   删除
                 </el-button>
@@ -188,7 +176,8 @@ onMounted(() => {
                 link
                 type="primary"
                 :size="size"
-                :icon="useRenderIcon('more')"
+                @click="handleUpdate(row)"
+                :icon="useRenderIcon(More)"
               />
               <template #dropdown>
                 <el-dropdown-menu>
@@ -198,8 +187,7 @@ onMounted(() => {
                       link
                       type="primary"
                       :size="size"
-                      @click="openMeunRole"
-                      :icon="useRenderIcon('menu')"
+                      :icon="useRenderIcon(Menu)"
                     >
                       菜单权限
                     </el-button>
@@ -210,7 +198,7 @@ onMounted(() => {
                       link
                       type="primary"
                       :size="size"
-                      :icon="useRenderIcon('database')"
+                      :icon="useRenderIcon(Database)"
                     >
                       数据权限
                     </el-button>
@@ -219,13 +207,9 @@ onMounted(() => {
               </template>
             </el-dropdown>
           </template>
-        </PureTable>
+        </pure-table>
       </template>
     </TableProBar>
-
-    <role ref="roleRef" @onSearch="onSearch" />
-
-    <MeunRole ref="meunRef" />
   </div>
 </template>
 
