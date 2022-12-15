@@ -11,23 +11,12 @@ import {
 } from "./types.d";
 import { stringify } from "qs";
 import NProgress from "../progress";
-import { loadEnv } from "@build/index";
 import { getToken, formatToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
-import router from "@/router";
-import { message } from "@pureadmin/components";
-
-// 加载环境变量 VITE_PROXY_DOMAIN（开发环境）  VITE_PROXY_DOMAIN_REAL（打包后的线上环境）
-const { VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL } = loadEnv();
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
-  baseURL:
-    process.env.NODE_ENV === "production"
-      ? VITE_PROXY_DOMAIN_REAL
-      : VITE_PROXY_DOMAIN,
-  // 当前使用mock模拟请求，将baseURL制空，如果你的环境用到了http请求，请删除下面的baseURL启用上面的baseURL，并将11行、16行代码注释取消
-  // baseURL: "",
+  // 请求超时时间
   timeout: 10000,
   headers: {
     Accept: "application/json, text/plain, */*",
@@ -150,14 +139,6 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
-        if (
-          error.response.data["code"] &&
-          error.response.data["code"] === 50001003
-        ) {
-          removeToken();
-          message.success("warning:" + error.response.data["msg"]);
-          router.push("/login");
-        }
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }
@@ -207,23 +188,6 @@ class PureHttp {
     config?: PureHttpRequestConfig
   ): Promise<P> {
     return this.request<P>("get", url, params, config);
-  }
-  // 单独抽离的 put 工具函数
-  public put<T, P>(
-    url: string,
-    params?: T,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>("put", url, params, config);
-  }
-
-  // 单独抽离的 delete 工具函数
-  public delete<T, P>(
-    url: string,
-    params?: T,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>("delete", url, params, config);
   }
 }
 
