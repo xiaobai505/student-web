@@ -29,7 +29,6 @@ menus:
   hsempty: Empty Page
   hssysManagement: System Manage
   hsUser: User Manage
-  hsDict: Dict Manage
   hsRole: Role Manage
   hsDept: Dept Manage
   hsMeun: Meun Manage
@@ -105,6 +104,8 @@ menus:
   hsPureTableBase: Base Usage
   hsPureTableHigh: High Usage
   hsTree: Big Data Tree
+  hsMenuoverflow: Menu Overflow Show Tooltip Text
+  hsChildMenuoverflow: Child Menu Overflow Show Tooltip Text
   hsMajor: Major
   hsCourse: Course
   hsStudentCourse: Student Add Course

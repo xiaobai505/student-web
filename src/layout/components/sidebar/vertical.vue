@@ -12,7 +12,8 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 
 const route = useRoute();
 const showLogo = ref(
-  storageLocal.getItem<StorageConfigs>("responsive-configure")?.showLogo ?? true
+  storageLocal().getItem<StorageConfigs>("responsive-configure")?.showLogo ??
+    true
 );
 
 const { routers, device, pureApp, isCollapse, menuSelect, toggleSideBar } =
@@ -59,7 +60,10 @@ watch(
 </script>
 
 <template>
-  <div :class="['sidebar-container', showLogo ? 'has-logo' : '']">
+  <div
+    v-loading="menuData.length === 0"
+    :class="['sidebar-container', showLogo ? 'has-logo' : '']"
+  >
     <Logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar
       wrap-class="scrollbar-wrapper"
@@ -91,3 +95,9 @@ watch(
     />
   </div>
 </template>
+
+<style scoped>
+:deep(.el-loading-mask) {
+  opacity: 0.45;
+}
+</style>

@@ -8,12 +8,10 @@ import {
   defineComponent
 } from "vue";
 import "./index.scss";
-import { cloneDeep } from "lodash-unified";
-import { isString } from "@pureadmin/utils";
 import { propTypes } from "@/utils/propTypes";
 import { IconifyIconOffline } from "../../ReIcon";
+import { isString, cloneDeep } from "@pureadmin/utils";
 import QRCode, { QRCodeRenderersOptions } from "qrcode";
-import RefreshRight from "@iconify-icons/ep/refresh-right";
 
 interface QrcodeLogo {
   src?: string;
@@ -98,7 +96,7 @@ export default defineComponent({
           width: props.width,
           ...options
         });
-        (unref(wrapRef) as HTMLImageElement).src = url;
+        (unref(wrapRef) as any).src = url;
         emit("done", url);
         loading.value = false;
       }
@@ -248,7 +246,7 @@ export default defineComponent({
               <div class="absolute top-[50%] left-[50%] font-bold">
                 <IconifyIconOffline
                   class="cursor-pointer"
-                  icon={RefreshRight}
+                  icon="refreshRight"
                   width="30"
                   color="var(--el-color-primary)"
                 />

@@ -1,12 +1,12 @@
 import { $t } from "@/plugins/i18n";
 import { error } from "@/router/enums";
-import InformationLine from "@iconify-icons/ri/information-line";
 
 export default {
   path: "/error",
   redirect: "/error/403",
   meta: {
-    icon: InformationLine,
+    icon: "informationLine",
+    // showLink: false,
     title: $t("menus.hsabnormal"),
     rank: error
   },

@@ -2,14 +2,6 @@
 import { MockMethod } from "vite-plugin-mock";
 import { system, permission, frame, tabs } from "@/router/enums";
 
-import FlUser from "@iconify-icons/ri/admin-line";
-import Role from "@iconify-icons/ri/admin-fill";
-import Dict from "@iconify-icons/ri/git-repository-line";
-import Setting from "@iconify-icons/ri/settings-3-line";
-import Dept from "@iconify-icons/ri/git-branch-line";
-import Lollipop from "@iconify-icons/ep/lollipop";
-import Monitor from "@iconify-icons/ep/monitor";
-
 /**
  * roles：页面级别权限，这里模拟二种 "admin"、"common"
  * admin：管理员角色
@@ -19,7 +11,7 @@ import Monitor from "@iconify-icons/ep/monitor";
 const systemRouter = {
   path: "/system",
   meta: {
-    icon: Setting,
+    icon: "setting",
     title: "menus.hssysManagement",
     rank: system
   },
@@ -28,7 +20,7 @@ const systemRouter = {
       path: "/system/user/index",
       name: "User",
       meta: {
-        icon: FlUser,
+        icon: "flUser",
         title: "menus.hsUser",
         roles: ["admin"]
       }
@@ -37,7 +29,7 @@ const systemRouter = {
       path: "/system/role/index",
       name: "Role",
       meta: {
-        icon: Role,
+        icon: "role",
         title: "menus.hsRole",
         roles: ["admin"]
       }
@@ -46,19 +38,8 @@ const systemRouter = {
       path: "/system/dept/index",
       name: "Dept",
       meta: {
-        icon: Dept,
+        icon: "dept",
         title: "menus.hsDept",
-        roles: ["admin"]
-      }
-    },
-    {
-      path: "/system/dict",
-      component: "/system/dict/index",
-      name: "Dict",
-      meta: {
-        icon: Dict,
-        title: "menus.hsDict",
-        keepAlive: true,
         roles: ["admin"]
       }
     }
@@ -69,7 +50,7 @@ const permissionRouter = {
   path: "/permission",
   meta: {
     title: "menus.permission",
-    icon: Lollipop,
+    icon: "lollipop",
     rank: permission
   },
   children: [
@@ -96,7 +77,7 @@ const permissionRouter = {
 const frameRouter = {
   path: "/iframe",
   meta: {
-    icon: Monitor,
+    icon: "monitor",
     title: "menus.hsExternalPage",
     rank: frame
   },

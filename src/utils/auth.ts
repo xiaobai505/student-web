@@ -23,7 +23,7 @@ export function getToken(): DataInfo<number> {
   // 此处与`TokenKey`相同，此写法解决初始化时`Cookies`中不存在`TokenKey`报错
   return Cookies.get(TokenKey)
     ? JSON.parse(Cookies.get(TokenKey))
-    : storageSession.getItem(sessionKey);
+    : storageSession().getItem(sessionKey);
 }
 
 /**
@@ -47,7 +47,7 @@ export function setToken(data: DataInfo<Date>) {
   function setSessionKey(username: string, roles: Array<string>) {
     useUserStoreHook().SET_USERNAME(username);
     useUserStoreHook().SET_ROLES(roles);
-    storageSession.setItem(sessionKey, {
+    storageSession().setItem(sessionKey, {
       refreshToken,
       expires,
       username,
@@ -60,9 +60,9 @@ export function setToken(data: DataInfo<Date>) {
     setSessionKey(username, roles);
   } else {
     const username =
-      storageSession.getItem<DataInfo<number>>(sessionKey)?.username ?? "";
+      storageSession().getItem<DataInfo<number>>(sessionKey)?.username ?? "";
     const roles =
-      storageSession.getItem<DataInfo<number>>(sessionKey)?.roles ?? [];
+      storageSession().getItem<DataInfo<number>>(sessionKey)?.roles ?? [];
     setSessionKey(username, roles);
   }
 }
@@ -70,7 +70,7 @@ export function setToken(data: DataInfo<Date>) {
 /** 删除`token`以及key值为`user-info`的session信息 */
 export function removeToken() {
   Cookies.remove(TokenKey);
-  sessionStorage.removeItem(sessionKey);
+  sessionStorage.clear();
 }
 
 /** 格式化token（jwt格式） */

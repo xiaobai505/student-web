@@ -29,7 +29,6 @@ menus:
   hsempty: 无Layout页
   hssysManagement: 系统管理
   hsUser: 用户管理
-  hsDict: 字典管理
   hsRole: 角色管理
   hsDept: 部门管理
   hsMeun: 菜单管理
@@ -103,8 +102,10 @@ menus:
   hsInfiniteScroll: 表格无限滚动
   hsdanmaku: 弹幕组件
   hsPureTableBase: 基础用法（23个示例）
-  hsPureTableHigh: 高级用法（8个示例）
+  hsPureTableHigh: 高级用法（10个示例）
   hsTree: 大数据树业务组件
+  hsMenuoverflow: 目录超出显示 Tooltip 文字提示
+  hsChildMenuoverflow: 菜单超出显示 Tooltip 文字提示
   hsMajor: 专业
   hsCourse: 课程
   hsStudentCourse: 报名选修课
