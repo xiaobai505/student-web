@@ -1,4 +1,5 @@
 import { http } from "@/utils/http";
+import { baseUrlApi } from "./utils";
 
 export type UserResult = {
   success: boolean;
@@ -37,7 +38,7 @@ export const getLogin2 = (data?: FormData) => {
 export const getLogin = (data?: object) => {
   return http.request<UserResult>(
     "post",
-    "/auth/login",
+    baseUrlApi("/auth/login"),
     { data },
     // 自定义的axios配置在下面对象填写即可
     {
