@@ -261,21 +261,21 @@ function onHide() {
         <el-button-group>
           <el-button
             type="primary"
-            :icon="useRenderIcon('fa:plus-square-o', { online: true })"
+            :icon="useRenderIcon('fa:plus-square-o')"
             @click="onAdd"
           >
             {{ t("buttons.hsadd") }}
           </el-button>
           <el-button
             type="primary"
-            :icon="useRenderIcon('fa:folder-open-o', { online: true })"
+            :icon="useRenderIcon('fa:folder-open-o')"
             @click="onExpand"
           >
             {{ t("buttons.hsexpendAll") }}
           </el-button>
           <el-button
             type="primary"
-            :icon="useRenderIcon('fa:folder-o', { online: true })"
+            :icon="useRenderIcon('fa:folder-o')"
             @click="onUnExpand"
           >
             {{ t("buttons.hscollapseAll") }}
@@ -334,7 +334,7 @@ function onHide() {
             link
             v-show="row.parentId === '0'"
             type="primary"
-            :icon="useRenderIcon('fa:plus-square-o', { online: true })"
+            :icon="useRenderIcon('fa:plus-square-o')"
             @click="onAddChild(row)"
           >
             新增子类型
@@ -343,7 +343,7 @@ function onHide() {
             v-show="row.parentId !== '0'"
             link
             type="primary"
-            :icon="useRenderIcon('fa:cog', { online: true })"
+            :icon="useRenderIcon('fa:cog')"
             @click="onDeploy(row)"
           >
             字典配置
