@@ -1,11 +1,25 @@
-import { ref } from "vue";
 import dayjs from "dayjs";
 import { message } from "@/utils/message";
+import { getUserList } from "@/api/system";
 import { ElMessageBox } from "element-plus";
+import { type PaginationProps } from "@pureadmin/table";
+import { reactive, ref, computed, onMounted } from "vue";
 
-export function useColumns() {
+export function useUser() {
+  const form = reactive({
+    username: "",
+    mobile: "",
+    status: ""
+  });
+  const dataList = ref([]);
+  const loading = ref(true);
   const switchLoadMap = ref({});
-
+  const pagination = reactive<PaginationProps>({
+    total: 0,
+    pageSize: 10,
+    currentPage: 1,
+    background: true
+  });
   const columns: TableColumnList = [
     {
       type: "selection",
@@ -20,38 +34,49 @@ export function useColumns() {
       hide: ({ checkList }) => !checkList.includes("序号列")
     },
     {
-      label: "角色编号",
-      prop: "id"
+      label: "用户编号",
+      prop: "id",
+      minWidth: 130
     },
     {
-      label: "角色名称",
-      prop: "roleName"
+      label: "用户名称",
+      prop: "username",
+      minWidth: 130
     },
     {
-      label: "角色标识",
-      prop: "roleCode"
+      label: "用户昵称",
+      prop: "nickname",
+      minWidth: 130
     },
     {
-      label: "角色类型",
-      prop: "roleType",
+      label: "性别",
+      prop: "sex",
+      minWidth: 90,
       cellRenderer: ({ row, props }) => (
         <el-tag
           size={props.size}
-          type={row.roleType === 0 ? "danger" : ""}
+          type={row.sex === 1 ? "danger" : ""}
           effect="plain"
         >
-          {row.roleType === 0 ? "内置" : "自定义"}
+          {row.sex === 1 ? "女" : "男"}
         </el-tag>
       )
     },
     {
-      label: "显示顺序",
-      prop: "roleSort"
+      label: "部门",
+      prop: "dept",
+      minWidth: 90,
+      formatter: ({ dept }) => dept.name
+    },
+    {
+      label: "手机号码",
+      prop: "mobile",
+      minWidth: 90
     },
     {
       label: "状态",
       prop: "status",
-      width: 130,
+      minWidth: 90,
       cellRenderer: scope => (
         <el-switch
           size={scope.props.size === "small" ? "small" : "default"}
@@ -68,8 +93,8 @@ export function useColumns() {
     },
     {
       label: "创建时间",
-      width: 180,
-      prop: "updateTime",
+      minWidth: 90,
+      prop: "createTime",
       formatter: ({ createTime }) =>
         dayjs(createTime).format("YYYY-MM-DD HH:mm:ss")
     },
@@ -80,14 +105,23 @@ export function useColumns() {
       slot: "operation"
     }
   ];
+  const buttonClass = computed(() => {
+    return [
+      "!h-[20px]",
+      "reset-margin",
+      "!text-gray-500",
+      "dark:!text-white",
+      "dark:hover:!text-primary"
+    ];
+  });
 
   function onChange({ row, index }) {
     ElMessageBox.confirm(
       `确认要<strong>${
         row.status === 0 ? "停用" : "启用"
       }</strong><strong style='color:var(--el-color-primary)'>${
-        row.roleName
-      }</strong>角色吗?`,
+        row.username
+      }</strong>用户吗?`,
       "系统提示",
       {
         confirmButtonText: "确定",
@@ -113,7 +147,7 @@ export function useColumns() {
               loading: false
             }
           );
-          message("已成功修改角色状态", {
+          message("已成功修改用户状态", {
             type: "success"
           });
         }, 300);
@@ -123,7 +157,59 @@ export function useColumns() {
       });
   }
 
+  function handleUpdate(row) {
+    console.log(row);
+  }
+
+  function handleDelete(row) {
+    console.log(row);
+  }
+
+  function handleSizeChange(val: number) {
+    console.log(`${val} items per page`);
+  }
+
+  function handleCurrentChange(val: number) {
+    console.log(`current page: ${val}`);
+  }
+
+  function handleSelectionChange(val) {
+    console.log("handleSelectionChange", val);
+  }
+
+  async function onSearch() {
+    loading.value = true;
+    const { data } = await getUserList();
+    dataList.value = data.list;
+    pagination.total = data.total;
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
+  }
+
+  const resetForm = formEl => {
+    if (!formEl) return;
+    formEl.resetFields();
+    onSearch();
+  };
+
+  onMounted(() => {
+    onSearch();
+  });
+
   return {
-    columns
+    form,
+    loading,
+    columns,
+    dataList,
+    pagination,
+    buttonClass,
+    onSearch,
+    resetForm,
+    handleUpdate,
+    handleDelete,
+    handleSizeChange,
+    handleCurrentChange,
+    handleSelectionChange
   };
 }
