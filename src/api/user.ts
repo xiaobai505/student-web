@@ -1,5 +1,5 @@
 import { http } from "@/utils/http";
-import { baseUrlApi } from "./utils";
+import { baseUrlApi } from "@/utils/http/utils";
 
 export type UserResult = {
   success: boolean;
@@ -27,11 +27,6 @@ export type RefreshTokenResult = {
     /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
     expires: Date;
   };
-};
-
-/** 登录 */
-export const getLogin2 = (data?: FormData) => {
-  return http.post("/auth/login", { data });
 };
 
 /** 登录 */

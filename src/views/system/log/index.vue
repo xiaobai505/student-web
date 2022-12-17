@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted } from "vue";
 import { type FormInstance } from "element-plus";
-import { TableProBar } from "/@/components/ReTable";
+import { PureTableBar } from "@/components/RePureTableBar";
 import { type PaginationProps } from "@pureadmin/table";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { logininfors } from "/@/api/Logininfor";
-import { logColumns } from "/@/views/system/log/columns";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { logininfors } from "@/api/Logininfor";
+import { logColumns } from "@/views/system/log/columns";
 
 defineOptions({
   name: "log"
@@ -15,8 +15,8 @@ const form = reactive({
   userName: ""
 });
 
-let dataList = ref([]);
-let loading = ref(true);
+const dataList = ref([]);
+const loading = ref(true);
 const { columns } = logColumns();
 
 const formRef = ref<FormInstance>();
@@ -30,7 +30,7 @@ const pagination = reactive<PaginationProps>({
 
 async function onSearch() {
   loading.value = true;
-  let params = Object.assign(pagination, form, {
+  const params = Object.assign(pagination, form, {
     size: pagination.pageSize
   });
   await logininfors(params).then(data => {
@@ -87,7 +87,7 @@ onMounted(() => {
       </el-form-item>
     </el-form>
 
-    <TableProBar
+    <PureTableBar
       title="登录日志"
       :loading="loading"
       :dataList="dataList"
@@ -115,6 +115,6 @@ onMounted(() => {
           @current-change="handleCurrentChange"
         />
       </template>
-    </TableProBar>
+    </PureTableBar>
   </div>
 </template>

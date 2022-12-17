@@ -1,5 +1,5 @@
 // Role API接口
-import { http } from "/@/utils/http";
+import { http } from "@/utils/http";
 
 interface ResponseType extends Promise<any> {
   data?: object;

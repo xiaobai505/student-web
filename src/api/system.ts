@@ -26,6 +26,6 @@ export const getRoleList = (data?: object) => {
 };
 
 /** 获取部门管理列表 */
-export const getDeptList = (data?: object) => {
-  return http.request<ResultDept>("post", "/dept", { data });
+export const getDeptList = (params?: object) => {
+  return http.get<object, ResultDept>("dgy/dept", { params });
 };

@@ -13,6 +13,7 @@ import { stringify } from "qs";
 import NProgress from "../progress";
 import { getToken, formatToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
+import { baseUrlApi } from "@/utils/http/utils";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -178,7 +179,7 @@ class PureHttp {
     params?: AxiosRequestConfig<T>,
     config?: PureHttpRequestConfig
   ): Promise<P> {
-    return this.request<P>("post", url, params, config);
+    return this.request<P>("post", baseUrlApi(url), params, config);
   }
 
   /** 单独抽离的get工具函数 */
@@ -187,7 +188,7 @@ class PureHttp {
     params?: AxiosRequestConfig<T>,
     config?: PureHttpRequestConfig
   ): Promise<P> {
-    return this.request<P>("get", url, params, config);
+    return this.request<P>("get", baseUrlApi(url), params, config);
   }
 
   /** 单独抽离的get工具函数 */
@@ -196,7 +197,7 @@ class PureHttp {
     params?: AxiosRequestConfig<T>,
     config?: PureHttpRequestConfig
   ): Promise<P> {
-    return this.request<P>("get", url, params, config);
+    return this.request<P>("put", baseUrlApi(url), params, config);
   }
 
   /** 单独抽离的get工具函数 */
@@ -205,7 +206,7 @@ class PureHttp {
     params?: AxiosRequestConfig<T>,
     config?: PureHttpRequestConfig
   ): Promise<P> {
-    return this.request<P>("get", url, params, config);
+    return this.request<P>("delete", baseUrlApi(url), params, config);
   }
 }
 
