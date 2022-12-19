@@ -40,17 +40,17 @@ export function useRole() {
     },
     {
       label: "角色名称",
-      prop: "name",
+      prop: "roleName",
       minWidth: 120
     },
     {
       label: "角色标识",
-      prop: "code",
+      prop: "roleCode",
       minWidth: 150
     },
     {
       label: "角色类型",
-      prop: "type",
+      prop: "roleType",
       minWidth: 150,
       cellRenderer: ({ row, props }) => (
         <el-tag
@@ -63,8 +63,8 @@ export function useRole() {
       )
     },
     {
-      label: "显示顺序",
-      prop: "sort",
+      label: "排序",
+      prop: "roleSort",
       minWidth: 100
     },
     {
@@ -172,12 +172,11 @@ export function useRole() {
 
   async function onSearch() {
     loading.value = true;
-    const { data } = await getRoleList();
-    dataList.value = data.list;
-    pagination.total = data.total;
-    setTimeout(() => {
+    await getRoleList().then(data => {
+      dataList.value = data["records"];
+      pagination.total = data["total"];
       loading.value = false;
-    }, 500);
+    });
   }
 
   const resetForm = formEl => {

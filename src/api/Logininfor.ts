@@ -1,4 +1,3 @@
-// Role API接口
 import { http } from "@/utils/http";
 
 type ResultLog = {
@@ -6,7 +5,7 @@ type ResultLog = {
   data?: Array<any>;
 };
 
-// Role API接口
+// logininfor API接口
 export const logininfors = (params: object) => {
-  return http.get<object, ResultLog>("/dgy/logininfor/page", { params });
+  return http.get<object, ResultLog>("dgy/logininfor/page", { params });
 };

@@ -106,9 +106,7 @@ menus:
   hsTree: Big Data Tree
   hsMenuoverflow: Menu Overflow Show Tooltip Text
   hsChildMenuoverflow: Child Menu Overflow Show Tooltip Text
-  hsMajor: Major
-  hsCourse: Course
-  hsStudentCourse: Student Add Course
+  hsDict: Dict
 status:
   hsLoad: Loading...
 login:

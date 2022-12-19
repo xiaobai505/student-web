@@ -28,12 +28,12 @@ const pagination = reactive<PaginationProps>({
   background: true
 });
 
-async function onSearch() {
+function onSearch() {
   loading.value = true;
   const params = Object.assign(pagination, form, {
     size: pagination.pageSize
   });
-  await logininfors(params).then(data => {
+  logininfors(params).then(data => {
     loading.value = false;
     dataList.value = data["records"];
     pagination["total"] = parseInt(data["total"]);

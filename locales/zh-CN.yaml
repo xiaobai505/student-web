@@ -106,9 +106,7 @@ menus:
   hsTree: 大数据树业务组件
   hsMenuoverflow: 目录超出显示 Tooltip 文字提示
   hsChildMenuoverflow: 菜单超出显示 Tooltip 文字提示
-  hsMajor: 专业
-  hsCourse: 课程
-  hsStudentCourse: 报名选修课
+  hsDict: 字典管理
 status:
   hsLoad: 加载中...
 login:

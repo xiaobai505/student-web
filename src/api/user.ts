@@ -33,7 +33,7 @@ export type RefreshTokenResult = {
 export const getLogin = (data?: object) => {
   return http.request<UserResult>(
     "post",
-    baseUrlApi("/auth/login"),
+    baseUrlApi("auth/login"),
     { data },
     // 自定义的axios配置在下面对象填写即可
     {
@@ -55,7 +55,7 @@ export const getUser = () => {
 };
 
 // 分页查询pageUser
-export const pageUser = (params?: object) => {
+export const getUserPage = (params?: object) => {
   return http.get("/dgy/user/page", { params });
 };
 
