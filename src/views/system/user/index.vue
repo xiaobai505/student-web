@@ -27,6 +27,7 @@ const {
   pagination,
   buttonClass,
   onSearch,
+  deptIdChange,
   resetForm,
   handleUpdate,
   handleDelete,
@@ -38,7 +39,7 @@ const {
 
 <template>
   <div class="main">
-    <tree class="w-[17%] float-left" />
+    <tree class="w-[17%] float-left" @deptIdChange="deptIdChange" />
     <div class="float-right w-[81%]">
       <el-form
         ref="formRef"
@@ -54,9 +55,9 @@ const {
             class="!w-[160px]"
           />
         </el-form-item>
-        <el-form-item label="手机号码：" prop="mobile">
+        <el-form-item label="手机号码：" prop="phone">
           <el-input
-            v-model="form.mobile"
+            v-model="form.phone"
             placeholder="请输入手机号码"
             clearable
             class="!w-[160px]"

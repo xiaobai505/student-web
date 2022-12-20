@@ -45,6 +45,8 @@ const filterNode = (value: string, data: Tree) => {
   return data.name.includes(value);
 };
 
+const emit = defineEmits<{ (e: "deptIdChange", v: number) }>();
+
 function nodeClick(value) {
   const nodeId = value.$treeNodeId;
   highlightMap.value[nodeId] = highlightMap.value[nodeId]?.highlight
@@ -59,6 +61,8 @@ function nodeClick(value) {
       v.highlight = false;
     }
   });
+  // 把id返回给父页面
+  emit("deptIdChange", value.id);
 }
 
 function toggleRowExpansionAll(status) {

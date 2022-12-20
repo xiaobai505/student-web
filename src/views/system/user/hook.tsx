@@ -8,8 +8,9 @@ import { reactive, ref, computed, onMounted } from "vue";
 export function useUser() {
   const form = reactive({
     username: "",
-    mobile: "",
-    status: ""
+    phone: "",
+    status: "",
+    deptId: 101
   });
   const dataList = ref([]);
   const loading = ref(true);
@@ -157,6 +158,11 @@ export function useUser() {
       });
   }
 
+  function deptIdChange(id: number) {
+    form.deptId = id;
+    onSearch();
+  }
+
   function handleUpdate(row) {
     console.log(row);
   }
@@ -179,7 +185,7 @@ export function useUser() {
 
   async function onSearch() {
     loading.value = true;
-    await getUserPage().then(data => {
+    await getUserPage(form).then(data => {
       dataList.value = data["records"];
       pagination.total = data["total"];
       loading.value = false;
@@ -204,6 +210,7 @@ export function useUser() {
     pagination,
     buttonClass,
     onSearch,
+    deptIdChange,
     resetForm,
     handleUpdate,
     handleDelete,
