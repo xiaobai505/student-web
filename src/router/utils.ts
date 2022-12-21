@@ -204,7 +204,6 @@ function initRouter() {
       });
     } else {
       return new Promise(resolve => {
-        debugger;
         getAsyncRoutes().then(({ data }) => {
           handleAsyncRoutes(cloneDeep(data));
           storageSession().setItem(key, data);
@@ -214,7 +213,6 @@ function initRouter() {
     }
   } else {
     return new Promise(resolve => {
-      debugger;
       getAsyncRoutes().then(({ data }) => {
         handleAsyncRoutes(cloneDeep(data));
         resolve(router);
