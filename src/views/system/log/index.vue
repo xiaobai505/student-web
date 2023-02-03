@@ -12,7 +12,7 @@ defineOptions({
 });
 
 const form = reactive({
-  userName: ""
+  userName: undefined
 });
 
 const dataList = ref([]);
@@ -30,8 +30,9 @@ const pagination = reactive<PaginationProps>({
 
 function onSearch() {
   loading.value = true;
-  const params = Object.assign(pagination, form, {
-    size: pagination.pageSize
+  const params = Object.assign(form, {
+    size: pagination.pageSize,
+    current: pagination.currentPage
   });
   logininfors(params).then(data => {
     loading.value = false;
