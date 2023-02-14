@@ -31,7 +31,6 @@ getUser().then(res => {
     :key="index"
     :columns="item.columns"
     :column="item.column"
-    class="margin-top"
     direction="vertical"
     border
   />

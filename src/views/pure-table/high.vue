@@ -14,13 +14,13 @@ function tabClick({ index }) {
 </script>
 
 <template>
-  <el-card>
+  <el-card shadow="never">
     <template #header>
       <div class="card-header">
         <span class="font-medium">
           高级用法全部采用 tsx 语法，充分发挥
           <el-link
-            href="https://github.com/xiaoxian521/pure-admin-table"
+            href="https://github.com/pure-admin/pure-admin-table"
             target="_blank"
             style="font-size: 16px; margin: 0 4px 5px"
           >
