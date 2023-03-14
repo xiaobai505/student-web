@@ -2,8 +2,7 @@
 // 打开权限页面
 import { reactive } from "vue";
 import { storageLocal } from "@pureadmin/utils";
-import { getRolesById } from "/@/api/system";
-import { setRolesById } from "/@/api/role";
+import { getRolesById, setRolesById } from "@/api/role";
 
 interface Option {
   id: number;

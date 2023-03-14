@@ -13,6 +13,10 @@ export const roles = (data: object): ResponseType => {
   return http.get("/dgy/role/page", data);
 };
 
+export const getRolesById = (id: number): ResponseType => {
+  return http.get("/dgy/role/" + id);
+};
+
 // 保存部门
 export const saveRole = (data: object) => {
   return http.post("/dgy/role", { data });
