@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { getDeptList, saveDept } from "@/api/dept";
+import { saveDept } from "@/api/dept";
 import { cloneDeep } from "lodash-unified";
-import { pageUser } from "@/api/user";
+import { getDeptList } from "@/api/system";
+import { getUserPage } from "@/api/user";
 
 const dialog = reactive({
   // 弹出层标题
@@ -64,7 +65,7 @@ const showDept = (row: any) => {
   }
   getDeptList().then(data => {
     // dialog.deptOptions = handleTree(data as any);
-    dialog.deptOptions = data;
+    dialog.deptOptions = data.data;
     dialog.open = true;
   });
 };
@@ -89,7 +90,7 @@ const remoteMethod = (query: string) => {
   dialog.userOptions = [];
   if (query) {
     dialog.loading = true;
-    pageUser({ name: query }).then(res => {
+    getUserPage({ name: query }).then(res => {
       dialog.userOptions = res["records"];
       dialog.loading = false;
     });

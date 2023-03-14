@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import UserInfo from "/@/views/welcome/profile/userInfo.vue";
-import ResetPwd from "/@/views/welcome/profile/resetPwd.vue";
+import UserInfo from "@/views/welcome/profile/userInfo.vue";
+import ResetPwd from "@/views/welcome/profile/resetPwd.vue";
 import { reactive } from "vue";
 const data = reactive({
   activeTab: "userinfo"

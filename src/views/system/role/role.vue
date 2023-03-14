@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { cloneDeep } from "lodash-unified";
-import { saveRole, updateRole } from "/@/api/role";
+import { saveRole, updateRole } from "@/api/role";
 
 const dialog = reactive({
   // 弹出层标题

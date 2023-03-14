@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
 import type { ElTreeV2 } from "element-plus";
-import { transformI18n } from "/@/plugins/i18n";
-import ElTreeLine from "/@/components/ReTreeLine";
-import { extractPathList, deleteChildren } from "@pureadmin/utils";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
+import { transformI18n } from "@/plugins/i18n";
+import ElTreeLine from "@/components/ReTreeLine";
+import { extractPathList } from "@pureadmin/utils";
 import type { TreeNode } from "element-plus/es/components/tree-v2/src/types";
 
 interface treeNode extends TreeNode {
@@ -23,17 +22,17 @@ const dialog = reactive({
 });
 
 const query = ref("");
-let dataProps = ref({
+const dataProps = ref({
   value: "uniqueId",
   children: "children"
 });
 const treeRef = ref<InstanceType<typeof ElTreeV2>>();
 
-let menusData = computed(() => {
-  return deleteChildren(usePermissionStoreHook().menusTree);
+const menusData = computed(() => {
+  return null;
 });
 
-let expandedKeys = extractPathList(menusData.value);
+const expandedKeys = extractPathList(menusData.value);
 
 const onQueryChanged = (query: string) => {
   (treeRef as any).value!.filter(query);
