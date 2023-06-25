@@ -71,7 +71,7 @@ menus:
   hsguide: 引导页
   hsAble: 功能
   hsMenuTree: 菜单树结构
-  hsOptimize: 防抖、截流、复制指令
+  hsOptimize: 防抖、截流、复制、长按指令
   hsWatermark: 水印
   hsPrint: 打印
   hsDownload: 下载
@@ -104,6 +104,8 @@ menus:
   hsPdf: PDF预览
   hsExecl: 导出Excel
   hsInfiniteScroll: 表格无限滚动
+  hsSensitive: 敏感词过滤
+  hsPinyin: 汉语拼音
   hsdanmaku: 弹幕组件
   hsPureTableBase: 基础用法（23个示例）
   hsPureTableHigh: 高级用法（11个示例）
