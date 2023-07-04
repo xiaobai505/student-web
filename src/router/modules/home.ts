@@ -22,15 +22,6 @@ export default {
         title: $t("menus.hshome"),
         showLink: VITE_HIDE_HOME === "true" ? false : true
       }
-    },
-    {
-      path: "/profile",
-      name: "Profile",
-      component: () => import("@/views/welcome/profile/index.vue"),
-      meta: {
-        title: $t("buttons.info"),
-        showLink: false
-      }
     }
   ]
 } as RouteConfigsTable;
