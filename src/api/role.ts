@@ -10,29 +10,29 @@ interface ResponseType extends Promise<any> {
 
 // Role API接口
 export const roles = (data: object): ResponseType => {
-  return http.get("/dgy/role/page", data);
+  return http.get("/sys/role/page", data);
 };
 
 export const getRolesById = (id: number): ResponseType => {
-  return http.get("/dgy/role/" + id);
+  return http.get("/sys/role/" + id);
 };
 
 // 保存部门
 export const saveRole = (data: object) => {
-  return http.post("/dgy/role", { data });
+  return http.post("/sys/role", { data });
 };
 
 // 更新部门
 export const updateRole = (data: object) => {
-  return http.put("/dgy/role", { data });
+  return http.put("/sys/role", { data });
 };
 
 // 删除
 export const delRole = (id: number) => {
-  return http.delete("/dgy/role/" + id);
+  return http.delete("/sys/role/" + id);
 };
 
 // roleUser API接口
 export const setRolesById = (id: number, ids: Array<number>) => {
-  return http.post("/dgy/roleUser/" + id, { data: ids });
+  return http.post("/sys/roleUser/" + id, { data: ids });
 };

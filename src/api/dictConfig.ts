@@ -6,20 +6,20 @@ interface ResponseType extends Promise<any> {
 
 // 分页查询
 export const getDictConfig = (id: number): ResponseType => {
-  return http.get("/dgy/dictConfig/" + id);
+  return http.get("/sys/dictConfig/" + id);
 };
 
 // 保存用户
 export const saveDictConfig = (data: object): ResponseType => {
-  return http.post("/dgy/dictConfig", { data });
+  return http.post("/sys/dictConfig", { data });
 };
 
 // 更新
 export const updateDictConfig = (data: object): ResponseType => {
-  return http.put("/dgy/dictConfig", { data });
+  return http.put("/sys/dictConfig", { data });
 };
 
 // 删除
 export const delDictConfig = (id: number): ResponseType => {
-  return http.delete("/dgy/dictConfig/" + id);
+  return http.delete("/sys/dictConfig/" + id);
 };

@@ -8,10 +8,10 @@ interface ResponseType extends Promise<any> {
 
 // 保存部门
 export const saveDept = (data: object) => {
-  return http.post("/dgy/dept", { data });
+  return http.post("/sys/dept", { data });
 };
 
 // 删除
 export const delDept = (id: number): ResponseType => {
-  return http.delete("/dgy/dept/" + id);
+  return http.delete("/sys/dept/" + id);
 };

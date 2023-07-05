@@ -51,28 +51,28 @@ export const refreshTokenApi = (data?: object) => {
 
 // 获取用户
 export const getUser = () => {
-  return http.get("/dgy/user");
+  return http.get("/sys/user");
 };
 
 // 分页查询pageUser
 export const getUserPage = (params?: object) => {
-  return http.get("/dgy/user/page", { params });
+  return http.get("/sys/user/page", { params });
 };
 
 // 保存用户
 export const saveUser = (data: object) => {
-  return http.post("/dgy/user", { data });
+  return http.post("/sys/user", { data });
 };
 // 更新用户
 export const updateUser = (data: object) => {
-  return http.put("/dgy/user", { data });
+  return http.put("/sys/user", { data });
 };
 // 删除用户
 export const delUser = (data: object) => {
-  return http.delete("/dgy/user", { data });
+  return http.delete("/sys/user", { data });
 };
 
 // 更新用户
 export const resetPwd = (data: object) => {
-  return http.put("/dgy/user/resetPwd", { data });
+  return http.put("/sys/user/resetPwd", { data });
 };

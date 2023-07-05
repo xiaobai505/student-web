@@ -7,5 +7,5 @@ type ResultLog = {
 
 // logininfor API接口
 export const logininfors = (params: object) => {
-  return http.get<object, ResultLog>("dgy/logininfor/page", { params });
+  return http.get<object, ResultLog>("sys/logininfor/page", { params });
 };

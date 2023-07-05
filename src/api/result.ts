@@ -8,20 +8,20 @@ interface ResponseType extends Promise<any> {
 // 分页查询
 export const getResult = (params: object) => {
   const stringify = qs.stringify(params, { arrayFormat: "comma" });
-  return http.get("/dgy/result?" + stringify);
+  return http.get("/sys/result?" + stringify);
 };
 
 // 保存用户
 export const saveResult = (data: object): ResponseType => {
-  return http.post("/dgy/result", { data });
+  return http.post("/sys/result", { data });
 };
 
 // 更新
 export const updateResult = (data: object) => {
-  return http.put("/dgy/result", { data });
+  return http.put("/sys/result", { data });
 };
 
 // 删除
 export const delResult = (data: object) => {
-  return http.delete("/dgy/result", { data });
+  return http.delete("/sys/result", { data });
 };
