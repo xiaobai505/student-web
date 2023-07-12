@@ -71,6 +71,7 @@ menus:
   hsguide: Guide
   hsAble: Able
   hsMenuTree: Menu Tree
+  hsWavesurfer: Audio Visualization
   hsOptimize: Debounce、Throttle、Copy、Longpress Directives
   hsWatermark: Water Mark
   hsPrint: Print
