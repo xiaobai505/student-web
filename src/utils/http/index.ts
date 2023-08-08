@@ -14,6 +14,7 @@ import NProgress from "../progress";
 import { getToken, formatToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
 import { baseUrlApi } from "@/utils/http/utils";
+import { message } from "@/utils/message";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -140,6 +141,10 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
+        // @ts-ignore
+        message(error.response.data.msg || "错误消息:请联系管理员!", {
+          type: "error"
+        });
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }
