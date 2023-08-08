@@ -11,9 +11,9 @@ import { reactive, ref, onMounted, h, toRaw } from "vue";
 
 export function useRole() {
   const form = reactive({
-    name: "",
-    code: "",
-    status: ""
+    roleNameEq: undefined,
+    roleCodeEq: undefined,
+    statusEq: undefined
   });
   const formRef = ref();
   const dataList = ref([]);
@@ -34,12 +34,12 @@ export function useRole() {
     },
     {
       label: "角色名称",
-      prop: "name",
+      prop: "roleName",
       minWidth: 120
     },
     {
       label: "角色标识",
-      prop: "code",
+      prop: "roleCode",
       minWidth: 150
     },
     {
@@ -61,8 +61,8 @@ export function useRole() {
       )
     },
     {
-      label: "备注",
-      prop: "remark",
+      label: "排序号",
+      prop: "roleSort",
       minWidth: 150
     },
     {
@@ -151,10 +151,10 @@ export function useRole() {
   async function onSearch() {
     loading.value = true;
     const { data } = await getRoleList(toRaw(form));
-    dataList.value = data.list;
+    dataList.value = data.records;
     pagination.total = data.total;
-    pagination.pageSize = data.pageSize;
-    pagination.currentPage = data.currentPage;
+    pagination.pageSize = data.size;
+    pagination.currentPage = data.current;
 
     setTimeout(() => {
       loading.value = false;

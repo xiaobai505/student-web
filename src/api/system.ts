@@ -4,13 +4,13 @@ type Result = {
   success: boolean;
   data?: {
     /** 列表数据 */
-    list: Array<any>;
+    records: Array<any>;
     /** 总条目数 */
     total?: number;
     /** 每页显示条目个数 */
-    pageSize?: number;
+    size?: number;
     /** 当前页数 */
-    currentPage?: number;
+    current?: number;
   };
 };
 
@@ -25,8 +25,8 @@ export const getUserList = (data?: object) => {
 };
 
 /** 获取角色管理列表 */
-export const getRoleList = (data?: object) => {
-  return http.request<Result>("post", "/role", { data });
+export const getRoleList = (params?: object) => {
+  return http.get<object, Result>("/sys/role/page", { params });
 };
 
 /** 获取部门管理列表 */

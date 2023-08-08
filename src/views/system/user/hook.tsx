@@ -7,9 +7,9 @@ import { reactive, ref, computed, onMounted } from "vue";
 
 export function useUser() {
   const form = reactive({
-    username: "",
-    phone: "",
-    status: "",
+    username: undefined,
+    phone: undefined,
+    status: undefined,
     deptId: 101
   });
   const dataList = ref([]);
