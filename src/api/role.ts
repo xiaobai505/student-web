@@ -18,7 +18,7 @@ export const getRolesById = (id: number): ResponseType => {
 };
 
 // 保存部门
-export const saveRole = (data: object) => {
+export const saveOrUpdateRole = (data: object) => {
   return http.post("/sys/role", { data });
 };
 

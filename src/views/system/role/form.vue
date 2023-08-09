@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { formRules } from "./utils/rule";
-import { FormProps } from "./utils/types";
 
-const props = withDefaults(defineProps<FormProps>(), {
+// import { FormProps } from "./utils/types";
+// null 应该是 defineProps<FormProps>()
+const props = withDefaults(null, {
   formInline: () => ({
-    name: "",
-    code: "",
-    remark: ""
+    id: undefined,
+    roleName: "",
+    roleCode: "",
+    roleSort: ""
   })
 });
 
@@ -30,7 +32,7 @@ defineExpose({ getRef });
   >
     <el-form-item label="角色名称" prop="name">
       <el-input
-        v-model="newFormInline.name"
+        v-model="newFormInline.roleName"
         clearable
         placeholder="请输入角色名称"
       />
@@ -38,16 +40,16 @@ defineExpose({ getRef });
 
     <el-form-item label="角色标识" prop="code">
       <el-input
-        v-model="newFormInline.code"
+        v-model="newFormInline.roleCode"
         clearable
         placeholder="请输入角色标识"
       />
     </el-form-item>
 
-    <el-form-item label="备注">
+    <el-form-item label="排序号">
       <el-input
-        v-model="newFormInline.remark"
-        placeholder="请输入备注信息"
+        v-model="newFormInline.roleSort"
+        placeholder="请输入排序号"
         type="textarea"
       />
     </el-form-item>

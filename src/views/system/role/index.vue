@@ -45,25 +45,25 @@ const {
       :model="form"
       class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px]"
     >
-      <el-form-item label="角色名称：" prop="name">
+      <el-form-item label="角色名称：" prop="roleNameEq">
         <el-input
-          v-model="form.name"
+          v-model="form.roleNameEq"
           placeholder="请输入角色名称"
           clearable
           class="!w-[200px]"
         />
       </el-form-item>
-      <el-form-item label="角色标识：" prop="code">
+      <el-form-item label="角色标识：" prop="roleCodeEq">
         <el-input
-          v-model="form.code"
+          v-model="form.roleCodeEq"
           placeholder="请输入角色标识"
           clearable
           class="!w-[180px]"
         />
       </el-form-item>
-      <el-form-item label="状态：" prop="status">
+      <el-form-item label="状态：" prop="statusEq">
         <el-select
-          v-model="form.status"
+          v-model="form.statusEq"
           placeholder="请选择状态"
           clearable
           class="!w-[180px]"
@@ -144,7 +144,7 @@ const {
               菜单权限
             </el-button>
             <el-popconfirm
-              :title="`是否确认删除角色名称为${row.name}的这条数据`"
+              :title="`是否确认删除角色名称为${row.roleName}的这条数据`"
               @confirm="handleDelete(row)"
             >
               <template #reference>

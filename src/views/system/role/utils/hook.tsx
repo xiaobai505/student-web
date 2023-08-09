@@ -8,6 +8,7 @@ import { addDialog } from "@/components/ReDialog";
 import { type FormItemProps } from "../utils/types";
 import { type PaginationProps } from "@pureadmin/table";
 import { reactive, ref, onMounted, h, toRaw } from "vue";
+import { delRole, saveOrUpdateRole, updateRole } from "@/api/role";
 
 export function useRole() {
   const form = reactive({
@@ -90,11 +91,16 @@ export function useRole() {
   // });
 
   function onChange({ row, index }) {
+    if (row.roleCode === "ROLE_ADMIN") {
+      message(`管理员不能修改！`, { type: "error" });
+      row.status === 0 ? (row.status = 1) : (row.status = 0);
+      return;
+    }
     ElMessageBox.confirm(
       `确认要<strong>${
         row.status === 0 ? "停用" : "启用"
       }</strong><strong style='color:var(--el-color-primary)'>${
-        row.name
+        row.roleName
       }</strong>吗?`,
       "系统提示",
       {
@@ -113,7 +119,7 @@ export function useRole() {
             loading: true
           }
         );
-        setTimeout(() => {
+        updateRole(row).then(() => {
           switchLoadMap.value[index] = Object.assign(
             {},
             switchLoadMap.value[index],
@@ -121,10 +127,10 @@ export function useRole() {
               loading: false
             }
           );
-          message(`已${row.status === 0 ? "停用" : "启用"}${row.name}`, {
+          message(`已${row.status === 0 ? "停用" : "启用"}${row.roleName}`, {
             type: "success"
           });
-        }, 300);
+        });
       })
       .catch(() => {
         row.status === 0 ? (row.status = 1) : (row.status = 0);
@@ -132,8 +138,16 @@ export function useRole() {
   }
 
   function handleDelete(row) {
-    message(`您删除了角色名称为${row.name}的这条数据`, { type: "success" });
-    onSearch();
+    if (row.roleCode === "ROLE_ADMIN") {
+      message(`管理员不能删除！`, { type: "error" });
+      return;
+    }
+    delRole(row.id).then(() => {
+      message(`您删除了角色名称为${row.roleName}的这条数据`, {
+        type: "success"
+      });
+      onSearch();
+    });
   }
 
   function handleSizeChange(val: number) {
@@ -168,13 +182,18 @@ export function useRole() {
   };
 
   function openDialog(title = "新增", row?: FormItemProps) {
+    if (row.roleCode === "ROLE_ADMIN") {
+      message(`管理员不能修改！`, { type: "error" });
+      return;
+    }
     addDialog({
       title: `${title}角色`,
       props: {
         formInline: {
-          name: row?.name ?? "",
-          code: row?.code ?? "",
-          remark: row?.remark ?? ""
+          id: row?.id ?? undefined,
+          roleName: row?.roleName ?? undefined,
+          roleCode: row?.roleCode ?? undefined,
+          roleSort: row?.roleSort ?? undefined
         }
       },
       width: "40%",
@@ -186,11 +205,13 @@ export function useRole() {
         const FormRef = formRef.value.getRef();
         const curData = options.props.formInline as FormItemProps;
         function chores() {
-          message(`您${title}了角色名称为${curData.name}的这条数据`, {
-            type: "success"
+          saveOrUpdateRole(curData).then(() => {
+            message(`您${title}了角色名称为:${curData.roleName} 的这条数据`, {
+              type: "success"
+            });
+            done(); // 关闭弹框
+            onSearch(); // 刷新表格数据
           });
-          done(); // 关闭弹框
-          onSearch(); // 刷新表格数据
         }
         FormRef.validate(valid => {
           if (valid) {
