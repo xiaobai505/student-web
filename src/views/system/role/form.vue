@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { formRules } from "./utils/rule";
+import { FormProps } from "./utils/types";
 
-// import { FormProps } from "./utils/types";
-// null 应该是 defineProps<FormProps>()
-const props = withDefaults(null, {
+const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
     id: undefined,
     roleName: "",
