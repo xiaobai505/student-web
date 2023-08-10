@@ -6,9 +6,9 @@ import { FormProps } from "./utils/types";
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
     id: undefined,
-    roleName: "",
-    roleCode: "",
-    roleSort: ""
+    roleName: undefined,
+    roleCode: undefined,
+    roleSort: undefined
   })
 });
 
@@ -29,7 +29,7 @@ defineExpose({ getRef });
     :rules="formRules"
     label-width="82px"
   >
-    <el-form-item label="角色名称" prop="name">
+    <el-form-item label="角色名称" prop="roleName">
       <el-input
         v-model="newFormInline.roleName"
         clearable
@@ -37,7 +37,7 @@ defineExpose({ getRef });
       />
     </el-form-item>
 
-    <el-form-item label="角色标识" prop="code">
+    <el-form-item label="角色标识" prop="roleCode">
       <el-input
         v-model="newFormInline.roleCode"
         clearable
@@ -46,11 +46,7 @@ defineExpose({ getRef });
     </el-form-item>
 
     <el-form-item label="排序号">
-      <el-input
-        v-model="newFormInline.roleSort"
-        placeholder="请输入排序号"
-        type="textarea"
-      />
+      <el-input v-model="newFormInline.roleSort" placeholder="请输入排序号" />
     </el-form-item>
   </el-form>
 </template>
