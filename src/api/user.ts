@@ -1,54 +1,17 @@
 import { http } from "@/utils/http";
-import { baseUrlApi } from "@/utils/http/utils";
 
-export type UserResult = {
+type Result = {
   success: boolean;
-  data: {
-    /** 用户名 */
-    username: string;
-    /** 当前登陆用户的角色 */
-    roles: Array<string>;
-    /** `token` */
-    accessToken: string;
-    /** 用于调用刷新`accessToken`的接口时所需的`token` */
-    refreshToken: string;
-    /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
-    expires: Date;
+  data?: {
+    /** 列表数据 */
+    records: Array<any>;
+    /** 总条目数 */
+    total?: number;
+    /** 每页显示条目个数 */
+    size?: number;
+    /** 当前页数 */
+    current?: number;
   };
-};
-
-export type RefreshTokenResult = {
-  success: boolean;
-  data: {
-    /** `token` */
-    accessToken: string;
-    /** 用于调用刷新`accessToken`的接口时所需的`token` */
-    refreshToken: string;
-    /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
-    expires: Date;
-  };
-};
-
-/** 登录 */
-export const getLogin = (data?: object) => {
-  return http.request<UserResult>(
-    "post",
-    baseUrlApi("/auth/login"),
-    { data },
-    // 自定义的axios配置在下面对象填写即可
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }
-  );
-};
-
-/** 刷新token */
-export const refreshTokenApi = (data?: object) => {
-  return http.request<RefreshTokenResult>("post", "/api/auth/refreshToken", {
-    data
-  });
 };
 
 // 获取用户
@@ -58,7 +21,7 @@ export const getUser = () => {
 
 // 分页查询pageUser
 export const getUserPage = (params?: object) => {
-  return http.get("/sys/user/page", { params });
+  return http.get<object, Result>("/sys/user/page", { params });
 };
 
 // 保存用户

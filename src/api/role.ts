@@ -1,6 +1,20 @@
 // Role API接口
 import { http } from "@/utils/http";
 
+type Result = {
+  success: boolean;
+  data?: {
+    /** 列表数据 */
+    records: Array<any>;
+    /** 总条目数 */
+    total?: number;
+    /** 每页显示条目个数 */
+    size?: number;
+    /** 当前页数 */
+    current?: number;
+  };
+};
+
 interface ResponseType extends Promise<any> {
   data?: object;
   code?: number;
@@ -11,6 +25,10 @@ interface ResponseType extends Promise<any> {
 // Role API接口
 export const roles = (data: object): ResponseType => {
   return http.get("/sys/role/page", data);
+};
+
+export const getRolePage = (params?: object) => {
+  return http.get<object, Result>("/sys/role/page", { params });
 };
 
 export const getRolesById = (id: number): ResponseType => {

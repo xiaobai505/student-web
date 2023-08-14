@@ -1,10 +1,14 @@
 import { http } from "@/utils/http";
 
-interface ResponseType extends Promise<any> {
-  data?: Array<object>;
-  code?: number;
-  msg?: string;
-}
+type ResultDept = {
+  success: boolean;
+  data?: Array<any>;
+};
+
+/** 获取部门管理列表 */
+export const getDeptList = (params?: object) => {
+  return http.get<object, ResultDept>("/sys/dept", { params });
+};
 
 // 保存部门
 export const saveDept = (data: object) => {
@@ -12,6 +16,6 @@ export const saveDept = (data: object) => {
 };
 
 // 删除
-export const delDept = (id: number): ResponseType => {
-  return http.delete("/sys/dept/" + id);
+export const delDept = (id: number) => {
+  return http.delete<object, ResultDept>("/sys/dept/" + id);
 };

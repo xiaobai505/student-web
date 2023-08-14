@@ -1,14 +1,13 @@
 import dayjs from "dayjs";
 import editForm from "../form.vue";
 import { message } from "@/utils/message";
-import { getRoleList } from "@/api/system";
+import { delRole, getRolePage, saveOrUpdateRole, updateRole } from "@/api/role";
 import { ElMessageBox } from "element-plus";
 import { usePublicHooks } from "../../hooks";
 import { addDialog } from "@/components/ReDialog";
 import { type FormItemProps } from "../utils/types";
 import { type PaginationProps } from "@pureadmin/table";
 import { reactive, ref, onMounted, h, toRaw } from "vue";
-import { delRole, saveOrUpdateRole, updateRole } from "@/api/role";
 
 export function useRole() {
   const form = reactive({
@@ -164,7 +163,7 @@ export function useRole() {
 
   async function onSearch() {
     loading.value = true;
-    const { data } = await getRoleList(toRaw(form));
+    const { data } = await getRolePage(toRaw(form));
     dataList.value = data.records;
     pagination.total = data.total;
     pagination.pageSize = data.size;
