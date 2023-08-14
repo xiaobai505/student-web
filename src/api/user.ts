@@ -33,7 +33,7 @@ export type RefreshTokenResult = {
 export const getLogin = (data?: object) => {
   return http.request<UserResult>(
     "post",
-    baseUrlApi("auth/login"),
+    baseUrlApi("/auth/login"),
     { data },
     // 自定义的axios配置在下面对象填写即可
     {
