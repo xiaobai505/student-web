@@ -11,7 +11,7 @@ export const getDeptList = (params?: object) => {
 };
 
 // 保存部门
-export const saveDept = (data: object) => {
+export const saveOrUpdateDept = (data: object) => {
   return http.post("/sys/dept", { data });
 };
 

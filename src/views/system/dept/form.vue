@@ -7,10 +7,11 @@ import { usePublicHooks } from "../hooks";
 
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
+    id: 0,
     higherDeptOptions: [],
     parentId: 0,
     name: "",
-    principal: "",
+    leaderuserid: "",
     phone: "",
     email: "",
     sort: 0,
@@ -74,7 +75,7 @@ defineExpose({ getRef });
       <re-col :value="12" :xs="24" :sm="24">
         <el-form-item label="部门负责人">
           <el-input
-            v-model="newFormInline.principal"
+            v-model="newFormInline.leaderuserid"
             clearable
             placeholder="请输入部门负责人"
           />

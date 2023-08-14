@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import editForm from "../form.vue";
 import { handleTree } from "@/utils/tree";
 import { message } from "@/utils/message";
-import { getDeptList } from "@/api/dept";
+import { getDeptList, saveOrUpdateDept } from "@/api/dept";
 import { usePublicHooks } from "../../hooks";
 import { addDialog } from "@/components/ReDialog";
 import { reactive, ref, onMounted, h } from "vue";
@@ -107,10 +107,11 @@ export function useDept() {
       title: `${title}部门`,
       props: {
         formInline: {
+          id: row?.id ?? 0,
           higherDeptOptions: formatHigherDeptOptions(cloneDeep(dataList.value)),
           parentId: row?.parentId ?? 0,
           name: row?.name ?? "",
-          principal: row?.principal ?? "",
+          leaderuserid: row?.leaderuserid ?? "",
           phone: row?.phone ?? "",
           email: row?.email ?? "",
           sort: row?.sort ?? 0,
@@ -127,11 +128,16 @@ export function useDept() {
         const FormRef = formRef.value.getRef();
         const curData = options.props.formInline as FormItemProps;
         function chores() {
-          message(`您${title}了部门名称为${curData.name}的这条数据`, {
-            type: "success"
-          });
-          done(); // 关闭弹框
-          onSearch(); // 刷新表格数据
+          saveOrUpdateDept(curData)
+            .then(() => {
+              message(`您${title}了部门名称为${curData.name}的这条数据`, {
+                type: "success"
+              });
+            })
+            .finally(() => {
+              done(); // 关闭弹框
+              onSearch(); // 刷新表格数据
+            });
         }
         FormRef.validate(valid => {
           if (valid) {
