@@ -134,6 +134,9 @@ class PureHttp {
           PureHttp.initConfig.beforeResponseCallback(response);
           return response.data;
         }
+        if (response.data.code !== 200) {
+          message(response.data.msg, { type: "error" });
+        }
         return response.data;
       },
       (error: PureHttpError) => {
@@ -141,10 +144,7 @@ class PureHttp {
         $error.isCancelRequest = Axios.isCancel($error);
         // 关闭进度条动画
         NProgress.done();
-        // @ts-ignore
-        message(error.response.data.msg || "错误消息:请联系管理员!", {
-          type: "error"
-        });
+        message("请求错误: 请检查网络或联系管理员!", { type: "error" });
         // 所有的响应异常 区分来源为取消请求/非取消请求
         return Promise.reject($error);
       }
