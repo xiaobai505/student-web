@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import tree from "./tree.vue";
-import { useUser } from "./hook";
+import { useUser } from "./utils/hook";
 import { PureTableBar } from "@/components/RePureTableBar";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 
@@ -33,7 +33,8 @@ const {
   handleDelete,
   handleSizeChange,
   handleCurrentChange,
-  handleSelectionChange
+  handleSelectionChange,
+  handleRoles
 } = useUser();
 </script>
 
@@ -168,6 +169,7 @@ const {
                         link
                         type="primary"
                         :size="size"
+                        @click="handleRoles(row)"
                         :icon="useRenderIcon(Role)"
                       >
                         分配角色

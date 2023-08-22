@@ -60,7 +60,7 @@ export function log() {
     {
       label: "访问时间",
       minWidth: 180,
-      prop: "loginTime",
+      prop: "createTime",
       formatter: ({ loginTime }) =>
         dayjs(loginTime).format("YYYY-MM-DD HH:mm:ss")
     }

@@ -181,7 +181,7 @@ export function useRole() {
   };
 
   function openDialog(title = "新增", row?: FormItemProps) {
-    if (row.roleCode === "ROLE_ADMIN") {
+    if (row !== undefined && row.roleCode === "ROLE_ADMIN") {
       message(`管理员不能修改！`, { type: "error" });
       return;
     }

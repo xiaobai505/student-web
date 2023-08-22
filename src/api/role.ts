@@ -23,16 +23,12 @@ interface ResponseType extends Promise<any> {
 }
 
 // Role API接口
-export const roles = (data: object): ResponseType => {
-  return http.get("/sys/role/page", data);
+export const getRoleList = (): ResponseType => {
+  return http.get("/sys/role");
 };
 
 export const getRolePage = (params?: object) => {
   return http.get<object, Result>("/sys/role/page", { params });
-};
-
-export const getRolesById = (id: number): ResponseType => {
-  return http.get("/sys/role/" + id);
 };
 
 // 保存部门
@@ -48,6 +44,11 @@ export const updateRole = (data: object) => {
 // 删除
 export const delRole = (id: number) => {
   return http.delete("/sys/role/" + id);
+};
+
+// 获取角色列表
+export const getRolesById = (id: number): ResponseType => {
+  return http.get("/sys/roleUser/" + id);
 };
 
 // roleUser API接口

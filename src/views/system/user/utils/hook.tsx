@@ -3,7 +3,10 @@ import { message } from "@/utils/message";
 import { getUserPage } from "@/api/user";
 import { ElMessageBox } from "element-plus";
 import { type PaginationProps } from "@pureadmin/table";
-import { reactive, ref, computed, onMounted } from "vue";
+import { reactive, ref, computed, onMounted, h } from "vue";
+import { addDialog } from "@/components/ReDialog/index";
+import RowRoles2 from "@/views/system/user/rowRoles.vue";
+import { RolesProps } from "@/views/system/user/utils/types";
 
 export function useUser() {
   const form = reactive({
@@ -12,6 +15,7 @@ export function useUser() {
     status: undefined,
     deptId: 101
   });
+  const formRef = ref();
   const dataList = ref([]);
   const loading = ref(true);
   const switchLoadMap = ref({});
@@ -166,22 +170,25 @@ export function useUser() {
   }
 
   function handleSizeChange(val: number) {
-    console.log(`${val} items per page`);
+    pagination.pageSize = val;
+    onSearch();
   }
 
   function handleCurrentChange(val: number) {
-    console.log(`current page: ${val}`);
+    pagination.currentPage = val;
+    onSearch();
   }
 
   function handleSelectionChange(val) {
-    console.log("handleSelectionChange", val);
+    pagination.pageSize = val;
+    onSearch();
   }
 
   async function onSearch() {
     loading.value = true;
-    await getUserPage(form).then(data => {
-      dataList.value = data["records"];
-      pagination.total = data["total"];
+    await getUserPage(form).then(res => {
+      dataList.value = res.data["records"];
+      pagination.total = res.data["total"];
       loading.value = false;
     });
   }
@@ -195,6 +202,40 @@ export function useUser() {
   onMounted(() => {
     onSearch();
   });
+
+  function handleRoles(row?: RolesProps) {
+    console.log("分配角色！");
+    addDialog({
+      title: `分配角色`,
+      props: {
+        formInline: {
+          id: row?.id ?? undefined,
+          ids: []
+        }
+      },
+      width: "40%",
+      draggable: true,
+      fullscreenIcon: true,
+      closeOnClickModal: false,
+      contentRenderer: () => h(RowRoles2, { ref: formRef }),
+      beforeSure: (done, { options }) => {
+        const FormRef = formRef.value.getRef();
+        const curData = options.props.formInline as RolesProps;
+        function chores() {
+          message(`重置了角色!`, { type: "success" });
+          done(); // 关闭弹框
+          onSearch(); // 刷新表格数据
+        }
+        FormRef.validate(valid => {
+          if (valid) {
+            console.log("curData", curData);
+            // 表单规则校验通过
+            chores();
+          }
+        });
+      }
+    });
+  }
 
   return {
     form,
@@ -210,6 +251,7 @@ export function useUser() {
     handleDelete,
     handleSizeChange,
     handleCurrentChange,
-    handleSelectionChange
+    handleSelectionChange,
+    handleRoles
   };
 }
