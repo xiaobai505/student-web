@@ -34,7 +34,8 @@ const {
   handleSizeChange,
   handleCurrentChange,
   handleSelectionChange,
-  handleRoles
+  handleRoles,
+  resetPassword
 } = useUser();
 </script>
 
@@ -127,7 +128,7 @@ const {
               >
                 修改
               </el-button>
-              <el-popconfirm title="是否确认删除?">
+              <el-popconfirm title="是否确认删除?" @confirm="handleDelete(row)">
                 <template #reference>
                   <el-button
                     class="reset-margin"
@@ -135,7 +136,6 @@ const {
                     type="primary"
                     :size="size"
                     :icon="useRenderIcon(Delete)"
-                    @click="handleDelete(row)"
                   >
                     删除
                   </el-button>
@@ -158,6 +158,7 @@ const {
                         link
                         type="primary"
                         :size="size"
+                        @click="resetPassword(row)"
                         :icon="useRenderIcon(Password)"
                       >
                         重置密码

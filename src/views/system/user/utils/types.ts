@@ -4,6 +4,8 @@ interface RolesProps {
   /** id */
   id: number;
 
+  name: string;
+
   ids: [];
 }
 interface FormProps {

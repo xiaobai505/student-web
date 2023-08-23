@@ -31,7 +31,6 @@ menus:
   hsUser: User Manage
   hsRole: Role Manage
   hsDept: Dept Manage
-  hsMeun: Meun Manage
   hsLog: HsLog Manage
   hseditor: Editor
   hsabnormal: Abnormal Page

@@ -14,12 +14,10 @@ export function useDept() {
     name: "",
     status: null
   });
-
   const formRef = ref();
   const dataList = ref([]);
   const loading = ref(true);
   const { tagStyle } = usePublicHooks();
-
   const columns: TableColumnList = [
     {
       label: "部门名称",

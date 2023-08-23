@@ -139,7 +139,7 @@ const {
               type="primary"
               :size="size"
               :icon="useRenderIcon(Menu)"
-              @click="handleMenu"
+              @click="handleMenu(row)"
             >
               菜单权限
             </el-button>

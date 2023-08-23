@@ -7,14 +7,14 @@ import { FormProps } from "@/views/system/user/utils/types";
 const props = withDefaults(defineProps<FormProps>(), {
   formInline: () => ({
     id: undefined,
-    ids: []
+    name: undefined,
+    ids: [] // 已經選擇數據
   })
 });
 
 const newFormInline = ref(props.formInline);
 const rowRoles = reactive({
-  optionsRoles: [], // 所有的選項
-  data: [] // 已經選擇數據
+  optionsRoles: [] // 所有的選項
 });
 
 async function generateData() {
@@ -29,7 +29,7 @@ async function generateData() {
   }
 
   await getRolesById(Number(newFormInline.value.id)).then(res => {
-    rowRoles.data = res["data"];
+    newFormInline.value.ids = res["data"];
   });
 }
 
@@ -42,7 +42,7 @@ onMounted(() => {
   <div class="main">
     <!--  穿梭框    -->
     <el-transfer
-      v-model="rowRoles.data"
+      v-model="newFormInline.ids"
       :data="rowRoles.optionsRoles"
       :props="{ key: 'id', label: 'roleName' }"
       :titles="['未授权角色', '已授权角色']"

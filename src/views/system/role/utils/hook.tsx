@@ -8,6 +8,7 @@ import { addDialog } from "@/components/ReDialog";
 import { type FormItemProps } from "../utils/types";
 import { type PaginationProps } from "@pureadmin/table";
 import { reactive, ref, onMounted, h, toRaw } from "vue";
+import MeunRole from "@/views/system/role/meunRole.vue";
 
 export function useRole() {
   const form = reactive({
@@ -150,20 +151,27 @@ export function useRole() {
   }
 
   function handleSizeChange(val: number) {
-    console.log(`${val} items per page`);
+    pagination.pageSize = val;
+    onSearch();
   }
 
   function handleCurrentChange(val: number) {
-    console.log(`current page: ${val}`);
+    pagination.currentPage = val;
+    onSearch();
   }
 
   function handleSelectionChange(val) {
-    console.log("handleSelectionChange", val);
+    pagination.pageSize = val;
+    onSearch();
   }
 
   async function onSearch() {
     loading.value = true;
-    const { data } = await getRolePage(toRaw(form));
+    const raw = Object.assign(form, {
+      currentPage: pagination.currentPage,
+      pageSize: pagination.pageSize
+    });
+    const { data } = await getRolePage(toRaw(raw));
     dataList.value = data.records;
     pagination.total = data.total;
     pagination.pageSize = data.size;
@@ -230,8 +238,29 @@ export function useRole() {
   }
 
   /** 菜单权限 */
-  function handleMenu() {
-    message("等菜单管理页面开发后完善");
+  function handleMenu(row?: FormItemProps) {
+    addDialog({
+      title: `菜单权限`,
+      props: {
+        formInline: {
+          id: row?.id ?? undefined,
+          roleName: row?.roleName ?? undefined,
+          roleCode: row?.roleCode ?? undefined,
+          roleSort: row?.roleSort ?? undefined
+        }
+      },
+      width: "40%",
+      draggable: true,
+      fullscreenIcon: true,
+      closeOnClickModal: false,
+      contentRenderer: () => h(MeunRole, { ref: formRef }),
+      beforeSure: (done, { options }) => {
+        const curData = options.props.formInline as FormItemProps;
+        message(`成功 ${curData.id}！`, { type: "success" });
+        done(); // 关闭弹框
+        onSearch(); // 刷新表格数据
+      }
+    });
   }
 
   /** 数据权限 可自行开发 */

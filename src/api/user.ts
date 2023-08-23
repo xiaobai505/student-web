@@ -33,8 +33,8 @@ export const updateUser = (data: object) => {
   return http.put("/sys/user", { data });
 };
 // 删除用户
-export const delUser = (data: object) => {
-  return http.delete("/sys/user", { data });
+export const delUser = (id: number) => {
+  return http.delete<object, Result>("/sys/user/" + id);
 };
 
 // 更新用户

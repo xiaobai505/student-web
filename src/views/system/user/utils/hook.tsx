@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 import { message } from "@/utils/message";
-import { getUserPage } from "@/api/user";
+import { delUser, getUserPage, resetPwd } from "@/api/user";
 import { ElMessageBox } from "element-plus";
 import { type PaginationProps } from "@pureadmin/table";
-import { reactive, ref, computed, onMounted, h } from "vue";
+import { reactive, ref, computed, onMounted, h, toRaw } from "vue";
 import { addDialog } from "@/components/ReDialog/index";
 import RowRoles2 from "@/views/system/user/rowRoles.vue";
 import { RolesProps } from "@/views/system/user/utils/types";
+import { setRolesById } from "@/api/role";
 
 export function useUser() {
   const form = reactive({
@@ -162,11 +163,21 @@ export function useUser() {
   }
 
   function handleUpdate(row) {
-    console.log(row);
+    console.log("handleUpdate" + row);
   }
 
   function handleDelete(row) {
-    console.log(row);
+    if (row.username === "admin") {
+      message(`管理员不能删除！`, { type: "error" });
+      return;
+    }
+    delUser(row.id)
+      .then(() => {
+        message(`删除 ${row.username} 成功！`, { type: "success" });
+      })
+      .finally(() => {
+        onSearch();
+      });
   }
 
   function handleSizeChange(val: number) {
@@ -186,7 +197,11 @@ export function useUser() {
 
   async function onSearch() {
     loading.value = true;
-    await getUserPage(form).then(res => {
+    const raw = Object.assign(form, {
+      currentPage: pagination.currentPage,
+      pageSize: pagination.pageSize
+    });
+    await getUserPage(toRaw(raw)).then(res => {
       dataList.value = res.data["records"];
       pagination.total = res.data["total"];
       loading.value = false;
@@ -204,36 +219,35 @@ export function useUser() {
   });
 
   function handleRoles(row?: RolesProps) {
-    console.log("分配角色！");
     addDialog({
-      title: `分配角色`,
+      title: `分配 ${row.name} 角色`,
       props: {
         formInline: {
-          id: row?.id ?? undefined,
+          id: row.id,
           ids: []
         }
       },
       width: "40%",
       draggable: true,
-      fullscreenIcon: true,
       closeOnClickModal: false,
       contentRenderer: () => h(RowRoles2, { ref: formRef }),
       beforeSure: (done, { options }) => {
-        const FormRef = formRef.value.getRef();
         const curData = options.props.formInline as RolesProps;
-        function chores() {
-          message(`重置了角色!`, { type: "success" });
-          done(); // 关闭弹框
-          onSearch(); // 刷新表格数据
-        }
-        FormRef.validate(valid => {
-          if (valid) {
-            console.log("curData", curData);
-            // 表单规则校验通过
-            chores();
-          }
-        });
+        setRolesById(row.id, curData.ids)
+          .then(() => {
+            message(`重置了 ${row.name} 角色!`, { type: "success" });
+          })
+          .finally(() => {
+            done(); // 关闭弹框
+            onSearch(); // 刷新表格数据
+          });
       }
+    });
+  }
+
+  function resetPassword(row?: RolesProps) {
+    resetPwd({ userId: row.id }).then(() => {
+      message(`重置了 ${row.name} 密码!`, { type: "success" });
     });
   }
 
@@ -252,6 +266,7 @@ export function useUser() {
     handleSizeChange,
     handleCurrentChange,
     handleSelectionChange,
-    handleRoles
+    handleRoles,
+    resetPassword
   };
 }

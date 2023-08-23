@@ -31,7 +31,6 @@ menus:
   hsUser: 用户管理
   hsRole: 角色管理
   hsDept: 部门管理
-  hsMeun: 菜单管理
   hsLog: 登录记录
   hseditor: 编辑器
   hsabnormal: 异常页面
