@@ -13,11 +13,6 @@ export function useDict() {
   });
   const columns: TableColumnList = [
     {
-      type: "selection",
-      width: 55,
-      align: "left"
-    },
-    {
       label: "序号",
       type: "index",
       minWidth: 70

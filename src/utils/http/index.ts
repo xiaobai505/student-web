@@ -11,10 +11,11 @@ import {
 } from "./types.d";
 import { stringify } from "qs";
 import NProgress from "../progress";
-import { getToken, formatToken } from "@/utils/auth";
+import { getToken, formatToken, removeToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
 import { baseUrlApi } from "@/utils/http/utils";
 import { message } from "@/utils/message";
+import { storageLocal, storageSession } from "@pureadmin/utils";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -134,8 +135,13 @@ class PureHttp {
           PureHttp.initConfig.beforeResponseCallback(response);
           return response.data;
         }
-        if (response.data.code !== 200) {
+        if (response.data.code != undefined && response.data.code !== 200) {
           message(response.data.msg, { type: "error" });
+        }
+        if (response.data.code != undefined && response.data.code === 5001003) {
+          removeToken();
+          storageLocal().clear();
+          storageSession().clear();
         }
         return response.data;
       },
