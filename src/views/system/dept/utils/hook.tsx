@@ -155,6 +155,14 @@ export function useDept() {
   }
 
   function handleDelete(row) {
+    if (row.parentId === "0") {
+      message(`根节点不能删除`, { type: "error" });
+      return;
+    }
+    if (row.children && row.children.length) {
+      message(`请先删除子节点`, { type: "error" });
+      return;
+    }
     message(`您删除了部门名称为${row.name}的这条数据`, { type: "success" });
     onSearch();
   }

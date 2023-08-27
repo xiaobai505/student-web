@@ -73,7 +73,7 @@ defineExpose({ getRef });
         </el-form-item>
       </re-col>
       <re-col :value="12" :xs="24" :sm="24">
-        <el-form-item label="部门负责人">
+        <el-form-item label="负责人" prop="leaderuserid">
           <el-input
             v-model="newFormInline.leaderuserid"
             clearable

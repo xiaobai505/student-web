@@ -90,10 +90,9 @@ export function useRole() {
   //   ];
   // });
 
-  function onChange({ row, index }) {
-    if (row.roleCode === "ROLE_ADMIN") {
+  function onChange({ row }) {
+    if (row.roleCode === "admin") {
       message(`管理员不能修改！`, { type: "error" });
-      row.status === 0 ? (row.status = 1) : (row.status = 0);
       return;
     }
     ElMessageBox.confirm(
@@ -112,33 +111,19 @@ export function useRole() {
       }
     )
       .then(() => {
-        switchLoadMap.value[index] = Object.assign(
-          {},
-          switchLoadMap.value[index],
-          {
-            loading: true
-          }
-        );
         updateRole(row).then(() => {
-          switchLoadMap.value[index] = Object.assign(
-            {},
-            switchLoadMap.value[index],
-            {
-              loading: false
-            }
-          );
-          message(`已${row.status === 0 ? "停用" : "启用"}${row.roleName}`, {
+          message(`已 ${row.status === 0 ? "停用" : "启用"} ${row.roleName}`, {
             type: "success"
           });
         });
       })
       .catch(() => {
-        row.status === 0 ? (row.status = 1) : (row.status = 0);
+        onSearch();
       });
   }
 
   function handleDelete(row) {
-    if (row.roleCode === "ROLE_ADMIN") {
+    if (row.roleCode === "admin") {
       message(`管理员不能删除！`, { type: "error" });
       return;
     }
@@ -189,7 +174,7 @@ export function useRole() {
   };
 
   function openDialog(title = "新增", row?: FormItemProps) {
-    if (row !== undefined && row.roleCode === "ROLE_ADMIN") {
+    if (row !== undefined && row.roleCode === "admin") {
       message(`管理员不能修改！`, { type: "error" });
       return;
     }

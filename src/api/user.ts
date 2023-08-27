@@ -25,7 +25,7 @@ export const getUserPage = (params?: object) => {
 };
 
 // 保存用户
-export const saveUser = (data: object) => {
+export const saveOrUpdateUser = (data: object) => {
   return http.post("/sys/user", { data });
 };
 // 更新用户

@@ -8,8 +8,23 @@ interface RolesProps {
 
   ids: [];
 }
-interface FormProps {
-  formInline: RolesProps;
+
+interface FormItemProps {
+  id: number;
+  higherDeptOptions: Record<string, unknown>[];
+  deptId: number;
+  username: string;
+  name: string;
+  sex: string | number;
+  phone: string | number;
+  email: string;
+  status: number;
+  remark: string;
 }
 
-export type { RolesProps, FormProps };
+interface FormProps {
+  formInline: RolesProps;
+  FormItemProps: FormItemProps;
+}
+
+export type { RolesProps, FormItemProps, FormProps };

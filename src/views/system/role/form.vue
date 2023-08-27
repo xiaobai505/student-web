@@ -45,7 +45,7 @@ defineExpose({ getRef });
       />
     </el-form-item>
 
-    <el-form-item label="排序号">
+    <el-form-item label="排序号" prop="roleSort">
       <el-input v-model="newFormInline.roleSort" placeholder="请输入排序号" />
     </el-form-item>
   </el-form>

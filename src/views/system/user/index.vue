@@ -24,12 +24,13 @@ const {
   loading,
   columns,
   dataList,
+  treeData,
   pagination,
   buttonClass,
   onSearch,
   deptIdChange,
   resetForm,
-  handleUpdate,
+  handleSave,
   handleDelete,
   handleSizeChange,
   handleCurrentChange,
@@ -41,7 +42,11 @@ const {
 
 <template>
   <div class="main">
-    <tree class="w-[17%] float-left" @deptIdChange="deptIdChange" />
+    <tree
+      class="w-[17%] float-left"
+      @deptIdChange="deptIdChange"
+      :treeData="treeData"
+    />
     <div class="float-right w-[82%]">
       <el-form
         ref="formRef"
@@ -93,7 +98,11 @@ const {
 
       <PureTableBar title="用户管理" :columns="columns" @refresh="onSearch">
         <template #buttons>
-          <el-button type="primary" :icon="useRenderIcon(AddFill)">
+          <el-button
+            type="primary"
+            :icon="useRenderIcon(AddFill)"
+            @click="handleSave()"
+          >
             新增用户
           </el-button>
         </template>
@@ -123,7 +132,7 @@ const {
                 link
                 type="primary"
                 :size="size"
-                @click="handleUpdate(row)"
+                @click="handleSave('修改', row)"
                 :icon="useRenderIcon(EditPen)"
               >
                 修改
@@ -147,7 +156,6 @@ const {
                   link
                   type="primary"
                   :size="size"
-                  @click="handleUpdate(row)"
                   :icon="useRenderIcon(More)"
                 />
                 <template #dropdown>
