@@ -44,7 +44,7 @@ export function useCourse() {
   async function onSearch() {
     loading.value = true;
     console.log("onSearch");
-    getCourse(null)
+    await getCourse(null)
       .then(res => {
         dataList.value = res.data["records"];
         pagination.total = res.data["total"];
@@ -55,7 +55,7 @@ export function useCourse() {
   }
 
   onMounted(async () => {
-    onSearch();
+    await onSearch();
   });
 
   return { loading, dataList, pagination, deptIdChange, columns, onSearch };
