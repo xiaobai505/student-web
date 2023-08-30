@@ -114,6 +114,7 @@ menus:
   hsMenuoverflow: Menu Overflow Show Tooltip Text
   hsChildMenuoverflow: Child Menu Overflow Show Tooltip Text
   hsDict: Dict
+  hsCourse: Course
 status:
   hsLoad: Loading...
 login:

@@ -114,6 +114,7 @@ menus:
   hsMenuoverflow: 目录超出显示 Tooltip 文字提示
   hsChildMenuoverflow: 菜单超出显示 Tooltip 文字提示
   hsDict: 字典管理
+  hsCourse: 课程管理
 status:
   hsLoad: 加载中...
 login:

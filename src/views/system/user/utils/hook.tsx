@@ -46,12 +46,12 @@ export function useUser() {
       fixed: "left"
     },
     {
-      label: "用户名称",
+      label: "用户名",
       prop: "username",
       minWidth: 130
     },
     {
-      label: "用户昵称",
+      label: "姓名",
       prop: "name",
       minWidth: 130
     },
@@ -78,6 +78,11 @@ export function useUser() {
     {
       label: "手机号码",
       prop: "phone",
+      minWidth: 90
+    },
+    {
+      label: "所属角色",
+      prop: "roleNames",
       minWidth: 90
     },
     {

@@ -1,14 +1,22 @@
 import { http } from "../utils/http";
 import qs from "qs";
 
-interface ResponseType extends Promise<any> {
-  data?: Array<object>;
-  code?: number;
-  msg?: string;
-}
+type Result = {
+  success: boolean;
+  data?: {
+    /** 列表数据 */
+    records: Array<any>;
+    /** 总条目数 */
+    total?: number;
+    /** 每页显示条目个数 */
+    size?: number;
+    /** 当前页数 */
+    current?: number;
+  };
+};
 
 // 分页查询
-export const CourseList = (): ResponseType => {
+export const CourseList = () => {
   return http.get("/dgy/course/list");
 };
 
@@ -17,7 +25,7 @@ export const getCourse = (params: object) => {
   const stringify = qs
     .stringify(params, { arrayFormat: "comma" })
     .replace("currentPage", "current");
-  return http.get("/dgy/course?" + stringify);
+  return http.get<object, Result>("/dgy/course?" + stringify);
 };
 
 // 保存用户
