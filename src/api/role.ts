@@ -52,6 +52,6 @@ export const getRolesById = (id: number): ResponseType => {
 };
 
 // roleUser API接口
-export const setRolesById = (id: number, ids: Array<number>) => {
+export const setRolesById = (id: number, ids: Record<number, unknown>[]) => {
   return http.post("/sys/roleUser/" + id, { data: ids });
 };

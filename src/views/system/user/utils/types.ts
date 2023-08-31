@@ -1,30 +1,38 @@
-// 虽然字段很少 但是抽离出来 后续有扩展字段需求就很方便了
-
-interface RolesProps {
-  /** id */
-  id: number;
-
-  name: string;
-
-  ids: [];
-}
-
 interface FormItemProps {
-  id: number;
+  id?: number;
+  /** 用于判断是`新增`还是`修改` */
+  title: string;
   higherDeptOptions: Record<string, unknown>[];
-  deptId: number;
-  username: string;
+  parentId: number;
   name: string;
-  sex: string | number;
+  username: string;
+  password: string;
   phone: string | number;
   email: string;
+  sex: string | number;
   status: number;
-  remark: string;
+  deptId: number;
+  dept?: {
+    id?: number;
+    name?: string;
+  };
+  address: string;
 }
-
 interface FormProps {
-  formInline: RolesProps;
-  FormItemProps: FormItemProps;
+  formInline: FormItemProps;
 }
 
-export type { RolesProps, FormItemProps, FormProps };
+interface RoleFormItemProps {
+  /** id */
+  id: number;
+  name: string;
+  /** 角色列表 */
+  roleOptions: any[];
+  /** 选中的角色列表 */
+  ids: Record<number, unknown>[];
+}
+interface RoleFormProps {
+  formInline: RoleFormItemProps;
+}
+
+export type { FormItemProps, FormProps, RoleFormItemProps, RoleFormProps };
