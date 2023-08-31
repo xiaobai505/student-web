@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Tree from "@/views/system/user/tree.vue";
-import { useCourse } from "@/views/course/hook";
+import { useCourse } from "@/views/course/treeCourse/hook";
 import { PureTableBar } from "@/components/RePureTableBar";
 
 defineOptions({
