@@ -44,9 +44,9 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
   const form = reactive({
     // 左侧部门树的id
     deptId: 101,
-    username: undefined,
-    phone: undefined,
-    status: undefined
+    usernameEq: undefined,
+    phoneEq: undefined,
+    statusEq: undefined
   });
   const formRef = ref();
   const ruleFormRef = ref();
@@ -178,7 +178,7 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
   });
   // 重置的新密码
   const pwdForm = reactive({
-    newPwd: ""
+    newPwd: "admin123"
   });
   const pwdProgress = [
     { color: "#e74242", text: "非常弱" },
@@ -246,10 +246,8 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
   /** 当CheckBox选择项发生变化时会触发该事件 */
   function handleSelectionChange(val) {
     selectedNum.value = val.length;
-    pagination.pageSize = val;
     // 重置表格高度
     tableRef.value.setAdaptive();
-    onSearch();
   }
 
   /** 取消选择 */
@@ -441,7 +439,7 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
         ruleFormRef.value.validate(valid => {
           if (valid) {
             // 根据实际业务使用pwdForm.newPwd和row里的某些字段去调用重置用户密码接口即可
-            resetPwd({ userId: row.id })
+            resetPwd({ userId: row.id, newPassword: pwdForm.newPwd })
               .then(() => {
                 message(`重置了 ${row.name} 密码!`, { type: "success" });
               })
