@@ -5,17 +5,31 @@ import { PureTableBar } from "@/components/RePureTableBar";
 
 defineOptions({
   // name 作为一种规范最好必须写上并且和路由的name保持一致
-  name: "Course"
+  name: "TreeCourse"
 });
 
-const { loading, dataList, pagination, deptIdChange, columns, onSearch } =
-  useCourse();
+const {
+  loading,
+  dataList,
+  treeData,
+  treeLoading,
+  onTreeSelect,
+  pagination,
+  columns,
+  onSearch
+} = useCourse();
 </script>
 
 <template>
-  <div class="main">
-    <tree class="w-[17%] float-left" @deptIdChange="deptIdChange" />
-    <div class="float-right w-[82%]">
+  <div class="flex justify-between">
+    <tree
+      ref="treeRef"
+      class="min-w-[200px] mr-2"
+      :treeData="treeData"
+      :treeLoading="treeLoading"
+      @tree-select="onTreeSelect"
+    />
+    <div class="w-[calc(100%-200px)]">
       <PureTableBar title="课程管理" :columns="columns" @refresh="onSearch">
         <template v-slot="{ size, dynamicColumns }">
           <pure-table

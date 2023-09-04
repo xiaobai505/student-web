@@ -1,6 +1,8 @@
 import { onMounted, reactive, ref } from "vue";
 import { PaginationProps } from "@pureadmin/table";
 import { getCourse } from "@/api/course";
+import { getDeptList } from "@/api/dept";
+import { handleTree } from "@/utils/tree";
 
 export function useCourse() {
   const form = reactive({
@@ -11,6 +13,9 @@ export function useCourse() {
   });
   const loading = ref(true);
   const dataList = ref([]);
+  const higherDeptOptions = ref();
+  const treeData = ref([]);
+  const treeLoading = ref(true);
   const pagination = reactive<PaginationProps>({
     total: 0,
     pageSize: 10,
@@ -36,11 +41,6 @@ export function useCourse() {
     }
   ];
 
-  function deptIdChange(id: number) {
-    form.deptId = id;
-    console.log(id);
-  }
-
   async function onSearch() {
     loading.value = true;
     console.log("onSearch");
@@ -54,9 +54,29 @@ export function useCourse() {
       });
   }
 
+  function onTreeSelect({ id, selected }) {
+    form.deptId = selected ? id : 101;
+    onSearch();
+  }
+
   onMounted(async () => {
+    // 归属部门
+    const { data } = await getDeptList();
+    higherDeptOptions.value = handleTree(data);
+    treeData.value = handleTree(data);
+    treeLoading.value = false;
+
     await onSearch();
   });
 
-  return { loading, dataList, pagination, deptIdChange, columns, onSearch };
+  return {
+    loading,
+    dataList,
+    treeData,
+    treeLoading,
+    onTreeSelect,
+    pagination,
+    columns,
+    onSearch
+  };
 }
