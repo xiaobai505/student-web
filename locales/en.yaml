@@ -89,7 +89,6 @@ menus:
   hsResult: Result Page
   hsSuccess: Success Page
   hsFail: Fail Page
-  hsTask: Task
   hsIconSelect: Icon Select
   hsTimeline: Time Line
   hsLineTree: LineTree
