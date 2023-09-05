@@ -2,9 +2,9 @@ import { h, onMounted, reactive, ref } from "vue";
 import { PaginationProps } from "@pureadmin/table";
 import { delCourseUser, saveCourseUser } from "@/api/courseUser";
 import { message } from "@/utils/message";
-import { FormItemProps } from "@/views/system/role/utils/types";
+import { FormItemProps } from "../../resultCourse/utils/types";
 import { addDialog } from "@/components/ReDialog/index";
-import editForm from "@/views/system/role/form.vue";
+import editForm from "../form.vue";
 import { getCourse } from "@/api/course";
 
 export function useSelectCourse() {
@@ -101,13 +101,10 @@ export function useSelectCourse() {
 
   function openDialog(row?: FormItemProps) {
     addDialog({
-      title: `已选课程`,
+      title: `已经报名学生`,
       props: {
         formInline: {
-          id: row?.id ?? undefined,
-          roleName: row?.roleName ?? undefined,
-          roleCode: row?.roleCode ?? undefined,
-          roleSort: row?.roleSort ?? undefined
+          id: row?.id ?? undefined
         }
       },
       width: "40%",
@@ -131,7 +128,7 @@ export function useSelectCourse() {
 
   function handleDelete(row) {
     console.log("handleDelete", row);
-    delCourseUser(row).then(res => {
+    delCourseUser({ courseId: row.id }).then(res => {
       if (res.code === 200) {
         message(`您取消了:${row.courseName}的这门课程！`, {
           type: "success"

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { PureTableBar } from "@/components/RePureTableBar";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import EditPen from "@iconify-icons/ep/edit-pen";
 import { useSelectCourse } from "./utils/hook";
 import { ref } from "vue";
-import AddFill from "@iconify-icons/ri/add-circle-line";
 import Delete from "@iconify-icons/ep/delete";
+import Search from "@iconify-icons/ep/search";
+import SetUp from "@iconify-icons/ep/set-up";
+import router from "@/router";
 
 defineOptions({
   name: "SelectCourse"
@@ -35,8 +36,7 @@ const {
       <template #buttons>
         <el-button
           type="primary"
-          :icon="useRenderIcon(AddFill)"
-          @click="openDialog()"
+          @click="router.push({ path: '/course/resultCourse/index' })"
         >
           已选课程
         </el-button>
@@ -67,10 +67,11 @@ const {
               v-if="row.count === null"
               class="reset-margin"
               link
-              type="primary"
+              type="success"
               :size="size"
-              :icon="useRenderIcon(EditPen)"
+              :icon="useRenderIcon(SetUp)"
               @click="handleAdd(row)"
+              v-auth="'student'"
             >
               选择报名
             </el-button>
@@ -83,14 +84,25 @@ const {
                 <el-button
                   class="reset-margin"
                   link
-                  type="primary"
+                  type="danger"
                   :size="size"
                   :icon="useRenderIcon(Delete)"
+                  v-auth="'student'"
                 >
                   取消报名
                 </el-button>
               </template>
             </el-popconfirm>
+            <el-button
+              class="reset-margin"
+              link
+              type="primary"
+              :icon="useRenderIcon(Search)"
+              @click="openDialog(row)"
+              v-auth="'teacher'"
+            >
+              查看报名
+            </el-button>
           </template>
         </pure-table>
       </template>

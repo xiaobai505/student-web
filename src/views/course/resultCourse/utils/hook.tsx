@@ -66,7 +66,7 @@ export function useResultCourse() {
   async function onSearch() {
     loading.value = true;
     console.log("onSearch");
-    await getResult(null)
+    await getResult({})
       .then(res => {
         dataList.value = res.data["records"];
         pagination.total = res.data["total"];

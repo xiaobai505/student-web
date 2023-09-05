@@ -90,6 +90,7 @@ const {
               :size="size"
               :icon="useRenderIcon(EditPen)"
               @click="openDialog(row)"
+              v-auth="'teacher'"
             >
               录入成绩
             </el-button>
