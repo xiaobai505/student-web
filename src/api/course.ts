@@ -1,5 +1,4 @@
 import { http } from "../utils/http";
-import qs from "qs";
 
 type Result = {
   success: boolean;
@@ -21,11 +20,8 @@ export const CourseList = () => {
 };
 
 // 分页查询
-export const getCourse = (params: object) => {
-  const stringify = qs
-    .stringify(params, { arrayFormat: "comma" })
-    .replace("currentPage", "current");
-  return http.get<object, Result>("/dgy/course?" + stringify);
+export const getCourse = (params?: object) => {
+  return http.get<object, Result>("/dgy/course", { params });
 };
 
 // 保存用户

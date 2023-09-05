@@ -78,10 +78,10 @@ const {
             <el-popconfirm
               :title="`是否确认取消${row.courseName}的这门课程`"
               @confirm="handleDelete(row)"
-              v-if="row.count !== null"
             >
               <template #reference>
                 <el-button
+                  v-if="row.count !== null"
                   class="reset-margin"
                   link
                   type="danger"

@@ -1,4 +1,4 @@
-import { h, onMounted, reactive, ref } from "vue";
+import { h, onMounted, reactive, ref, toRaw } from "vue";
 import { PaginationProps } from "@pureadmin/table";
 import { delCourseUser, saveCourseUser } from "@/api/courseUser";
 import { message } from "@/utils/message";
@@ -88,8 +88,11 @@ export function useSelectCourse() {
 
   async function onSearch() {
     loading.value = true;
-    console.log("onSearch");
-    await getCourse(null)
+    const raw = Object.assign(form, {
+      currentPage: pagination.currentPage,
+      pageSize: pagination.pageSize
+    });
+    await getCourse(toRaw(raw))
       .then(res => {
         dataList.value = res.data["records"];
         pagination.total = res.data["total"];
@@ -127,15 +130,17 @@ export function useSelectCourse() {
   }
 
   function handleDelete(row) {
-    console.log("handleDelete", row);
-    delCourseUser({ courseId: row.id }).then(res => {
-      if (res.code === 200) {
-        message(`您取消了:${row.courseName}的这门课程！`, {
-          type: "success"
-        });
-      }
-      onSearch();
-    });
+    delCourseUser({ courseId: row.id })
+      .then(res => {
+        if (res.code === 200) {
+          message(`您取消了:${row.courseName}的这门课程！`, {
+            type: "success"
+          });
+        }
+      })
+      .finally(() => {
+        onSearch();
+      });
   }
 
   onMounted(() => {
