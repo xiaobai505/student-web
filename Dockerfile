@@ -16,6 +16,7 @@ FROM nginx:stable-alpine as production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY .npmrc nginx.conf /etc/nginx/
+RUN ls /etc/nginx/
 RUN cat /etc/nginx/nginx.conf
 EXPOSE 80
 
