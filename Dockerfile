@@ -7,6 +7,7 @@ RUN corepack prepare pnpm@7.32.1 --activate
 RUN npm config set registry https://registry.npmmirror.com
 
 COPY .npmrc package.json pnpm-lock.yaml ./
+COPY .npmrc nginx.conf /etc/nginx/
 RUN pnpm install --frozen-lockfile
 
 COPY . .
