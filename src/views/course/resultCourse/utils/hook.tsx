@@ -56,6 +56,11 @@ export function useResultCourse() {
       minWidth: 50
     },
     {
+      label: "学生姓名",
+      prop: "studentName",
+      minWidth: 50
+    },
+    {
       label: "操作",
       fixed: "right",
       width: 160,
