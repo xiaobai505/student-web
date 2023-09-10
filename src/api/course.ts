@@ -2,6 +2,7 @@ import { http } from "../utils/http";
 
 type Result = {
   success: boolean;
+  code: number;
   data?: {
     /** 列表数据 */
     records: Array<any>;
@@ -26,7 +27,7 @@ export const getCourse = (params?: object) => {
 
 // 保存用户
 export const saveCourse = (data: object) => {
-  return http.post("/dgy/course", { data });
+  return http.post<object, Result>("/dgy/course", { data });
 };
 
 // 更新
@@ -35,6 +36,6 @@ export const updateCourse = (data: object) => {
 };
 
 // 删除
-export const delCourse = (data: object) => {
-  return http.delete("/dgy/course", { data });
+export const delCourse = (id: number) => {
+  return http.delete<object, Result>("/dgy/course/" + id);
 };

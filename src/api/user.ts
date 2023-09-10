@@ -2,6 +2,7 @@ import { http } from "@/utils/http";
 
 type Result = {
   success: boolean;
+  code: number;
   data?: {
     /** 列表数据 */
     records: Array<any>;
@@ -26,7 +27,7 @@ export const getUserPage = (params?: object) => {
 
 // 保存用户
 export const saveOrUpdateUser = (data: object) => {
-  return http.post("/sys/user", { data });
+  return http.post<object, Result>("/sys/user", { data });
 };
 // 更新用户
 export const updateUser = (data: object) => {

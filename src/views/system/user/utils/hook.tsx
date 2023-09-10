@@ -314,7 +314,7 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
           id: row?.id ?? undefined,
           higherDeptOptions: formatHigherDeptOptions(higherDeptOptions.value),
           parentId: row?.parentId ?? 0,
-          deptId: row.deptId ?? 101,
+          deptId: row?.deptId ?? 101,
           username: row?.username ?? "",
           name: row?.name ?? "",
           phone: row?.phone ?? "",
@@ -333,19 +333,22 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
         const FormRef = formRef.value.getRef();
         const curData = options.props.formInline as FormItemProps;
         function chores() {
-          message(`您${title}了用户名称为${curData.name}的这条数据`, {
-            type: "success"
-          });
-          done(); // 关闭弹框
-          onSearch(); // 刷新表格数据
+          saveOrUpdateUser(curData)
+            .then(res => {
+              if (res.code === 200) {
+                message(`您${title}了名称为${curData.name}的数据`, {
+                  type: "success"
+                });
+              }
+            })
+            .finally(() => {
+              done(); // 关闭弹框
+              onSearch(); // 刷新表格数据
+            });
         }
         FormRef.validate(valid => {
           if (valid) {
-            console.log("curData", curData);
-            // 表单规则校验通过
-            saveOrUpdateUser(curData).then(() => {
-              chores();
-            });
+            chores();
           }
         });
       }
