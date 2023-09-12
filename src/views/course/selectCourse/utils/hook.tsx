@@ -143,6 +143,16 @@ export function useSelectCourse() {
       });
   }
 
+  function handleSizeChange(val: number) {
+    pagination.pageSize = val;
+    onSearch();
+  }
+
+  function handleCurrentChange(val: number) {
+    pagination.currentPage = val;
+    onSearch();
+  }
+
   onMounted(() => {
     onSearch();
   });
@@ -160,6 +170,8 @@ export function useSelectCourse() {
     handleSelectionChange,
     openDialog,
     handleAdd,
-    handleDelete
+    handleDelete,
+    handleSizeChange,
+    handleCurrentChange
   };
 }

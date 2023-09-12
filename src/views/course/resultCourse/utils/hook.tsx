@@ -1,4 +1,4 @@
-import { h, onMounted, reactive, ref } from "vue";
+import { h, onMounted, reactive, ref, toRaw } from "vue";
 import { PaginationProps } from "@pureadmin/table";
 import { FormItemProps } from "./types";
 import { addDialog } from "@/components/ReDialog/index";
@@ -8,8 +8,8 @@ import { message } from "@/utils/message";
 
 export function useResultCourse() {
   const form = reactive({
-    roleNameEq: undefined,
-    roleCodeEq: undefined,
+    courseNameLike: undefined,
+    studentNameEq: undefined,
     statusEq: undefined
   });
   const formRef = ref();
@@ -22,11 +22,11 @@ export function useResultCourse() {
     background: true
   });
 
-  function resetForm(formEl) {
+  const resetForm = formEl => {
     if (!formEl) return;
     formEl.resetFields();
     onSearch();
-  }
+  };
 
   const columns: TableColumnList = [
     {
@@ -70,8 +70,11 @@ export function useResultCourse() {
 
   async function onSearch() {
     loading.value = true;
-    console.log("onSearch");
-    await getResult({})
+    const raw = Object.assign(form, {
+      currentPage: pagination.currentPage,
+      pageSize: pagination.pageSize
+    });
+    await getResult(toRaw(raw))
       .then(res => {
         dataList.value = res.data["records"];
         pagination.total = res.data["total"];

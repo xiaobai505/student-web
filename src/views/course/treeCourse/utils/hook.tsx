@@ -54,6 +54,11 @@ export function useTreeCourse() {
       )
     },
     {
+      label: "学分",
+      prop: "graduate",
+      minWidth: 130
+    },
+    {
       label: "课程类型",
       prop: "isMust",
       minWidth: 90,

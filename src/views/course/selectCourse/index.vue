@@ -21,18 +21,15 @@ const {
   onSearch,
   openDialog,
   handleAdd,
-  handleDelete
+  handleDelete,
+  handleSizeChange,
+  handleCurrentChange
 } = useSelectCourse();
 </script>
 
 <template>
   <div class="main">
-    <PureTableBar
-      title="已选课程"
-      :columns="columns"
-      :tableRef="tableRef?.getTableRef()"
-      @refresh="onSearch"
-    >
+    <PureTableBar title="已选课程" :columns="columns" @refresh="onSearch">
       <template #buttons>
         <el-button
           type="primary"
@@ -43,14 +40,11 @@ const {
       </template>
       <template v-slot="{ size, dynamicColumns }">
         <pure-table
+          row-key="id"
           ref="tableRef"
           adaptive
-          :adaptiveConfig="{ offsetBottom: 32 }"
           align-whole="center"
-          row-key="id"
-          showOverflowTooltip
           table-layout="auto"
-          default-expand-all
           :loading="loading"
           :size="size"
           :data="dataList"
@@ -61,6 +55,8 @@ const {
             background: 'var(--el-fill-color-light)',
             color: 'var(--el-text-color-primary)'
           }"
+          @page-size-change="handleSizeChange"
+          @page-current-change="handleCurrentChange"
         >
           <template #operation="{ row }">
             <el-button

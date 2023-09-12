@@ -35,8 +35,8 @@ const {
     >
       <el-form-item label="课程名称：" prop="roleNameEq">
         <el-input
-          v-model="form.roleNameEq"
-          placeholder="请输入角色名称"
+          v-model="form.courseNameLike"
+          placeholder="请输入课程名称"
           clearable
           class="!w-[200px]"
         />
@@ -56,7 +56,7 @@ const {
       </el-form-item>
     </el-form>
     <PureTableBar
-      title="已选课程"
+      title="考试成绩"
       :columns="columns"
       :tableRef="tableRef?.getTableRef()"
       @refresh="onSearch"

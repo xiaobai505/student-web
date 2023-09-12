@@ -33,7 +33,6 @@ const isMustOptions = [
 
 const ruleFormRef = ref();
 const newFormInline = ref(props.formInline);
-const value1 = ref("");
 
 function getRef() {
   return ruleFormRef.value;
@@ -41,14 +40,10 @@ function getRef() {
 
 defineExpose({ getRef });
 
-onMounted(async () => {
-  // value1.value[0] = newFormInline.value.startTime;
-  // value1.value[1] = newFormInline.value.endTime;
-});
+onMounted(async () => {});
 </script>
 
 <template>
-  {{ value1[0] }} :: {{ value1[1] }}
   <el-form
     ref="ruleFormRef"
     :model="newFormInline"

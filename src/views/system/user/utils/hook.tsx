@@ -274,11 +274,14 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
       currentPage: pagination.currentPage,
       pageSize: pagination.pageSize
     });
-    await getUserPage(toRaw(raw)).then(res => {
-      dataList.value = res.data["records"];
-      pagination.total = res.data["total"];
-      loading.value = false;
-    });
+    await getUserPage(toRaw(raw))
+      .then(res => {
+        dataList.value = res.data["records"];
+        pagination.total = res.data["total"];
+      })
+      .finally(() => {
+        loading.value = false;
+      });
   }
 
   const resetForm = formEl => {
