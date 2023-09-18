@@ -83,7 +83,8 @@ const onLogin = async (formEl: FormInstance | undefined) => {
               message("登录成功", { type: "success" });
             });
           }
-        });
+        })
+        .finally(() => (loading.value = false));
     } else {
       loading.value = false;
       return fields;
