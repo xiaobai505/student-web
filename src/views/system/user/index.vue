@@ -143,8 +143,8 @@ const {
             </el-popconfirm>
           </div>
           <pure-table
-            row-key="id"
             ref="tableRef"
+            row-key="id"
             adaptive
             align-whole="center"
             table-layout="auto"

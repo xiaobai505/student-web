@@ -5,8 +5,8 @@ import { delRole, getRolePage, saveOrUpdateRole, updateRole } from "@/api/role";
 import { ElMessageBox } from "element-plus";
 import { usePublicHooks } from "../../hooks";
 import { addDialog } from "@/components/ReDialog";
-import { type FormItemProps } from "../utils/types";
-import { type PaginationProps } from "@pureadmin/table";
+import type { FormItemProps } from "../utils/types";
+import type { PaginationProps } from "@pureadmin/table";
 import { reactive, ref, onMounted, h, toRaw } from "vue";
 import MeunRole from "@/views/system/role/meunRole.vue";
 

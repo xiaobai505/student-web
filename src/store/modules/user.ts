@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import { store } from "@/store";
-import { userType } from "./types";
+import type { userType } from "./types";
 import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
 import { storageLocal } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth";
-import { getLogin, refreshTokenApi, TokenResult } from "@/api/auth";
+import { getLogin, refreshTokenApi, type TokenResult } from "@/api/auth";
 
 export const useUserStore = defineStore({
   id: "pure-user",
