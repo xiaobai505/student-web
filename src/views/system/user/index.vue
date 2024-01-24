@@ -11,12 +11,11 @@ import Password from "@iconify-icons/ri/lock-password-line";
 import More from "@iconify-icons/ep/more-filled";
 import Delete from "@iconify-icons/ep/delete";
 import EditPen from "@iconify-icons/ep/edit-pen";
-import Search from "@iconify-icons/ep/search";
 import Refresh from "@iconify-icons/ep/refresh";
 import AddFill from "@iconify-icons/ri/add-circle-line";
 
 defineOptions({
-  name: "User"
+  name: "SystemUser"
 });
 
 const treeRef = ref();
@@ -70,7 +69,7 @@ const {
             v-model="form.usernameEq"
             placeholder="请输入用户名称"
             clearable
-            class="!w-[160px]"
+            class="!w-[180px]"
           />
         </el-form-item>
         <el-form-item label="手机号码：" prop="phoneEq">
@@ -78,7 +77,7 @@ const {
             v-model="form.phoneEq"
             placeholder="请输入手机号码"
             clearable
-            class="!w-[160px]"
+            class="!w-[180px]"
           />
         </el-form-item>
         <el-form-item label="状态：" prop="statusEq">
@@ -86,7 +85,7 @@ const {
             v-model="form.statusEq"
             placeholder="请选择"
             clearable
-            class="!w-[160px]"
+            class="!w-[180px]"
           >
             <el-option label="已开启" value="1" />
             <el-option label="已关闭" value="0" />
@@ -95,7 +94,7 @@ const {
         <el-form-item>
           <el-button
             type="primary"
-            :icon="useRenderIcon(Search)"
+            :icon="useRenderIcon('search')"
             :loading="loading"
             @click="onSearch"
           >
@@ -169,7 +168,7 @@ const {
                 type="primary"
                 :size="size"
                 :icon="useRenderIcon(EditPen)"
-                @click="openDialog('编辑', row)"
+                @click="openDialog('修改', row)"
               >
                 修改
               </el-button>

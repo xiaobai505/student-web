@@ -10,7 +10,7 @@ import { usePublicHooks } from "../../hooks";
 import { addDialog } from "@/components/ReDialog";
 import type { PaginationProps } from "@pureadmin/table";
 import type { FormItemProps, RoleFormItemProps } from "../utils/types";
-import { getKeyList, isAllEmpty } from "@pureadmin/utils";
+import { hideTextAtIndex, getKeyList, isAllEmpty } from "@pureadmin/utils";
 
 import { getRolePage, getRolesById, setRolesById } from "@/api/role";
 import { getDeptList } from "@/api/dept";
@@ -80,13 +80,13 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
     },
     {
       label: "用户头像",
-      prop: "headPic",
+      prop: "avatar",
       cellRenderer: ({ row }) => (
         <el-image
           fit="cover"
           preview-teleported={true}
-          src={row.headPic}
-          preview-src-list={Array.of(row.headPic)}
+          src={row.avatar}
+          preview-src-list={Array.of(row.avatar)}
           class="w-[24px] h-[24px] rounded-full align-middle"
         />
       ),
@@ -130,9 +130,8 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
     {
       label: "手机号码",
       prop: "phone",
-      minWidth: 90
-      // 脱敏
-      // formatter: ({ phone }) => hideTextAtIndex(phone, { start: 3, end: 6 })
+      minWidth: 90,
+      formatter: ({ phone }) => hideTextAtIndex(phone, { start: 3, end: 6 })
     },
     {
       label: "状态",
@@ -358,6 +357,7 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
     });
   }
 
+  const cropRef = ref();
   /** 上传头像 */
   function handleUpload(row) {
     addDialog({
@@ -367,7 +367,8 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
       closeOnClickModal: false,
       contentRenderer: () =>
         h(croppingUpload, {
-          imgSrc: row.headPic,
+          ref: cropRef,
+          imgSrc: row.avatar,
           onCropper: info => (avatarInfo.value = info)
         }),
       beforeSure: done => {
@@ -375,7 +376,8 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
         // 根据实际业务使用avatarInfo.value和row里的某些字段去调用上传头像接口即可
         done(); // 关闭弹框
         onSearch(); // 刷新表格数据
-      }
+      },
+      closeCallBack: () => cropRef.value.hidePopover()
     });
   }
 
